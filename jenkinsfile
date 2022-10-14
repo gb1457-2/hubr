@@ -1,0 +1,35 @@
+#!groovy
+// Run docker build
+properties([disableConcurrentBuilds()])// запрет одновременных билдов
+
+pipeline {
+    agent any
+    triggers { pollSCM('* * * * *') }
+
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10')) // макс 10 билдов и артефактов
+        timestamps() // временная отментка
+    }
+    stages {
+        stage("create war file") {
+            steps {
+                echo " ============== start create war-file =================="
+                sh 'mvn clean package'
+            }
+        }
+        
+        stage("deploy warfile") {
+            environment {
+		        WAR_FILE = """${sh(
+                	returnStdout: true,
+                	script: 'find "$PWD" -name \'*.war\'')}"""
+            }
+            steps {
+                echo " ============== start building image ==================" 
+                sh 'ssh root@a8edf62f7cea \'rm -R "$TOMCAT_PATH/webapps" \' || true'
+                 sh 'ssh root@a8edf62f7cea \'mkdir "$TOMCAT_PATH/webapps" \' || true' 
+                sh 'scp -r ${WAR_FILE} root@a8edf62f7cea:\'\$TOMCAT_PATH/webapps\' '
+            }
+        }
+    }
+}

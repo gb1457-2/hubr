@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/head ::head('Безопасность / Хабр') }">
+    <meta charset="UTF-8">
+    <title>Безопасность / Хабр</title>
+    <link rel="shortcut icon" type="image/png" sizes="16x16"
+          href="https://assets.habr.com/habr-web/img/favicons/favicon-16.png">
+    <link rel="shortcut icon" type="image/png" sizes="32x32"
+          href="https://assets.habr.com/habr-web/img/favicons/favicon-32.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="76x76"
+          href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-76.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="120x120"
+          href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+</head>
+<body>
+
+<div th:insert="~{common/navbar ::navbar }"></div>
+<div style="background-color: #eee;">
+
+    <div class="container">
+        <div class="main-body">
+            <div th:insert="~{profile/navbar-profile ::navbar('profile-security') }"></div>
+            <hr class="mt-0 mb-4">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Change password card-->
+                    <div class="card mb-4">
+                        <div class="card-header">Изменить пароль</div>
+                        <div class="card-body">
+                            <form th:action="@{/profile/security}" th:object="${profileUserDto}" method='post'>
+                                <!-- Form Group (current password)-->
+                                <input type="hidden" th:field="*{login}">
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="currentPassword">Текущий пароль</label>
+                                    <input class="form-control" id="currentPassword" th:field="*{password}"
+                                           type="password"
+                                           placeholder="Введите текущий пароль">
+                                </div>
+                                <!-- Form Group (new password)-->
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="newPassword">Новый пароль</label>
+                                    <input class="form-control" id="newPassword" th:field="*{newPassword}"
+                                           data-bv-identical-field="confirmPassword" type="password"
+                                           placeholder="Введите новый пароль">
+                                    <div id="validationServerUsernameFeedback" class="invalid-feedback ">
+                                        Пароли не соответствуют
+                                    </div>
+                                </div>
+                                <!-- Form Group (confirm password)-->
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="confirmPassword">Подтвердить пароль</label>
+                                    <input class="form-control" id="confirmPassword"
+                                           data-bv-identical-field="newPassword"
+                                           type="password"
+                                           placeholder="Подтвердите новый пароль" th:field="*{newMatchingPassword}">
+                                    <div id="validationServerUsernameFeedback" class="invalid-feedback" >
+                                        Пароли не соответствуют
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" id="resetButtonPass" ontype="button">
+                                    Сохранить
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-header">Изменить почту</div>
+                        <div class="card-body">
+                            <form th:action="@{/profile/security}" th:object="${profileUserDto}" method='post'>
+                                <input type="hidden" th:field="*{login}">
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="currentEmail">Текущий e-mail</label>
+                                    <input class="form-control" readonly id="currentEmail"
+                                           data-bv-identical-field="currentEmail"
+                                           type="text"
+                                            th:field="*{email}">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="newEmail">Новый e-mail</label>
+                                    <input class="form-control" id="newEmail"th:field="*{newEmail}"
+                                           data-bv-identical-field="confirmPassword" type="email"
+                                           placeholder="Введите новую почту">
+                                    <div id="validationServerUsernameFeedback" class="invalid-feedback ">
+                                        Пожалуйста введите электронную почту
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="currentPassword">Пароль для подтверждения</label>
+                                    <input class="form-control" id="currentPassword"
+                                           data-bv-identical-field="currentPassword"
+                                           type="password"
+                                           placeholder="Подтвердите пароль пароль" th:field="*{password}">
+                                </div>
+                                <button class="btn btn-primary" id="resetButtonPass" ontype="button">
+                                    Сохранить
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-header">Удалить аккаунт</div>
+                        <div class="card-body">
+                            <p>Удаление вашей учетной записи является необратимым действием и не может быть отменено.
+                                Если
+                                вы уверены, что хотите удалить свою учетную запись, нажмите кнопку ниже.</p>
+                            <button class="btn btn-danger-soft text-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="showModal('Удаление')"
+                                    type="button">Я понимаю, удалите мой аккаунт
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <form action="/profile/security/deleteProfile" th:object="${profileUserDto}" method="get">
+        <input type="hidden" th:field="*{login}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Удалить аккаунт</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="staticBackdropText">
+                    Вы подтверждаете удаление аккаунта? Вам на почту будет выслана ссылка на удаления аккаунта.
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
+                    <button type="submit" class="btn btn-primary">Принять</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script type="text/javascript" src="js/script.js" th:src="@{/js/script.js}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+        integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+        crossorigin="anonymous"></script>
+</body>
+</html>

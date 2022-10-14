@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/head ::head('Профиль / Хабр') }">
+    <meta charset="UTF-8">
+    <title >Профиль / Хабр</title>
+    <link rel="shortcut icon" type="image/png" sizes="16x16"
+          href="https://assets.habr.com/habr-web/img/favicons/favicon-16.png">
+    <link rel="shortcut icon" type="image/png" sizes="32x32"
+          href="https://assets.habr.com/habr-web/img/favicons/favicon-32.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="76x76"
+          href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-76.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="120x120"
+          href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<div th:insert="~{common/navbar ::navbar }"></div>
+<section style="background-color: #eee;">
+
+
+
+    <div class="container">
+        <div class="main-body">
+
+            <div th:insert="~{profile/navbar-profile ::navbar('profile') }"></div>
+
+
+            <hr class="mt-0 mb-4">
+            <div class="row gutters-sm">
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
+                                     class="rounded-circle" width="150">
+                                <div class="mt-3">
+                                    <h4>John Doe</h4>
+                                    <p class="text-secondary mb-1">Full Stack Developer</p>
+                                    <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
+                                    <button class="btn btn-primary">Подписаться</button>
+                                    <button class="btn btn-outline-primary">Написать</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mt-3">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                    </svg>
+                                    Website
+                                </h6>
+                                <span class="text-secondary">https://bootdey.com</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round" class="feather feather-github mr-2 icon-inline">
+                                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                    </svg>
+                                    Github
+                                </h6>
+                                <span class="text-secondary">bootdey</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+
+                    <div th:insert="~{profile/cardprofile:: ${#request.getAttribute('isEdit')==true }? profilecardedit : profilecardview}"></div>
+
+
+                    <div class="row gutters-sm">
+                        <!-- Pills navs -->
+                        <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a
+                                        class="nav-link active"
+                                        id="ex3-tab-1"
+                                        data-mdb-toggle="pill"
+                                        href="#ex3-pills-1"
+                                        role="tab"
+                                        aria-controls="ex3-pills-1"
+                                        aria-selected="true"
+                                >Подписки</a
+                                >
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a
+                                        class="nav-link"
+                                        id="ex3-tab-2"
+                                        data-mdb-toggle="pill"
+                                        href="#ex3-pills-2"
+                                        role="tab"
+                                        aria-controls="ex3-pills-2"
+                                        aria-selected="false"
+                                >Статьи</a
+                                >
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a
+                                        class="nav-link"
+                                        id="ex3-tab-3"
+                                        data-mdb-toggle="pill"
+                                        href="#ex3-pills-3"
+                                        role="tab"
+                                        aria-controls="ex3-pills-3"
+                                        aria-selected="false"
+                                >Уведомления</a
+                                >
+                            </li>
+                        </ul>
+                        <!-- Pills navs -->
+
+
+                        <div class="row mb-3 show active">
+
+                            <div class="card ">
+                                <div class="card-body">
+
+                                    <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Подписки</i>
+                                    </h6>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+        integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

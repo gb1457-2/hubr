@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.7.xsd">
+
+    <changeSet id="before_create_article" author="Paul Selyutin">
+        <tagDatabase tag="before_create_article_tables"/>
+    </changeSet>
+
+    <changeSet id="create_table_article" author="Paul Selyutin">
+        <createTable tableName="article">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="version" type="INT" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="last_modified_at" type="TIMESTAMP WITH TIME ZONE"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="article" baseColumnNames="user_id"
+                                 constraintName="fk_article_account_user"
+                                 referencedTableName="account_user" referencedColumnNames="id"/>
+    </changeSet>
+
+
+    <changeSet id="before_create_table_tag" author="Paul Selyutin">
+        <tagDatabase tag="before_create_tag_table"/>
+    </changeSet>
+
+    <changeSet id="create_table_tag" author="Paul Selyutin">
+        <createTable tableName="tag">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="before_create_table_article_tag" author="Paul Selyutin">
+        <tagDatabase tag="before_create_article_tag_table"/>
+    </changeSet>
+
+    <changeSet id="create_table_article_tag" author="Paul Selyutin">
+        <createTable tableName="article_tag">
+            <column name="article_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tag_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="article_tag" columnNames="article_id, tag_id"/>
+
+        <addForeignKeyConstraint baseTableName="article_tag" baseColumnNames="article_id"
+                                 constraintName="fk_article_tag_article"
+                                 referencedTableName="article" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="article_tag" baseColumnNames="tag_id"
+                                 constraintName="fk_article_tag_tag"
+                                 referencedTableName="tag" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="before_create_table_comment" author="Paul Selyutin">
+        <tagDatabase tag="before_create_comment_table"/>
+    </changeSet>
+
+    <changeSet id="create_table_comment" author="Paul Selyutin">
+        <createTable tableName="comment">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="content" type="VARCHAR(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="article_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="version" type="INT" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="last_modified_at" type="TIMESTAMP WITH TIME ZONE"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="comment" baseColumnNames="article_id"
+                                 constraintName="fk_comment_article"
+                                 referencedTableName="article" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="comment" baseColumnNames="user_id"
+                                 constraintName="fk_comment_account_user"
+                                 referencedTableName="account_user" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="before_create_table_comment_like" author="Paul Selyutin">
+        <tagDatabase tag="before_create_comment_like_table"/>
+    </changeSet>
+
+    <changeSet id="create_table_comment_like" author="Paul Selyutin">
+        <createTable tableName="comment_like">
+            <column name="comment_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="comment_like" columnNames="comment_id, user_id"/>
+
+        <addForeignKeyConstraint baseTableName="comment_like" baseColumnNames="comment_id"
+                                 constraintName="fk_comment_like_comment"
+                                 referencedTableName="comment" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="comment_like" baseColumnNames="user_id"
+                                 constraintName="fk_comment_like_user"
+                                 referencedTableName="account_user" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="before_create_table_article_like" author="Paul Selyutin">
+        <tagDatabase tag="before_create_article_like_table"/>
+    </changeSet>
+
+    <changeSet id="create_table_article_like" author="Paul Selyutin">
+        <createTable tableName="article_like">
+            <column name="article_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="article_like" columnNames="article_id, user_id"/>
+
+        <addForeignKeyConstraint baseTableName="article_like" baseColumnNames="article_id"
+                                 constraintName="fk_article_like_article"
+                                 referencedTableName="article" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="article_like" baseColumnNames="user_id"
+                                 constraintName="fk_article_like_user"
+                                 referencedTableName="account_user" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="before_create_table_moderator_notification" author="Paul Selyutin">
+        <tagDatabase tag="before_create_moderator_notification_table"/>
+    </changeSet>
+
+    <changeSet id="create_table_moderator_notification" author="Paul Selyutin">
+        <createTable tableName="moderator_notification">
+            <column name="comment_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="moderator_notification" baseColumnNames="comment_id"
+                                 constraintName="fk_moderator_notification_comment"
+                                 referencedTableName="comment" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="create_table_user_lock_notification" author="Paul Selyutin">
+        <createTable tableName="user_lock_notification">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="user_lock_notification" baseColumnNames="user_id"
+                                 constraintName="fk_user_lock_notification_user"
+                                 referencedTableName="account_user" referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

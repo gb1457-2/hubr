@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.7.xsd">
+
+    <changeSet id="before_alter_ans_create_user_tables" author="Paul Selyutin">
+        <tagDatabase tag="before_alter_ans_create_user_tables"/>
+    </changeSet>
+
+    <changeSet id="alter_table_account_user" author="Paul Selyutin">
+        <comment>Добавлены поля с ФИО и датой блокировки</comment>
+        <addColumn tableName="account_user">
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="locked_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="deleted_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="version" type="INT" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="last_modified_at" type="TIMESTAMP WITH TIME ZONE"/>
+        </addColumn>
+    </changeSet>
+
+
+    <changeSet id="before_create_table_account_role" author="Paul Selyutin">
+        <tagDatabase tag="before_create_account_role_table"/>
+    </changeSet>
+
+    <changeSet id="create_table_account_role" author="Paul Selyutin">
+        <createTable tableName="account_role">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="before_create_table_user_role" author="Paul Selyutin">
+        <tagDatabase tag="before_create_user_role_table"/>
+    </changeSet>
+
+    <changeSet id="create_table_user_role" author="Paul Selyutin">
+        <createTable tableName="user_role">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="user_role" columnNames="user_id, role_id"/>
+
+        <addForeignKeyConstraint baseTableName="user_role" baseColumnNames="user_id"
+                                 constraintName="fk_user_role_account_user"
+                                 referencedTableName="account_user" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="user_role" baseColumnNames="role_id"
+                                 constraintName="fk_user_role_account_role"
+                                 referencedTableName="ACCOUNT_ROLE" referencedColumnNames="ID"/>
+    </changeSet>
+
+    <changeSet id="before_create_table_authority" author="Paul Selyutin">
+        <tagDatabase tag="before_create_authority_table"/>
+    </changeSet>
+
+    <changeSet id="create_table_authority" author="Paul Selyutin">
+        <createTable tableName="authority">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="permission" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="before_create_table_role_authority" author="Paul Selyutin">
+        <tagDatabase tag="before_create_role_authority_table"/>
+    </changeSet>
+
+    <changeSet id="create_table_role_authority" author="Paul Selyutin">
+        <createTable tableName="role_authority">
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="role_authority" columnNames="role_id, authority_id"/>
+
+        <addForeignKeyConstraint baseTableName="role_authority" baseColumnNames="authority_id"
+                                 constraintName="fk_role_authority_authority"
+                                 referencedTableName="authority" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="role_authority" baseColumnNames="role_id"
+                                 constraintName="fk_role_authority_account_role"
+                                 referencedTableName="account_role" referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

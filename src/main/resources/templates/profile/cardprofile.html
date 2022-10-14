@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="profilecardedit" >
+    <form th:action="@{/profile}" th:object="${user}" method='post'>
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0" >Фамилия</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <input type="text" class="form-control" th:field="*{lastname}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Имя</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <input type="text" class="form-control" th:field="*{firstname}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Электронная почта</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <input type="text" class="form-control"  th:field="*{email}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Телефон</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <input type="text" class="form-control"  th:field="*{phone}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Адрес</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <input type="text" class="form-control" value="Bay Area, San Francisco, CA">
+                    </div>
+                </div>
+
+                <div class="row" >
+
+                    <div class="col-sm-9 text-secondary">
+                        <input type="submit" class="btn btn-primary px-4" value="Сохранить изменения">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+<div th:fragment="profilecardview" th:object="${user}">
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-sm-3">
+                    <h6 class="mb-0">Фамилия</h6>
+                </div>
+                <div class="col-sm-9 text-secondary" th:text="*{lastname}">
+                </div>
+            </div>
+            <hr>
+            <div class="row mb-3">
+                <div class="col-sm-3">
+                    <h6 class="mb-0">Имя</h6>
+                </div>
+                <div class="col-sm-9 text-secondary" th:text="*{firstname}">
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <h6 class="mb-0">Электронная почта</h6>
+                </div>
+                <div class="col-sm-9 text-secondary" th:text="*{email}">
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <h6 class="mb-0">Телефон</h6>
+                </div>
+                <div class="col-sm-9 text-secondary" th:text="*{phone}">
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <h6 class="mb-0">Адрес</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    Bay Area, San Francisco, CA
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-12">
+                    <a class="btn btn-info " target="__blank" th:href="@{/profile/edit}">Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
