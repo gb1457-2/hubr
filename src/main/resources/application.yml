@@ -1,7 +1,7 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost/hubr
-    username: admin
-    password: password
+    username: postgres
+    password: postgres
   liquibase:
     change-log: classpath:/liquibase/changelog.xml
