@@ -9,20 +9,14 @@
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="navbar(activeTab)">
     <!-- Container wrapper -->
     <div class="container-fluid">
         <!-- Toggle button -->
-        <button
-                class="navbar-toggler"
-                type="button"
-                data-mdb-toggle="collapse"
-                data-mdb-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-        >
-            <i class="fas fa-bars"></i>
+        <a class="navbar-brand" th:href="@{/articles/all}">My HABR</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
 
         <!-- Collapsible wrapper -->
@@ -31,13 +25,10 @@
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Dashboard</a>
+                    <a class="nav-link" th:classappend="${activeTab == 'ArticleList' ? 'active' : ''}" aria-current="page" th:href="@{/articles/all}">Все статьи</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Team</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Projects</a>
+                    <a class="nav-link" th:classappend="${activeTab == 'AddArticle' ? 'active' : ''}" aria-current="page" th:href="@{/articles/add}">Написать статью</a>
                 </li>
             </ul>
             <!-- Left links -->
