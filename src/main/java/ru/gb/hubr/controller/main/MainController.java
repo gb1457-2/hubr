@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.gb.hubr.entity.AccountUser;
 import ru.gb.hubr.entity.Article;
 import ru.gb.hubr.service.ArticleService;
+import ru.gb.hubr.web.ArticleDto;
 
 
 @Controller
@@ -26,23 +27,23 @@ public class MainController {
     }
 
     @PostMapping("/add")
-    public String saveProduct(Article article) {
-        service.saveArticle(article);
+    public String saveProduct(ArticleDto articleDto) {
+        service.saveArticle(articleDto);
         return "redirect:/articles/all";
     }
 
     @GetMapping("/add")
     public String showForm(Model model) {
-        Article article = new Article();
-        model.addAttribute("article", article);
+        ArticleDto articleDto = new ArticleDto();
+        model.addAttribute("article", articleDto);
         return "articles/add-article";
     }
 
     @GetMapping("/{id}")
     public String showArticle(Model model, @PathVariable(name = "id") Long id){
 
-        Article article = service.getArticleById(id);
-        model.addAttribute("article", article);
+        ArticleDto articleDto = service.getArticleById(id);
+        model.addAttribute("article", articleDto);
         return "articles/show-article";
     }
 
