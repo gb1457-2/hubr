@@ -1,30 +1,29 @@
-package ru.gb.hubr.entity;
+package ru.gb.hubr.web;
 
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import ru.gb.hubr.entity.common.InfoEntity;
+import ru.gb.hubr.entity.AccountUser;
 
-import javax.persistence.*;
+import javax.persistence.EntityListeners;
+import javax.validation.constraints.NotBlank;
 
-
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-@Table(name = "article")
-public class Article extends InfoEntity {
+public class ArticleDto {
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private AccountUser author;
+    private Long id;
 
-    @Column(name = "name")
+    @NotBlank
+    private String author;
+
+    @NotBlank
     private String name;
 
-    @Column(name = "content")
+    @NotBlank
     private String content;
 
     public String getPreview(){
