@@ -1,0 +1,20 @@
+spring:
+  liquibase:
+    change-log: classpath:/liquibase/changelog.xml
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    hikari:
+      driver-class-name: 'org.h2.Driver'
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+hubr:
+  mail:
+    host: smtp.gmail.com
+    port: 587

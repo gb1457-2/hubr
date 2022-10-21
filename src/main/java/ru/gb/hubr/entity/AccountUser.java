@@ -34,4 +34,9 @@ public class AccountUser extends InfoEntity {
     @Column(name = "locked_at")
     private LocalDateTime lockedAt;
 
+    @Column(name = "email")
+    private String email;
+
+
+
 }

@@ -1,4 +1,4 @@
-package ru.gb.hubr.api.security;
+package ru.gb.hubr.api.user;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,4 +37,6 @@ public class UserDto {
     @NotBlank(message = "is required")
     @Size(min = 5, message = "min 5 symbols")
     private String phone;
+
+
 }

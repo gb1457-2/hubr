@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>mail</title>
+</head>
+
+
+<body style="position: relative; min-height: 100%; top: 40px;">
+<div class="skiptranslate" style="display: block;">
+    <iframe id=":0.container" class="goog-te-banner-frame skiptranslate" frameborder="0" src="javascript:''"
+            style="display: block !important;"></iframe>
+</div>
+
+
+<table class="m_8529529372830849063content__tablet_fullWidth" border="0" cellpadding="0" cellspacing="0" align="center"
+       style="width:100%;max-width:600px;border-collapse:collapse" width="600" role="presentation">
+    <tbody>
+    <tr>
+        <td align="center" valign="top" bgcolor="" style="direction:ltr" dir="ltr">
+
+
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
+                   style="width:100%;max-width:600px;border-collapse:collapse" role="presentation">
+
+                <tbody>
+                <tr>
+                    <td class="m_8529529372830849063content__mobilePad_40px_20px_0px_20px" align="center" valign="top"
+                        bgcolor="#ffffff" style="padding:40px 40px 0px 40px;direction:ltr" dir="ltr">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
+                               style="width:100%;border-collapse:collapse" role="presentation">
+                            <tbody>
+                            <tr>
+                                <td class="m_8529529372830849063header__logoSize_110px" align="left" valign="top"
+                                    width="100%" style="padding:0;direction:ltr" dir="ltr">
+                                    <a
+                                       target="_blank">
+                                        <img class="m_8529529372830849063header__logoSize_110px CToWUd"
+                                             src="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-76.png"
+                                             hspace="0" vspace="0" border="0"
+                                             style="display:block;width:138px;max-width:138px" width="138" alt="Фрукты"
+                                             data-bit="iit">
+                                    </a>
+                                </td>
+
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
+                   style="width:100%;max-width:600px;border-collapse:collapse" role="presentation">
+                <tbody>
+                <tr>
+                    <td class="m_8529529372830849063content__mobilePad_40px_0px_0px_0px" align="center" valign="top"
+                        bgcolor="#ffffff" style="padding:60px 0px 0px 0px" dir="ltr"></td>
+                </tr>
+
+                <tr>
+                    <td class="m_8529529372830849063content__mobilePad_0px_20px" align="left" valign="top"
+                        bgcolor="#ffffff"
+                        style="padding:0px 40px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:150%;color:#0a0a0a!important;direction:ltr"
+                        dir="ltr">
+                        <div th:text="${type_event}"></div>
+                        <div th:value="${type_event}"></div>
+                        <div th:switch="${type_event}" >
+                        <p th:case="DELETE_PROFILE">Здравствуйте, <span th:text="${username}"></span>, Вам отправлена ссылка на удаление учетной
+                            записи.<a
+                                    style="color:#4262ff;text-decoration:none"
+                                    th:href="@{${ref_event}}" target="_blank"> Удалить аккаунт</a>. Ссылка активна 24 часа.
+                        </p>
+                        </div>
+                        <p>Если вы не меняли
+                            пароль, <a style="color:#4262ff;text-decoration:none"
+                                       th:href="@{${ref_reset}}" target="_blank">перейдите по
+                                этой ссылке</a>, чтобы сбросить новый.</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="m_8529529372830849063content__mobilePad_20px_0px_0px_0px" align="center" valign="top"
+                        bgcolor="#ffffff" style="padding:20px 0px 0px 0px" dir="ltr"></td>
+                </tr>
+                </tbody>
+            </table>
+
+
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center"
+                   style="width:100%;max-width:600px;border-collapse:collapse" role="presentation">
+
+                <tbody>
+                <tr>
+                    <td class="m_8529529372830849063content__mobilePad_0px_20px_20px_20px" align="left" valign="top"
+                        bgcolor="#ffffff"
+                        style="padding:0px 40px 40px 40px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:150%;color:#0a0a0a!important;direction:ltr"
+                        dir="ltr">
+                        <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Удачного
+                            сотрудничества, </font></font><br><font style="vertical-align: inherit;"><font
+                                style="vertical-align: inherit;">команда Hubr</font></font></p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<table class="m_8529529372830849063content__tablet_fullWidth" border="0" cellpadding="0" cellspacing="0" align="center"
+       style="width:100%;max-width:600px;border-collapse:collapse" width="600" role="presentation">
+    <tbody>
+    <tr>
+        <td align="center" valign="top" style="padding:60px 0px 0px 0px"></td>
+    </tr>
+
+
+    <tr>
+        <td align="center" valign="top"
+            style="padding:0px 40px 0px 40px;font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;direction:ltr"
+            dir="ltr">
+            <span style="color:#0a0a0a!important;text-decoration:none!important"><font style="vertical-align: inherit;"><font
+                    style="vertical-align: inherit;">Москва, gb.ru</font></font><br><font
+                    style="vertical-align: inherit;"><font style="vertical-align: inherit;">1547</font></font></span>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td align="center" valign="top" style="padding:60px 0px 0px 0px"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
