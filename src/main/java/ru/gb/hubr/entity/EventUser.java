@@ -8,6 +8,7 @@ import ru.gb.hubr.entity.common.InfoEntity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Setter
 @Getter
@@ -23,7 +24,7 @@ public class EventUser extends InfoEntity {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(name = "guid_event", unique = true)
-    private String guid_event;
+    private UUID guidEvent;
 
     @Column(name = "user_id")
     private Long userId;
@@ -41,9 +42,10 @@ public class EventUser extends InfoEntity {
     @PrePersist
     protected void onCreate() {
         lifetimeSeconds = typeEvent.getLifetimeSeconds();
-        guid_event = guid_event == null ? java.util.UUID.randomUUID().toString(): guid_event;
+        guidEvent = guidEvent == null ? java.util.UUID.randomUUID(): guidEvent;
         deletedAt = deletedAt == null? getCreatedAt().plusSeconds(typeEvent.getLifetimeSeconds()): deletedAt;
     }
+
 
 
 }

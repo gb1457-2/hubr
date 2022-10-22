@@ -24,11 +24,7 @@ function handlerNew(e) {
 
 function showModal(typeBackdrop) {
 
-    let staticBackdrop = new bootstrap.Modal(document.getElementById('staticBackdrop'), {
-        keyboard: false
-    });
-
-    staticBackdrop.show();
+    $('#staticBackdrop').modal('show');
 
     let param = getParamByType(typeBackdrop);
     document.getElementById('staticBackdropLabel').innerText = param.label;
@@ -37,6 +33,12 @@ function showModal(typeBackdrop) {
     document.getElementById("formModal").action = param.action;
 }
 
+function closeModal() {
+    $('#staticBackdrop').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+
+}
 function getParamByType(typeBackdrop) {
     let obj = {
         label: "",

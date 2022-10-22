@@ -35,11 +35,11 @@ public class EventServiceSQL implements EventService {
     @Override
     public EventDto getEventByToken(String token) {
         return eventMapper.
-                toEventDto(eventUserDao.findByGuid_event(token));
+                toEventDto(eventUserDao.findByGuidEvent(java.util.UUID.fromString(token)));
     }
 
     @Override
     public void deleteEventByToken(String token) {
-        eventUserDao.deleteByGuid_event(token);
+        eventUserDao.deleteByGuidEvent(java.util.UUID.fromString(token));
     }
 }

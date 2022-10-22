@@ -4,11 +4,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ru.gb.hubr.entity.EventUser;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface EventUserDao extends JpaRepository<EventUser,Long> {
     List<EventUser> findByUserId(Long userId);
 
-    EventUser findByGuid_event(String guidEvent);
+    EventUser findByGuidEvent(UUID guidEvent);
 
-    void deleteByGuid_event(String guidEvent);
+    void deleteByGuidEvent(UUID guidEvent);
 }
