@@ -1,11 +1,11 @@
-package ru.gb.hubr.web.mapper;
+package ru.gb.hubr.api.article.mapper;
 
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
+import ru.gb.hubr.api.article.ArticleDto;
 import ru.gb.hubr.dao.AccountUserDao;
 import ru.gb.hubr.entity.AccountUser;
 import ru.gb.hubr.entity.Article;
-import ru.gb.hubr.web.ArticleDto;
 
 import java.util.NoSuchElementException;
 
@@ -17,7 +17,7 @@ public interface ArticleMapper {
     ArticleDto toArticleDto(Article article);
 
     default AccountUser getAuthor(String author, @Context AccountUserDao accountUserDao) {
-        return accountUserDao.findAccountUserByLogin("system").orElseThrow(
+        return accountUserDao.findByLogin("system").orElseThrow(
                 () -> new NoSuchElementException("There isn't author with name " + author));
     }
 

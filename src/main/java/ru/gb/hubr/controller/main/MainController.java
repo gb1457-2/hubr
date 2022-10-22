@@ -7,10 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.gb.hubr.entity.AccountUser;
-import ru.gb.hubr.entity.Article;
-import ru.gb.hubr.service.ArticleService;
-import ru.gb.hubr.web.ArticleDto;
+import ru.gb.hubr.service.article.ArticleService;
+import ru.gb.hubr.api.article.ArticleDto;
 
 
 @Controller

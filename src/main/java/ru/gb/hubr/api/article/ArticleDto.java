@@ -1,4 +1,4 @@
-package ru.gb.hubr.web;
+package ru.gb.hubr.api.article;
 
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
