@@ -1,9 +1,9 @@
-package ru.gb.hubr.controller.profile.dto;
+package ru.gb.hubr.api.user.profile;
 
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import ru.gb.hubr.api.security.UserDto;
+import ru.gb.hubr.api.user.UserDto;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,5 +26,6 @@ public class ProfileUserDto extends UserDto {
     @NotNull(message = "is required")
     @Size(min = 8, message = "required 8 symbols")
     private String newEmail;
+
 
 }

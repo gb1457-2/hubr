@@ -2,7 +2,7 @@ newPassword.onkeyup = confirmPassword.onkeyup = handlerNew;
 
 function handlerNew(e) {
 
-    if (newPassword.value == "" || confirmPassword.value ==""){
+    if (newPassword.value == "" || confirmPassword.value == "") {
         newPassword.classList.remove('is-valid');
         newPassword.classList.remove('is-invalid');
         confirmPassword.classList.remove('is-valid');
@@ -22,28 +22,40 @@ function handlerNew(e) {
     }
 };
 
-function showModal(typeModal) {
+function showModal(typeBackdrop) {
 
-    let staticBackdrop = new bootstrap.Modal(document.getElementById('staticBackdrop'), {
-        keyboard: false
-    });
+    $('#staticBackdrop').modal('show');
 
-    staticBackdrop.show();
-
-    let param = getParamByType(typeModal);
+    let param = getParamByType(typeBackdrop);
     document.getElementById('staticBackdropLabel').innerText = param.label;
     document.getElementById('staticBackdropText').innerText = param.text;
+    document.getElementById('modalPassword').hidden = param.showPassword;
+    document.getElementById("formModal").action = param.action;
+}
+
+function closeModal() {
+    $('#staticBackdrop').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
 
 }
-function getParamByType(typeModal) {
+function getParamByType(typeBackdrop) {
     let obj = {
         label: "",
-        text: ""
+        text: "",
+        showPassword: false,
+        action: "",
+        method: "get"
     };
-    if (typeModal = "Удаление"){
+    if (typeBackdrop = "Удаление") {
         obj.label = "Удалить аккаунт";
         obj.text = "Вы подтверждаете удаление аккаунта? Вам на почту будет выслана ссылка на удаления аккаунта.";
-        return obj;
+        obj.action = "/profile/security/deleteProfile";
+    } else if (typeBackdrop = "Подтверждение удаления") {
+        obj.label = "Удалить аккаунт";
+        obj.text = "Вы подтверждаете удаление аккаунта? Вам на почту будет выслана ссылка на удаления аккаунта.";
+        obj.showPassword = true;
+        obj.action = "/profile/security/deleteProfile";
     }
     return obj;
 

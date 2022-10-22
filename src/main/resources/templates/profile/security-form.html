@@ -18,7 +18,13 @@
 </head>
 <body>
 
+<div th:if="${#request.getAttribute('typeBackdrop')!= null}">
+    <body th:onload="showModal([[${typeBackdrop}]])"></body>
+</div>
+
+
 <div th:insert="~{common/navbar ::navbar }"></div>
+
 <div style="background-color: #eee;">
 
     <div class="container">
@@ -31,11 +37,11 @@
                     <div class="card mb-4">
                         <div class="card-header">Изменить пароль</div>
                         <div class="card-body">
-                            <form th:action="@{/profile/security}" th:object="${profileUserDto}" method='post'>
+                            <form th:action="@{/profile/security}" th:object="${user}" method='post'>
                                 <!-- Form Group (current password)-->
                                 <input type="hidden" th:field="*{login}">
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="currentPassword">Текущий пароль</label>
+                                    <label class="small mb-1"  for="currentPassword">Текущий пароль</label>
                                     <input class="form-control" id="currentPassword" th:field="*{password}"
                                            type="password"
                                            placeholder="Введите текущий пароль">
@@ -71,7 +77,7 @@
                     <div class="card mb-4">
                         <div class="card-header">Изменить почту</div>
                         <div class="card-body">
-                            <form th:action="@{/profile/security}" th:object="${profileUserDto}" method='post'>
+                            <form th:action="@{/profile/security}" th:object="${user}" method='post'>
                                 <input type="hidden" th:field="*{login}">
                                 <div class="mb-3">
                                     <label class="small mb-1" for="currentEmail">Текущий e-mail</label>
@@ -126,7 +132,7 @@
 
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <form action="/profile/security/deleteProfile" th:object="${profileUserDto}" method="get">
+    <form action="/profile/security/deleteProfile" id="formModal" th:object="${user}" method="get">
         <input type="hidden" th:field="*{login}">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -135,16 +141,29 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="staticBackdropText">
-                    Вы подтверждаете удаление аккаунта? Вам на почту будет выслана ссылка на удаления аккаунта.
+                    <p>Вы подтверждаете удаление аккаунта? Вам на почту будет выслана ссылка на удаления аккаунта.</p>
+                    <div class="mb-3">
+                        <label class="small mb-1" for="newEmailModal">Новый e-mail</label>
+                        <input class="form-control" id="newEmailModal"
+                               data-bv-identical-field="confirmPassword" type="email"
+                               placeholder="Введите новую почту">
+                        <div id="validationServerUsernameFeedback" class="invalid-feedback ">
+                            Пожалуйста введите электронную почту
+                        </div>
+                    </div>
                 </div>
+
+
                 <div class="modal-footer">
-                    <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
+                    <button type="reset" class="btn btn-secondary" onclick="closeModal()" data-bs-dismiss="modal">Отменить</button>
                     <button type="submit" class="btn btn-primary">Принять</button>
                 </div>
             </div>
+
         </div>
     </form>
 </div>
+
 
 
 <script type="text/javascript" src="js/script.js" th:src="@{/js/script.js}"></script>
