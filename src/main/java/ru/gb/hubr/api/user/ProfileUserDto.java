@@ -1,4 +1,4 @@
-package ru.gb.hubr.api.user.profile;
+package ru.gb.hubr.api.user;
 
 
 import lombok.*;

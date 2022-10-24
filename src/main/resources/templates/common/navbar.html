@@ -51,8 +51,8 @@
                 <img class="bg-primary rounded-circle" src="https://frontend-scripts.hb.bizmrg.com/unique-hf/svg/profile-icon.svg" data-bs-toggle="dropdown" alt="profile-icon" scale="2">
 
                 <ul class="dropdown-menu" style="">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" th:href="${@environment.getProperty('profile-uri')}">Профиль</a></li>
+                    <li><a class="dropdown-item" th:href="${@environment.getProperty('security-uri')}">Безопасность</a></li>
                     <li><hr class="mt-0 mb-0"></li>
                     <li><a class="dropdown-item" href="#">Выйти</a></li>
                 </ul>

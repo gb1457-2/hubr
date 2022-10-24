@@ -2,24 +2,38 @@ package ru.gb.hubr.controller.profile;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.gb.hubr.api.event.EventDto;
+import ru.gb.hubr.api.event.EventService;
+import ru.gb.hubr.api.user.ProfileUserDto;
 import ru.gb.hubr.api.user.UserDto;
 import ru.gb.hubr.api.user.profile.ProfileService;
-import ru.gb.hubr.api.user.profile.ProfileUserDto;
 import ru.gb.hubr.api.user.security.SecurityService;
+import ru.gb.hubr.entity.TypeEvent;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/profile/security")
+@RequestMapping("${security-uri}")
 public class SecurityController {
 
     private final ProfileService profileService;
     private final SecurityService securityService;
+    private final EventService eventService;
+    @Value("${security-uri}")
+    private String pathSecurity;
+
+
+    @ModelAttribute("baseUri")
+    public String getInitializeMyObject() {
+        return pathSecurity;
+    }
 
     @GetMapping("")
     public String profilePage(Model model, HttpSession session) {
@@ -27,39 +41,60 @@ public class SecurityController {
         return "profile/security-form";
     }
 
-    @PostMapping("")
+
+    @PostMapping("/updatePassword")
     @ResponseStatus(HttpStatus.OK)
-    public String updateSecurity(ProfileUserDto profileUserDto) {
-        return "redirect:/profile/security";
+    public String updatePassword(ProfileUserDto profileUserDto) {
+        return "redirect:"+pathSecurity;
+    }
+
+    @PostMapping("/updateEmail")
+    @ResponseStatus(HttpStatus.OK)
+    public String updateEmail(ProfileUserDto profileUserDto) {
+        return "redirect:"+pathSecurity;
     }
 
 
     @GetMapping("/deleteProfile")
-    public String sendDeleteProfile(HttpSession session, Model model) throws Exception {
+    public String sendDeleteProfile(HttpServletRequest request, HttpSession session, Model model) throws Exception {
         UserDto currentUser = profileService.getCurrentUser(session);
-        securityService.createDeleteProfile(currentUser);
+        securityService.createDeleteProfile( currentUser);
         model.addAttribute("user", currentUser);
+
         return "profile/security-form";
     }
 
-    @GetMapping("/deleteProfile/{tokenDelete}")
-    public String sendDeleteProfile(HttpSession session, @PathVariable(name = "tokenDelete") String tokenDelete, Model model) {
+    @GetMapping("/event/{token}")
+    public String sendDeleteProfile(HttpSession session,@PathVariable(name = "token") String token, Model model) {
+        EventDto eventByToken = eventService.getEventByToken(token);
         UserDto currentUser = profileService.getCurrentUser(session);
-        model.addAttribute("typeBackdrop", "Подтверждение удаления");
+        model.addAttribute("user", currentUser);
+        model.addAttribute("typeBackdrop", TypeEvent.valueOf(eventByToken.getTypeEvent()));
         return "profile/security-form";
     }
 
-    @PostMapping("/deleteProfile/{tokenDelete}")
-    public String sendDeleteProfile(HttpSession session, UserDto userDto, @PathVariable(name = "tokenDelete") String tokenDelete, Model model) {
-        UserDto currentUser = profileService.getCurrentUser(session);
+    @PostMapping("/event/{token}")
+    public String workByTokenRequest(UserDto userDto, @PathVariable(name = "token") String token, Model model) {
+        EventDto eventByToken = eventService.getEventByToken(token);
+        UserDto currentUser = profileService.findById(eventByToken.getUserId());
+        TypeEvent typeEvent = TypeEvent.valueOf(eventByToken.getTypeEvent());
+
         boolean successfulDelete = false;
-        if (currentUser.getPassword().equals(userDto.getPassword())){
-            securityService.deleteProfile(currentUser,tokenDelete);
+        if (typeEvent.equals(TypeEvent.RESET_EMAIL)) {
+            securityService.resetEmail(currentUser, userDto.getEmail());
             successfulDelete = true;
-        } else {
-            return  "redirect:/deleteProfile/"+tokenDelete;
+        } else if (typeEvent.equals(TypeEvent.RESET_PASSWORD)) {
+            securityService.resetPassword(currentUser, userDto.getPassword());
+            successfulDelete = true;
+        } else if (typeEvent.equals(TypeEvent.CONFIRM_ACCOUNT)) {
+            securityService.resetPassword(currentUser, userDto.getPassword());
+            successfulDelete = true;
+        } else if (typeEvent.equals(TypeEvent.DELETE_PROFILE) && currentUser.getPassword().equals(userDto.getPassword())) {
+            securityService.deleteProfile(currentUser);
+            successfulDelete = true;
         }
-
-        return "";
+        model.addAttribute("successfulDelete", successfulDelete);
+        return "redirect:"+pathSecurity + token;
     }
+
 }

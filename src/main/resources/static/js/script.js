@@ -1,9 +1,8 @@
-
 newPassword.onkeyup = confirmPassword.onkeyup = handlerNew;
 
 function handlerNew(e) {
 
-    if (newPassword.value == "" || confirmPassword.value ==""){
+    if (newPassword.value == "" || confirmPassword.value == "") {
         newPassword.classList.remove('is-valid');
         newPassword.classList.remove('is-invalid');
         confirmPassword.classList.remove('is-valid');
@@ -23,28 +22,56 @@ function handlerNew(e) {
     }
 };
 
-function showModal(typeModal) {
 
-    let staticBackdrop = new bootstrap.Modal(document.getElementById('staticBackdrop'), {
-        keyboard: false
-    });
+function showModal(typeBackdrop,URI) {
 
-    staticBackdrop.show();
 
-    let param = getParamByType(typeModal);
-    document.getElementById('staticBackdropLabel').innerText = param.label;
-    document.getElementById('staticBackdropText').innerText = param.text;
+    updateModal(typeBackdrop,URI);
+    $('#staticBackdrop').modal('show');
 
 }
-function getParamByType(typeModal) {
+
+function updateModal(typeBackdrop,URI) {
+
+    let param = getParamByType(typeBackdrop);
+    document.getElementById('staticBackdropLabel').innerText = param.label;
+    document.getElementById('staticBackdropText').innerText = param.text;
+    document.getElementById('modalPassword').hidden = param.hiddenPassword;
+    document.getElementById('modalEmail').hidden = param.hiddenEmail;
+    document.getElementById("formModal").action = URI+param.action;
+    document.getElementById("formModal").method = param.method;
+
+}
+
+function getParamByType(typeBackdrop) {
     let obj = {
         label: "",
-        text: ""
+        text: "",
+        hiddenPassword: true,
+        action: "",
+        method: "get",
+        hiddenEmail: true
     };
-    if (typeModal = "Удаление"){
+    if (typeBackdrop == "SEND_DELETE") {
         obj.label = "Удалить аккаунт";
         obj.text = "Вы подтверждаете удаление аккаунта? Вам на почту будет выслана ссылка на удаления аккаунта.";
-        return obj;
+        obj.action = "/deleteProfile";
+    } else if (typeBackdrop == "DELETE_PROFILE") {
+        obj.label = "Удалить аккаунт";
+        obj.text = "Для подтверждения удаления введите пароль.";
+        obj.hiddenPassword = false;
+        obj.method = "post";
+    } else if (typeBackdrop == "RESET_PASSWORD"){
+        obj.label = "Удалить аккаунт";
+        obj.text = "Введите новый пароль";
+        obj.hiddenPassword = false;
+        obj.method = "post";
+    } else if (typeBackdrop == "RESET_EMAIL"){
+        obj.label = "Удалить аккаунт";
+        obj.text = "Для подтверждения введите пароль и новую почту";
+        obj.hiddenPassword = false;
+        obj.hiddenEmail = false;
+        obj.method = "post";
     }
     return obj;
 

@@ -1,6 +1,7 @@
 package ru.gb.hubr.service.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.gb.hubr.api.mail.EmailContext;
 import ru.gb.hubr.api.mail.EmailService;
@@ -24,29 +25,20 @@ public class SecurityServiceSQL implements SecurityService {
     private final EmailService emailService;
     private final EventUserDao eventUserDao;
     private final AccountUserDao accountUserDao;
-
-    @Override
-    public void deleteProfile(UserDto userDto, String tokenDelete) {
-
-        Optional<AccountUser> accountUser = accountUserDao.findByLogin(userDto.getLogin());
-
-
-
-
-
-    }
+    @Value("${security-uri}")
+    private String securityPath;
 
     @Override
     public void createDeleteProfile(UserDto userDto) throws Exception {
 
         AccountUser accountUser = accountUserDao.findByLogin(userDto.getLogin()).orElseThrow();
 
-        EventUser eventDelete = createEventUser(TypeEvent.DELETE_PROFILE,accountUser);
+        EventUser eventDelete = createEventUser(TypeEvent.DELETE_PROFILE, accountUser);
         EventUser eventReset = eventUserDao.save(createEventUser(TypeEvent.RESET_PASSWORD, accountUser));
         EmailContext contextMessage = createContextMessage(TypeEvent.DELETE_PROFILE, accountUser);
         try {
-            contextMessage.addContext("ref_event", eventDelete.getGuidEvent());
-            contextMessage.addContext("ref_reset", eventReset.getGuidEvent());
+            contextMessage.addContext("ref_event", mailProperties.getBaseURL() +securityPath+ "/event/" + eventDelete.getGuidEvent());
+            contextMessage.addContext("ref_reset", mailProperties.getBaseURL() +securityPath+ "/event/" + eventReset.getGuidEvent());
             emailService.sendMail(contextMessage);
         } catch (Exception e) {
             eventUserDao.delete(eventDelete);
@@ -59,17 +51,31 @@ public class SecurityServiceSQL implements SecurityService {
     @Override
     public void resetPassword(UserDto userDto, String newPassword) {
 
+        AccountUser accountUser = accountUserDao.findByLogin(userDto.getLogin()).orElseThrow();
+        accountUser.setPassword(newPassword);
+        accountUserDao.save(accountUser);
+
     }
 
     @Override
     public void resetEmail(UserDto userDto, String newEmail) {
+        AccountUser accountUser = accountUserDao.findByLogin(userDto.getLogin()).orElseThrow();
+        accountUser.setEmail(newEmail);
+        accountUserDao.save(accountUser);
+    }
+
+    @Override
+    public void confirmAccount(UserDto userDto) {
 
     }
 
+    @Override
+    public void deleteProfile(UserDto userDto ) {
+        AccountUser accountUser = accountUserDao.findByLogin(userDto.getLogin()).orElseThrow();
+        accountUserDao.delete(accountUser);
+    }
 
     private EmailContext createContextMessage(TypeEvent typeEvent, AccountUser accountUser) {
-
-
         EmailContext emailContext = EmailContext.builder()
                 .from(mailProperties.getUsername())
                 .to(accountUser.getEmail())
@@ -88,7 +94,9 @@ public class SecurityServiceSQL implements SecurityService {
         EventUser eventUser = new EventUser();
         eventUser.setUserId(accountUser.getId());
         eventUser.setTypeEvent(typeEvent);
-        return  eventUserDao.save(eventUser);
+        return eventUserDao.save(eventUser);
     }
+
+
 
 }

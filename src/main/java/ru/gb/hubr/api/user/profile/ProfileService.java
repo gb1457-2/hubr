@@ -8,12 +8,11 @@ import java.util.List;
 public interface ProfileService {
      UserDto findByLogin(String login);
 
+     UserDto findById(Long idUser);
+
      UserDto save(final UserDto userDto);
 
      List<UserDto> findAll();
-
-
-
      UserDto getCurrentUser(HttpSession session);
 
 }

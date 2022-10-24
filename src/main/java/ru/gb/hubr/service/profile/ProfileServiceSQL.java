@@ -25,9 +25,16 @@ public class ProfileServiceSQL implements ProfileService {
 
         AccountUser accountUser = accountUserDao.findByLogin(login).orElse(new AccountUser());
         UserDto userDto = userMapper.toUserDto(accountUser);
-
         return userDto;
 
+    }
+
+    @Override
+    public UserDto findById(Long idUser) {
+        AccountUser accountUser = accountUserDao.findById(idUser).orElseThrow();
+        UserDto userDto = userMapper.toUserDto(accountUser);
+
+        return userDto;
     }
 
     @Override

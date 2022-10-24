@@ -35,7 +35,7 @@
                                 <td class="m_8529529372830849063header__logoSize_110px" align="left" valign="top"
                                     width="100%" style="padding:0;direction:ltr" dir="ltr">
                                     <a
-                                       target="_blank">
+                                            target="_blank">
                                         <img class="m_8529529372830849063header__logoSize_110px CToWUd"
                                              src="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-76.png"
                                              hspace="0" vspace="0" border="0"
@@ -68,19 +68,54 @@
                         bgcolor="#ffffff"
                         style="padding:0px 40px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:150%;color:#0a0a0a!important;direction:ltr"
                         dir="ltr">
-                        <div th:text="${type_event}"></div>
-                        <div th:value="${type_event}"></div>
-                        <div th:switch="${type_event}" >
-                        <p th:case="DELETE_PROFILE">Здравствуйте, <span th:text="${username}"></span>, Вам отправлена ссылка на удаление учетной
-                            записи.<a
-                                    style="color:#4262ff;text-decoration:none"
-                                    th:href="@{${ref_event}}" target="_blank"> Удалить аккаунт</a>. Ссылка активна 24 часа.
-                        </p>
+                        <div th:switch="${type_event}">
+                            <div th:case="${T(ru.gb.hubr.entity.TypeEvent).DELETE_PROFILE}">
+
+                                <p>
+                                    Здравствуйте, <span th:text="${username}"></span>, Вам отправлена ссылка на удаление
+                                    учетной записи.<a style="color:#4262ff;text-decoration:none"
+                                                      th:href="@{${ref_event}}"
+                                                      target="_blank"> Удалить аккаунт</a>. Ссылка активна 24 часа.
+                                </p>
+                                <p>Если вы не делали этого, прошу перейти по ссылки, <a
+                                        style="color:#4262ff;text-decoration:none"
+                                        th:href="@{${ref_reset}}" target="_blank">перейдите по
+                                    этой ссылке</a>, что бы сбросить пароль.
+                                </p>
+                            </div>
+
+                            <div th:case="${T(ru.gb.hubr.entity.TypeEvent).CONFIRM_ACCOUNT}">
+                                <p>Здравствуйте, <span
+                                        th:text="${username}"></span>, Вам отправлена ссылка на подтверждение учетной
+                                    записи.<a
+                                            style="color:#4262ff;text-decoration:none"
+                                            th:href="@{${ref_event}}" target="_blank"> Подтвердить аккаунт</a>. Ссылка
+                                    активна
+                                    24 часа.
+                                </p>
+                            </div>
+
+                            <div th:case="${T(ru.gb.hubr.entity.TypeEvent).RESET_EMAIL}">
+                                <p>Здравствуйте, <span
+                                        th:text="${username}"></span>, Вам отправлена ссылка на смену электронной почты.<a
+                                        style="color:#4262ff;text-decoration:none"
+                                        th:href="@{${ref_event}}" target="_blank"> Сменить почту</a>. Ссылка
+                                    активна
+                                    24 часа. Если вы не делали этого прошу проигнорировать это письмо.
+                                </p>
+                            </div>
+
+                            <div th:case="${T(ru.gb.hubr.entity.TypeEvent).RESET_PASSWORD}">
+                                <p>Здравствуйте, <span th:text="${username}"></span>, На вашей учетной записи был
+                                    изменен пароль.</p>
+                                <p>Если вы не меняли пароль, <a style="color:#4262ff;text-decoration:none"
+                                                               th:href="@{${ref_reset}}" target="_blank">перейдите по
+                                    этой ссылке</a>, чтобы сбросить пароль.
+                                </p>
+                            </div>
+
                         </div>
-                        <p>Если вы не меняли
-                            пароль, <a style="color:#4262ff;text-decoration:none"
-                                       th:href="@{${ref_reset}}" target="_blank">перейдите по
-                                этой ссылке</a>, чтобы сбросить новый.</p>
+
                     </td>
                 </tr>
 
