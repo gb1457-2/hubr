@@ -18,9 +18,10 @@
 </head>
 <body>
 
-<div th:if="${#request.getAttribute('typeBackdrop')!= null}">
-    <body  th:onload="showModal([[${typeBackdrop}]])"></body>
+<div th:if="${#request.getAttribute('typeBackdrop')!= null}" >
+    <body th:onload="showModal([[${typeBackdrop}]],[[${#httpServletRequest.requestURI}]])"></body>
 </div>
+
 
 
 <div th:insert="~{common/navbar ::navbar }"></div>
@@ -80,30 +81,14 @@
                             <form th:action="@{/profile/security}" th:object="${user}" method='post'>
                                 <input type="hidden" th:field="*{login}">
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="currentEmail">Текущий e-mail</label>
-                                    <input class="form-control" readonly id="currentEmail"
-                                           data-bv-identical-field="currentEmail"
-                                           type="text"
-                                           th:field="*{email}">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="small mb-1" for="newEmail">Новый e-mail</label>
-                                    <input class="form-control" id="newEmail" th:field="*{newEmail}"
-                                           data-bv-identical-field="confirmPassword" type="email"
-                                           placeholder="Введите новую почту">
-                                    <div id="validationServerUsernameFeedback" class="invalid-feedback ">
-                                        Пожалуйста введите электронную почту
-                                    </div>
-                                </div>
-                                <div class="mb-3">
                                     <label class="small mb-1" for="currentPassword">Пароль для подтверждения</label>
                                     <input class="form-control" id="currentPassword"
                                            data-bv-identical-field="currentPassword"
                                            type="password"
-                                           placeholder="Подтвердите пароль пароль" th:field="*{password}">
+                                           placeholder="Подтвердите пароль" th:field="*{password}">
                                 </div>
-                                <button class="btn btn-primary" id="resetButtonPass" ontype="button">
-                                    Сохранить
+                                <button class="btn btn-primary" id="resetButtoMail" ontype="button">
+                                    Отправить ссылку для изменения
                                 </button>
                             </form>
                         </div>
@@ -119,7 +104,7 @@
                                 Если
                                 вы уверены, что хотите удалить свою учетную запись, нажмите кнопку ниже.</p>
                             <button class="btn btn-danger-soft text-danger" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop" onclick="updateModal('SEND_DELETE')"
+                                    data-bs-target="#staticBackdrop" th:onclick="updateModal('SEND_DELETE',[[${baseUri}]])"
                                     type="button">Я понимаю, удалите мой аккаунт
                             </button>
                         </div>
@@ -133,7 +118,7 @@
 
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <form th:action="@{/profile/security/deleteProfile}"  id="formModal" th:object="${user}" method="get">
+    <form th:action="@{/profile/security/deleteProfile}" id="formModal" th:object="${user}" method="get">
         <input type="hidden" th:field="*{login}">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -141,18 +126,19 @@
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">Удалить аккаунт</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" >
-                    <p id="staticBackdropText">Вы подтверждаете удаление аккаунта? Вам на почту будет выслана ссылка на удаления аккаунта.</p>
+                <div class="modal-body">
+                    <p id="staticBackdropText">Вы подтверждаете удаление аккаунта? Вам на почту будет выслана ссылка на
+                        удаления аккаунта.</p>
                     <div class="mb-3" id="modalPassword">
-                        <label class="small mb-1" for="currentPassword">Текущий пароль</label>
-                        <input class="form-control" id="currentPassword" th:field="*{password}"
-                               type="password"
+                        <label class="small mb-1" for="currentPasswordModel">Текущий пароль</label>
+                        <input class="form-control" id="currentPasswordModel"
+                               type="password" th:field="*{password}"
                                placeholder="Введите текущий пароль">
                     </div>
                     <div class="mb-3" id="modalEmail">
                         <label class="small mb-1" for="newEmailModal">E-mail</label>
                         <input class="form-control" id="newEmailModal"
-                               th:field="*{email}" type="email"
+                               type="email"
                                placeholder="Введите новую почту">
                     </div>
                 </div>
@@ -162,14 +148,12 @@
                     <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">
                         Отменить
                     </button>
-                    <button type="button" class="btn btn-primary">Принять</button>
+                    <button type="submit" class="btn btn-primary">Принять</button>
                 </div>
             </div>
-
         </div>
     </form>
 </div>
-
 
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>

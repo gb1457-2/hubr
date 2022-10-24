@@ -28,6 +28,7 @@ public class ProfileServiceDefault implements ProfileService {
             .lastname("dfsdf")
             .phone("dfsdfsdf")
             .login("system")
+            .password("password")
             .build();
 
     @Transactional(readOnly = true)

@@ -37,8 +37,8 @@ public class SecurityServiceSQL implements SecurityService {
         EventUser eventReset = eventUserDao.save(createEventUser(TypeEvent.RESET_PASSWORD, accountUser));
         EmailContext contextMessage = createContextMessage(TypeEvent.DELETE_PROFILE, accountUser);
         try {
-            contextMessage.addContext("ref_event", mailProperties.getBaseURL() +securityPath+ "/" + eventDelete.getGuidEvent());
-            contextMessage.addContext("ref_reset", mailProperties.getBaseURL() +securityPath+ "/" + eventReset.getGuidEvent());
+            contextMessage.addContext("ref_event", mailProperties.getBaseURL() +securityPath+ "/event/" + eventDelete.getGuidEvent());
+            contextMessage.addContext("ref_reset", mailProperties.getBaseURL() +securityPath+ "/event/" + eventReset.getGuidEvent());
             emailService.sendMail(contextMessage);
         } catch (Exception e) {
             eventUserDao.delete(eventDelete);

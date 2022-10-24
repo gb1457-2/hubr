@@ -15,6 +15,7 @@ import ru.gb.hubr.api.user.profile.ProfileService;
 import ru.gb.hubr.api.user.security.SecurityService;
 import ru.gb.hubr.entity.TypeEvent;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -29,28 +30,41 @@ public class SecurityController {
     private String pathSecurity;
 
 
+    @ModelAttribute("baseUri")
+    public String getInitializeMyObject() {
+        return pathSecurity;
+    }
+
     @GetMapping("")
     public String profilePage(Model model, HttpSession session) {
         model.addAttribute("user", profileService.getCurrentUser(session));
         return "profile/security-form";
     }
 
-    @PostMapping("")
+
+    @PostMapping("/updatePassword")
     @ResponseStatus(HttpStatus.OK)
-    public String updateSecurity(ProfileUserDto profileUserDto) {
+    public String updatePassword(ProfileUserDto profileUserDto) {
+        return "redirect:"+pathSecurity;
+    }
+
+    @PostMapping("/updateEmail")
+    @ResponseStatus(HttpStatus.OK)
+    public String updateEmail(ProfileUserDto profileUserDto) {
         return "redirect:"+pathSecurity;
     }
 
 
     @GetMapping("/deleteProfile")
-    public String sendDeleteProfile(HttpSession session, Model model) throws Exception {
+    public String sendDeleteProfile(HttpServletRequest request, HttpSession session, Model model) throws Exception {
         UserDto currentUser = profileService.getCurrentUser(session);
         securityService.createDeleteProfile( currentUser);
         model.addAttribute("user", currentUser);
+
         return "profile/security-form";
     }
 
-    @GetMapping("/{token}")
+    @GetMapping("/event/{token}")
     public String sendDeleteProfile(HttpSession session,@PathVariable(name = "token") String token, Model model) {
         EventDto eventByToken = eventService.getEventByToken(token);
         UserDto currentUser = profileService.getCurrentUser(session);
@@ -59,7 +73,7 @@ public class SecurityController {
         return "profile/security-form";
     }
 
-    @PostMapping("/{token}")
+    @PostMapping("/event/{token}")
     public String workByTokenRequest(UserDto userDto, @PathVariable(name = "token") String token, Model model) {
         EventDto eventByToken = eventService.getEventByToken(token);
         UserDto currentUser = profileService.findById(eventByToken.getUserId());
