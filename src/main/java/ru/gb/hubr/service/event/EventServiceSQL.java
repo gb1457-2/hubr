@@ -11,7 +11,9 @@ import ru.gb.hubr.entity.AccountUser;
 import ru.gb.hubr.entity.EventUser;
 import ru.gb.hubr.service.mapper.EventMapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,14 +30,18 @@ public class EventServiceSQL implements EventService {
 
         List<EventUser> listEvent = eventUserDao.findByUserId(accountUser.getId());
         return listEvent.stream()
+                .filter(eventUser -> eventUser.getDeletedAt().isAfter(LocalDateTime.now()))
                 .map(eventMapper::toEventDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public EventDto getEventByToken(String token) {
-        return eventMapper.
-                toEventDto(eventUserDao.findByGuidEvent(java.util.UUID.fromString(token)));
+        EventUser byGuidEvent = eventUserDao.findByGuidEvent(UUID.fromString(token));
+        if (byGuidEvent.getDeletedAt().isBefore(LocalDateTime.now())) {
+            throw new NullPointerException();
+        }
+        return eventMapper.toEventDto(byGuidEvent);
     }
 
     @Override

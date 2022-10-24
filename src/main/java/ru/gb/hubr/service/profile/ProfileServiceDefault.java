@@ -6,12 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gb.hubr.api.user.UserDto;
 import ru.gb.hubr.api.user.profile.ProfileService;
-import ru.gb.hubr.api.user.profile.ProfileUserDto;
+import ru.gb.hubr.api.user.ProfileUserDto;
 import ru.gb.hubr.dao.AccountUserDao;
-import ru.gb.hubr.dao.EventUserDao;
 import ru.gb.hubr.service.mapper.UserMapper;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,6 +35,11 @@ public class ProfileServiceDefault implements ProfileService {
 
         return profileUserDto;
 
+    }
+
+    @Override
+    public UserDto findById(Long idUser) {
+        return profileUserDto;
     }
 
     @Override

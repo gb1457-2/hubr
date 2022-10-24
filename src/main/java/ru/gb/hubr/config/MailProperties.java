@@ -10,23 +10,25 @@ import org.springframework.context.annotation.PropertySource;
 @Setter
 @Getter
 @Configuration
-@PropertySource("classpath:mail-property.properties")
 @RequiredArgsConstructor
 public class MailProperties {
 
-    @Value("${host}")
+    @Value("${mail-service.host}")
     private String host;
-    @Value("${port}")
+    @Value("${mail-service.port}")
     private int port;
-    @Value("${login-mail}")
+    @Value("${mail-service.login-mail}")
     private String username;
-    @Value("${password-mail}")
+    @Value("${mail-service.password-mail}")
     private String password;
 
-    @Value("${path-template}")
+    @Value("${mail-service.path-template}")
     private String pathTemplate;
 
-    @Value("${display-from}")
+    @Value("${mail-service.display-from}")
     private String displayFrom;
+
+    @Value("${mail-service.base-url}")
+    private String baseURL;
 
 }

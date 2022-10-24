@@ -4,7 +4,7 @@ import ru.gb.hubr.api.user.UserDto;
 
 public interface SecurityService {
 
-    void deleteProfile(final UserDto userDto,String tokenDelete);
+    void deleteProfile(final UserDto userDto);
 
     void createDeleteProfile(final UserDto userDto) throws Exception;
 
@@ -12,4 +12,5 @@ public interface SecurityService {
 
     void resetEmail(final UserDto userDto,String newEmail);
 
+    void confirmAccount(final UserDto userDto);
 }

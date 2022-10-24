@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import ru.gb.hubr.api.user.UserDto;
 import ru.gb.hubr.api.user.profile.ProfileService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -22,7 +23,7 @@ public class ProfileController {
     private final ProfileService profileService;
 
     @GetMapping("")
-    public String profilePage(HttpSession session,Model model) {
+    public String profilePage(HttpSession session, Model model) {
         model.addAttribute("user", profileService.getCurrentUser(session));
         return "profile/profile-form";
     }
@@ -42,6 +43,9 @@ public class ProfileController {
         System.out.println(userDto.getEmail());
         return "redirect:/profile";
     }
+
+
+
 
 
 }

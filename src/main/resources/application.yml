@@ -9,3 +9,12 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
     hibernate.ddl-auto: validate
+security-uri: /profile/security
+mail-service:
+  host: smtp.gmail.com
+  port: 465
+  login-mail: gbtestcase.mail@gmail.com
+  password-mail: lmcdepergjcmbxwb
+  path-template: mail/template-mail
+  display-from: hubr-gb
+  base-url: http://localhost:8080

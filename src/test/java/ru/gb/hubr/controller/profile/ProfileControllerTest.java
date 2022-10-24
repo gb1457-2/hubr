@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import ru.gb.hubr.AbstractTest;
 import ru.gb.hubr.api.user.profile.ProfileService;
-import ru.gb.hubr.api.user.profile.ProfileUserDto;
+import ru.gb.hubr.api.user.ProfileUserDto;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.anyString;

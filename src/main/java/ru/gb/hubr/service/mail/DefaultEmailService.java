@@ -20,7 +20,6 @@ import java.nio.charset.StandardCharsets;
 
 @Service
 @RequiredArgsConstructor
-@PropertySource("classpath:mail-property.properties")
 public class DefaultEmailService implements EmailService {
 
 
