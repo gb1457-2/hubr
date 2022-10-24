@@ -9,6 +9,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
     hibernate.ddl-auto: validate
+profile-uri: /profile
 security-uri: /profile/security
 mail-service:
   host: smtp.gmail.com
