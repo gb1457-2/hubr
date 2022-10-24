@@ -27,7 +27,7 @@ function showModal(typeBackdrop) {
 
 
     updateModal(typeBackdrop);
-   // $('#staticBackdrop').modal('show');
+    $('#staticBackdrop').modal('show');
 
 }
 
@@ -36,8 +36,8 @@ function updateModal(typeBackdrop) {
     let param = getParamByType(typeBackdrop);
     document.getElementById('staticBackdropLabel').innerText = param.label;
     document.getElementById('staticBackdropText').innerText = param.text;
-    document.getElementById('modalPassword').style.display = 'none';
-    document.getElementById('modalEmail').style.display = 'none';
+    document.getElementById('modalPassword').hidden = param.hiddenPassword;
+    document.getElementById('modalEmail').hidden = param.hiddenEmail;
     document.getElementById("formModal").action = param.action;
     document.getElementById("formModal").method = param.method;
 

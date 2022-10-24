@@ -19,9 +19,9 @@ class EventUserDaoTest {
     public void saveTest() {
 
         EventUser save = eventUserDao.save(EventUser.builder().lifetimeSeconds(3600).build());
-        UUID guid_event = save.getGuid_event();
+        UUID guid_event = save.getGuidEvent();
         save = eventUserDao.save(save);
         assertEquals(save.getDeletedAt(),save.getCreatedAt().plusSeconds(save.getLifetimeSeconds()));
-        assertEquals(guid_event,save.getGuid_event());
+        assertEquals(guid_event,save.getGuidEvent());
     }
 }
