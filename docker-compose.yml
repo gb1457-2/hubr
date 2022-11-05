@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  postgresql:
+    image: postgres
+    container_name: postgresql_container
+    environment:
+      POSTGRES_USER: geek
+      POSTGRES_PASSWORD: geek
+      POSTGRES_DB: hubr
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    ports:
+      - "5050:80"
+volumes:
+  postgres_data:
+    driver: local

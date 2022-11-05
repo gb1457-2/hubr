@@ -1,6 +1,9 @@
 package ru.gb.hubr.service.profile;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gb.hubr.api.user.UserDto;
@@ -15,15 +18,23 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ProfileServiceSQL implements ProfileService {
+public class ProfileServiceSQL implements ProfileService, UserDetailsService {
 
     private final AccountUserDao accountUserDao;
     private final UserMapper userMapper;
 
+    @Override
+    @Transactional(readOnly = true)
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return accountUserDao.findByUsername(username).orElseThrow(
+                () -> new UsernameNotFoundException("Username: " + username + " not found")
+        );
+    }
+
     @Transactional(readOnly = true)
     public UserDto findByLogin(String login) {
 
-        AccountUser accountUser = accountUserDao.findByLogin(login).orElse(new AccountUser());
+        AccountUser accountUser = accountUserDao.findByUsername(login).orElse(new AccountUser());
         UserDto userDto = userMapper.toUserDto(accountUser);
         return userDto;
 
@@ -43,8 +54,8 @@ public class ProfileServiceSQL implements ProfileService {
 
         AccountUser accountUser = userMapper.toAccountUser(userDto);
 
-        if (accountUser.getLogin() != null) {
-            accountUserDao.findByLogin(accountUser.getLogin())
+        if (accountUser.getUsername() != null) {
+            accountUserDao.findByUsername(accountUser.getUsername())
                     .ifPresent((p) -> accountUser.setVersion(p.getVersion()));
         }
         return userMapper.toUserDto(accountUserDao.save(accountUser));

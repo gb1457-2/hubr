@@ -27,7 +27,7 @@ public class ProfileServiceDefault implements ProfileService {
             .firstname("dfsdf")
             .lastname("dfsdf")
             .phone("dfsdfsdf")
-            .login("system")
+            .username("system")
             .password("password")
             .build();
 
