@@ -14,8 +14,6 @@ import ru.gb.hubr.entity.AccountUser;
 import ru.gb.hubr.entity.EventUser;
 import ru.gb.hubr.entity.TypeEvent;
 
-import java.util.Optional;
-
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +29,7 @@ public class SecurityServiceSQL implements SecurityService {
     @Override
     public void createDeleteProfile(UserDto userDto) throws Exception {
 
-        AccountUser accountUser = accountUserDao.findByLogin(userDto.getLogin()).orElseThrow();
+        AccountUser accountUser = accountUserDao.findByUsername(userDto.getUsername()).orElseThrow();
 
         EventUser eventDelete = createEventUser(TypeEvent.DELETE_PROFILE, accountUser);
         EventUser eventReset = eventUserDao.save(createEventUser(TypeEvent.RESET_PASSWORD, accountUser));
@@ -51,7 +49,7 @@ public class SecurityServiceSQL implements SecurityService {
     @Override
     public void resetPassword(UserDto userDto, String newPassword) {
 
-        AccountUser accountUser = accountUserDao.findByLogin(userDto.getLogin()).orElseThrow();
+        AccountUser accountUser = accountUserDao.findByUsername(userDto.getUsername()).orElseThrow();
         accountUser.setPassword(newPassword);
         accountUserDao.save(accountUser);
 
@@ -59,7 +57,7 @@ public class SecurityServiceSQL implements SecurityService {
 
     @Override
     public void resetEmail(UserDto userDto, String newEmail) {
-        AccountUser accountUser = accountUserDao.findByLogin(userDto.getLogin()).orElseThrow();
+        AccountUser accountUser = accountUserDao.findByUsername(userDto.getUsername()).orElseThrow();
         accountUser.setEmail(newEmail);
         accountUserDao.save(accountUser);
     }
@@ -71,7 +69,7 @@ public class SecurityServiceSQL implements SecurityService {
 
     @Override
     public void deleteProfile(UserDto userDto ) {
-        AccountUser accountUser = accountUserDao.findByLogin(userDto.getLogin()).orElseThrow();
+        AccountUser accountUser = accountUserDao.findByUsername(userDto.getUsername()).orElseThrow();
         accountUserDao.delete(accountUser);
     }
 

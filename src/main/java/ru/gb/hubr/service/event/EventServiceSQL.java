@@ -26,7 +26,7 @@ public class EventServiceSQL implements EventService {
 
     @Override
     public List<EventDto> getEventUser(UserDto userDto) {
-        AccountUser accountUser = accountUserDao.findByLogin(userDto.getLogin()).orElseThrow();
+        AccountUser accountUser = accountUserDao.findByUsername(userDto.getUsername()).orElseThrow();
 
         List<EventUser> listEvent = eventUserDao.findByUserId(accountUser.getId());
         return listEvent.stream()

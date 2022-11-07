@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.7.xsd">
+
+    <changeSet id="before_insert_roles_and_authorities" author="Pavel Zhilin">
+        <tagDatabase tag="before_insert_roles_and_authorities"/>
+    </changeSet>
+
+    <changeSet id="insert_roles" author="Pavel Zhilin">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="account_role"/>
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(*) FROM account_role WHERE id IN (1, 2);
+            </sqlCheck>
+        </preConditions>
+        <insert tableName="account_role">
+            <column name="id" value="1"/>
+            <column name="name" value="ROLE_ADMIN"/>
+        </insert>
+        <insert tableName="account_role">
+            <column name="id" value="2"/>
+            <column name="name" value="ROLE_USER"/>
+        </insert>
+        <rollback>
+            DELETE FROM account_role WHERE id IN (1, 2);
+        </rollback>
+    </changeSet>
+
+    <changeSet id="insert_authorities" author="Pavel Zhilin">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="authority"/>
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(*) FROM authority WHERE id IN (1, 2, 3, 4);
+            </sqlCheck>
+        </preConditions>
+        <insert tableName="authority">
+            <column name="id" value="1"/>
+            <column name="permission" value="article.write"/>
+        </insert>
+        <insert tableName="authority">
+            <column name="id" value="2"/>
+            <column name="permission" value="account.read"/>
+        </insert>
+        <insert tableName="authority">
+            <column name="id" value="3"/>
+            <column name="permission" value="account.write"/>
+        </insert>
+        <insert tableName="authority">
+            <column name="id" value="4"/>
+            <column name="permission" value="security.write"/>
+        </insert>
+        <rollback>
+            DELETE FROM authority WHERE id IN (1, 2, 3, 4);
+        </rollback>
+    </changeSet>
+
+    <changeSet id="insert_user_roles" author="Pavel Zhilin">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="user_role"/>
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(*) FROM user_role WHERE user_id IN (1);
+            </sqlCheck>
+        </preConditions>
+        <insert tableName="user_role">
+            <column name="user_id" value="999"/>
+            <column name="role_id" value="1"/>
+        </insert>
+        <rollback>
+            DELETE FROM user_role WHERE user_id IN (1);
+        </rollback>
+    </changeSet>
+
+    <changeSet id="insert_role_authorities" author="Pavel Zhilin">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="role_authority"/>
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(*) FROM role_authority WHERE role_id IN (1, 2);
+            </sqlCheck>
+        </preConditions>
+        <insert tableName="role_authority">
+            <column name="role_id" value="1"/>
+            <column name="authority_id" value="1"/>
+        </insert>
+        <insert tableName="role_authority">
+            <column name="role_id" value="1"/>
+            <column name="authority_id" value="2"/>
+        </insert>
+        <insert tableName="role_authority">
+            <column name="role_id" value="1"/>
+            <column name="authority_id" value="3"/>
+        </insert>
+        <insert tableName="role_authority">
+            <column name="role_id" value="1"/>
+            <column name="authority_id" value="4"/>
+        </insert>
+        <insert tableName="role_authority">
+            <column name="role_id" value="2"/>
+            <column name="authority_id" value="1"/>
+        </insert>
+        <insert tableName="role_authority">
+            <column name="role_id" value="2"/>
+            <column name="authority_id" value="2"/>
+        </insert>
+        <insert tableName="role_authority">
+            <column name="role_id" value="2"/>
+            <column name="authority_id" value="3"/>
+        </insert>
+        <rollback>
+            DELETE FROM role_authority WHERE role_id IN (1, 2);
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

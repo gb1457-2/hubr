@@ -32,7 +32,7 @@ class SecurityControllerTest extends AbstractTest {
                 .lastname("dfsdf")
                 .password("dfsdf")
                 .phone("dfsdfsdf")
-                .login("username")
+                .username("username")
                 .build();
         given(profileService.findByLogin(anyString())).willReturn(profileUserDto);
     }
@@ -46,7 +46,7 @@ class SecurityControllerTest extends AbstractTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("id")))
                 .andExpect(model().attribute("user",
-                        hasProperty("login",is(profileUserDto.getLogin()))
+                        hasProperty("login",is(profileUserDto.getUsername()))
                     )
                 )
                 .andExpect(view().name("profile/security-form"));
@@ -73,7 +73,7 @@ class SecurityControllerTest extends AbstractTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("showDeleteMessage",true))
                 .andExpect(model().attribute("user",
-                        hasProperty("login",is(profileUserDto.getLogin()))
+                        hasProperty("login",is(profileUserDto.getUsername()))
                         )
                 )
                 .andExpect(view().name("profile/security-form"));

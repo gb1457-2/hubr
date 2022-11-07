@@ -20,7 +20,7 @@ public class UserDto {
     private Long id;
     @NotBlank
     @Size(min = 3, message = "login length must be greater than 2 symbols")
-    private String login;
+    private String username;
     @NotNull(message = "is required")
     @Size(min = 8, message = "required 8 symbols")
     private String password;
