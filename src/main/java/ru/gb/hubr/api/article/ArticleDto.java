@@ -1,11 +1,11 @@
 package ru.gb.hubr.api.article;
 
-import lombok.*;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import ru.gb.hubr.entity.AccountUser;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.EntityListeners;
 import javax.validation.constraints.NotBlank;
 
 @Getter
@@ -26,13 +26,10 @@ public class ArticleDto {
     @NotBlank
     private String content;
 
-    public String getPreview(){
-
-        String[] strings = content.split("</p>");
-
-        String preview = strings[0] + strings[1];
-
-        return preview;
+    public String getPreview() {
+        int maxPreviewLength = 100;
+        int endContentIndex = Math.min(content.length(), maxPreviewLength);
+        return content.substring(0, endContentIndex).concat("...");
     }
 
 }
