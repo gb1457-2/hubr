@@ -2,7 +2,10 @@ package ru.gb.hubr.api.user;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Email;
@@ -28,9 +31,9 @@ public class UserDto {
     @Size(min = 8, message = "required 8 symbols")
     private String matchingPassword;
     @NotBlank(message = "is required")
-    private String firstname;
+    private String firstName;
     @NotBlank(message = "is required")
-    private String lastname;
+    private String lastName;
     @Email
     @NotBlank(message = "is required")
     private String email;

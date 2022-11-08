@@ -18,7 +18,4 @@ public class AbstractTest {
 
     @Autowired
     protected ObjectMapper objectMapper;
-
-
-
 }

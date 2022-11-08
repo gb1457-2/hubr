@@ -6,7 +6,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import ru.gb.hubr.api.event.EventDto;
 import ru.gb.hubr.api.event.EventService;
 import ru.gb.hubr.api.user.ProfileUserDto;
@@ -35,7 +40,7 @@ public class SecurityController {
         return pathSecurity;
     }
 
-    @GetMapping("")
+    @GetMapping
     public String profilePage(Model model, HttpSession session) {
         model.addAttribute("user", profileService.getCurrentUser(session));
         return "profile/security-form";
@@ -45,27 +50,27 @@ public class SecurityController {
     @PostMapping("/updatePassword")
     @ResponseStatus(HttpStatus.OK)
     public String updatePassword(ProfileUserDto profileUserDto) {
-        return "redirect:"+pathSecurity;
+        return "redirect:" + pathSecurity;
     }
 
     @PostMapping("/updateEmail")
     @ResponseStatus(HttpStatus.OK)
     public String updateEmail(ProfileUserDto profileUserDto) {
-        return "redirect:"+pathSecurity;
+        return "redirect:" + pathSecurity;
     }
 
 
     @GetMapping("/deleteProfile")
     public String sendDeleteProfile(HttpServletRequest request, HttpSession session, Model model) throws Exception {
         UserDto currentUser = profileService.getCurrentUser(session);
-        securityService.createDeleteProfile( currentUser);
+        securityService.createDeleteProfile(currentUser);
         model.addAttribute("user", currentUser);
 
         return "profile/security-form";
     }
 
     @GetMapping("/event/{token}")
-    public String sendDeleteProfile(HttpSession session,@PathVariable(name = "token") String token, Model model) {
+    public String sendDeleteProfile(HttpSession session, @PathVariable(name = "token") String token, Model model) {
         EventDto eventByToken = eventService.getEventByToken(token);
         UserDto currentUser = profileService.getCurrentUser(session);
         model.addAttribute("user", currentUser);
@@ -94,7 +99,7 @@ public class SecurityController {
             successfulDelete = true;
         }
         model.addAttribute("successfulDelete", successfulDelete);
-        return "redirect:"+pathSecurity + token;
+        return "redirect:" + pathSecurity + token;
     }
 
 }
