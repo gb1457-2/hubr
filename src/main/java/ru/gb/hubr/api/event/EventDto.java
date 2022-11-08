@@ -28,7 +28,7 @@ import java.util.UUID;
 public class EventDto {
 
     @NotBlank
-    private UUID guid_event;
+    private UUID guidEvent;
 
     @NotBlank
     private Long userId;

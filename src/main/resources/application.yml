@@ -15,7 +15,7 @@ mail-service:
   host: smtp.gmail.com
   port: 465
   login-mail: gbtestcase.mail@gmail.com
-  password-mail: lmcdepergjcmbxwb
+  password-mail: xchdibbwnhucijpe
   path-template: mail/template-mail
   display-from: hubr-gb
   base-url: http://localhost:8080

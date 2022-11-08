@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import ru.gb.hubr.AbstractTest;
+import ru.gb.hubr.api.mail.EmailContext;
+import ru.gb.hubr.api.mail.EmailService;
 import ru.gb.hubr.api.user.profile.ProfileService;
 import ru.gb.hubr.api.user.ProfileUserDto;
 
@@ -23,6 +25,9 @@ class ProfileControllerTest extends AbstractTest {
     @Autowired
     ProfileService profileService;
 
+    @Autowired
+    EmailService emailService;
+
     @BeforeEach
     void setUp() {
         profileUserDto = ProfileUserDto.builder()
@@ -34,7 +39,10 @@ class ProfileControllerTest extends AbstractTest {
                 .login("username")
                 .build();
         given(profileService.findByLogin(anyString())).willReturn(profileUserDto);
+
     }
+
+
 
     @Test
     @Order(1)

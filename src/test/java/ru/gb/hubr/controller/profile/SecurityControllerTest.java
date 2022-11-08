@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import ru.gb.hubr.AbstractTest;
 import ru.gb.hubr.api.user.profile.ProfileService;
@@ -24,6 +25,9 @@ class SecurityControllerTest extends AbstractTest {
     @Mock
     ProfileService profileService;
 
+    @Value("${security-uri}")
+    private String pathSecurity;
+
     @BeforeEach
     void setUp() {
         profileUserDto = ProfileUserDto.builder()
@@ -42,7 +46,7 @@ class SecurityControllerTest extends AbstractTest {
     @Order(1)
     void testGetProfilePage() throws Exception {
 
-        mockMvc.perform(get("/profile/security"))
+        mockMvc.perform(get(pathSecurity))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("id")))
                 .andExpect(model().attribute("user",
@@ -57,7 +61,7 @@ class SecurityControllerTest extends AbstractTest {
     @Order(2)
     void testSaveSecurityPage() throws Exception {
 
-        mockMvc.perform(post("/profile/security")
+        mockMvc.perform(post(pathSecurity+"/updatePassword")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(profileUserDto)))
                 .andExpect(status().isOk())
@@ -69,7 +73,7 @@ class SecurityControllerTest extends AbstractTest {
     @Order(2)
     void testDeleteProfile() throws Exception {
 
-        mockMvc.perform(get("/profile/security/deleteProfile"))
+        mockMvc.perform(get(pathSecurity+"/deleteProfile"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("showDeleteMessage",true))
                 .andExpect(model().attribute("user",
