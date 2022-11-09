@@ -17,12 +17,12 @@ public interface ArticleMapper {
     ArticleDto toArticleDto(Article article);
 
     default AccountUser getAuthor(String author, @Context AccountUserDao accountUserDao) {
-        return accountUserDao.findByLogin("system").orElseThrow(
+        return accountUserDao.findByUsername("system").orElseThrow(
                 () -> new NoSuchElementException("There isn't author with name " + author));
     }
 
     default String getAuthor(AccountUser author) {
-        return author.getLogin();
+        return author.getUsername();
     }
 
 

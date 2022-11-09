@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import ru.gb.hubr.AbstractTest;
-import ru.gb.hubr.api.mail.EmailContext;
-import ru.gb.hubr.api.mail.EmailService;
 import ru.gb.hubr.api.user.profile.ProfileService;
 import ru.gb.hubr.api.user.ProfileUserDto;
 
@@ -25,24 +23,18 @@ class ProfileControllerTest extends AbstractTest {
     @Autowired
     ProfileService profileService;
 
-    @Autowired
-    EmailService emailService;
-
     @BeforeEach
     void setUp() {
         profileUserDto = ProfileUserDto.builder()
                 .email("vffsdf")
-                .firstname("dfsdf")
-                .lastname("dfsdf")
+                .firstName("dfsdf")
+                .lastName("dfsdf")
                 .password("dfsdf")
                 .phone("dfsdfsdf")
-                .login("username")
+                .username("username")
                 .build();
         given(profileService.findByLogin(anyString())).willReturn(profileUserDto);
-
     }
-
-
 
     @Test
     @Order(1)
@@ -51,9 +43,7 @@ class ProfileControllerTest extends AbstractTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("id")))
                 .andExpect(model().attribute("user",
-                        hasProperty("login", is(profileUserDto.getLogin()))
-                        )
-                )
+                        hasProperty("username", is(profileUserDto.getUsername()))))
                 .andExpect(view().name("profile/profile-form"));
     }
 
@@ -61,15 +51,12 @@ class ProfileControllerTest extends AbstractTest {
     @Test
     @Order(2)
     void testGetEditPage() throws Exception {
-
         mockMvc.perform(get("/profile/edit"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("id")))
                 .andExpect(model().attribute("isEdit", true))
                 .andExpect(model().attribute("user",
-                        hasProperty("login", is(profileUserDto.getLogin()))
-                        )
-                )
+                        hasProperty("username", is(profileUserDto.getUsername()))))
                 .andExpect(view().name("profile/profile-form"));
 
     }
@@ -78,8 +65,8 @@ class ProfileControllerTest extends AbstractTest {
     @Order(3)
     void testSaveProfile() throws Exception {
         mockMvc.perform(post("/profile")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(profileUserDto)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(profileUserDto)))
                 .andExpect(status().isOk())
                 .andExpect(view().name("redirect:/profile"));
 

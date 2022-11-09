@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.gb.hubr.api.user.ProfileUserDto;
 import ru.gb.hubr.api.user.UserDto;
 import ru.gb.hubr.api.user.profile.ProfileService;
-import ru.gb.hubr.api.user.ProfileUserDto;
 import ru.gb.hubr.dao.AccountUserDao;
 import ru.gb.hubr.service.mapper.UserMapper;
 
@@ -24,10 +24,10 @@ public class ProfileServiceDefault implements ProfileService {
 
     ProfileUserDto profileUserDto = ProfileUserDto.builder()
             .email("vffsdf")
-            .firstname("dfsdf")
-            .lastname("dfsdf")
+            .firstName("dfsdf")
+            .lastName("dfsdf")
             .phone("dfsdfsdf")
-            .login("system")
+            .username("system")
             .password("password")
             .build();
 
