@@ -30,8 +30,29 @@
                 <li class="nav-item">
                     <a class="nav-link" th:classappend="${activeTab == 'AddArticle' ? 'active' : ''}" aria-current="page" th:href="@{/articles/add}">Написать статью</a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${activeTab == 'Design' ? 'active' : ''}" aria-current="page" th:href="@{/articles/all}">Дизайн</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${activeTab == 'WebDevelopment' ? 'active' : ''}" aria-current="page" th:href="@{/articles/all}">Веб-разработка</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${activeTab == 'MobileDevelopment' ? 'active' : ''}" aria-current="page" th:href="@{/articles/all}">Мобильная разработка</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${activeTab == 'Marketing' ? 'active' : ''}" aria-current="page" th:href="@{/articles/all}">Маркетинг</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${activeTab == 'AdminPanel' ? 'active' : ''}" aria-current="page" th:href="@{/admin/users/all}">Панель администратора</a>
+                </li>
+
             </ul>
             <!-- Left links -->
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-light" type="submit">Search</button>
+            </form>
         </div>
         <!-- Collapsible wrapper -->
 

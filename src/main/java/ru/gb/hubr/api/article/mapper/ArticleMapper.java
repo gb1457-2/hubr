@@ -6,6 +6,7 @@ import ru.gb.hubr.api.article.ArticleDto;
 import ru.gb.hubr.dao.AccountUserDao;
 import ru.gb.hubr.entity.AccountUser;
 import ru.gb.hubr.entity.Article;
+import ru.gb.hubr.entity.enums.ArticleTopic;
 
 import java.util.NoSuchElementException;
 
@@ -17,13 +18,16 @@ public interface ArticleMapper {
     ArticleDto toArticleDto(Article article);
 
     default AccountUser getAuthor(String author, @Context AccountUserDao accountUserDao) {
-        return accountUserDao.findByLogin("system").orElseThrow(
+        return accountUserDao.findByUsername("system").orElseThrow(
                 () -> new NoSuchElementException("There isn't author with name " + author));
     }
 
     default String getAuthor(AccountUser author) {
-        return author.getLogin();
+        return author.getUsername();
     }
 
+//    default String getTopic(ArticleTopic topic) {
+//        return topic.getTitle();
+//    }
 
 }

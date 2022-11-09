@@ -1,14 +1,17 @@
 package ru.gb.hubr.api.user;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -20,7 +23,7 @@ public class UserDto {
     private Long id;
     @NotBlank
     @Size(min = 3, message = "login length must be greater than 2 symbols")
-    private String login;
+    private String username;
     @NotNull(message = "is required")
     @Size(min = 8, message = "required 8 symbols")
     private String password;
@@ -38,5 +41,15 @@ public class UserDto {
     @Size(min = 5, message = "min 5 symbols")
     private String phone;
 
+    @PastOrPresent
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonFormat(pattern = "dd.MM.yyyy")
+    private LocalDate lockedAt;
+
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonFormat(pattern = "dd.MM.yyyy")
+    private LocalDate lockedUntil;
 
 }

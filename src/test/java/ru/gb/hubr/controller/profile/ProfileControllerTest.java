@@ -31,9 +31,9 @@ class ProfileControllerTest extends AbstractTest {
                 .lastname("dfsdf")
                 .password("dfsdf")
                 .phone("dfsdfsdf")
-                .login("username")
+                .username("username")
                 .build();
-        given(profileService.findByLogin(anyString())).willReturn(profileUserDto);
+        given(profileService.findByUsername(anyString())).willReturn(profileUserDto);
     }
 
     @Test
@@ -43,7 +43,7 @@ class ProfileControllerTest extends AbstractTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("id")))
                 .andExpect(model().attribute("user",
-                        hasProperty("login", is(profileUserDto.getLogin()))
+                        hasProperty("login", is(profileUserDto.getUsername()))
                         )
                 )
                 .andExpect(view().name("profile/profile-form"));
@@ -59,7 +59,7 @@ class ProfileControllerTest extends AbstractTest {
                 .andExpect(content().string(containsString("id")))
                 .andExpect(model().attribute("isEdit", true))
                 .andExpect(model().attribute("user",
-                        hasProperty("login", is(profileUserDto.getLogin()))
+                        hasProperty("login", is(profileUserDto.getUsername()))
                         )
                 )
                 .andExpect(view().name("profile/profile-form"));

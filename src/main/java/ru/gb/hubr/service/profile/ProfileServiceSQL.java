@@ -21,9 +21,9 @@ public class ProfileServiceSQL implements ProfileService {
     private final UserMapper userMapper;
 
     @Transactional(readOnly = true)
-    public UserDto findByLogin(String login) {
+    public UserDto findByUsername(String username) {
 
-        AccountUser accountUser = accountUserDao.findByLogin(login).orElse(new AccountUser());
+        AccountUser accountUser = accountUserDao.findByUsername(username).orElse(new AccountUser());
         UserDto userDto = userMapper.toUserDto(accountUser);
         return userDto;
 
@@ -43,8 +43,8 @@ public class ProfileServiceSQL implements ProfileService {
 
         AccountUser accountUser = userMapper.toAccountUser(userDto);
 
-        if (accountUser.getLogin() != null) {
-            accountUserDao.findByLogin(accountUser.getLogin())
+        if (accountUser.getUsername() != null) {
+            accountUserDao.findByUsername(accountUser.getUsername())
                     .ifPresent((p) -> accountUser.setVersion(p.getVersion()));
         }
         return userMapper.toUserDto(accountUserDao.save(accountUser));

@@ -17,16 +17,16 @@ import java.util.Set;
 public class AccountUser extends InfoEntity {
 
     @Column(name = "login")
-    private String login;
+    private String username;
 
     @Column(name = "password")
     private String password;
 
     @Column(name = "first_name")
-    private String firstName;
+    private String firstname;
 
     @Column(name = "last_name")
-    private String lastName;
+    private String lastname;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.MERGE)
     private Set<Article> articles;
@@ -37,6 +37,10 @@ public class AccountUser extends InfoEntity {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "phone")
+    private String phone;
 
+    @Column(name = "locked_until")
+    private LocalDateTime lockedUntil;
 
 }

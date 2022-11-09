@@ -27,12 +27,12 @@ public class ProfileServiceDefault implements ProfileService {
             .firstname("dfsdf")
             .lastname("dfsdf")
             .phone("dfsdfsdf")
-            .login("system")
+            .username("system")
             .password("password")
             .build();
 
     @Transactional(readOnly = true)
-    public UserDto findByLogin(String login) {
+    public UserDto findByUsername(String username) {
 
         return profileUserDto;
 

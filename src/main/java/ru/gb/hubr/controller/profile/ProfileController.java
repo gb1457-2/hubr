@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import ru.gb.hubr.api.user.UserDto;
 import ru.gb.hubr.api.user.profile.ProfileService;
 
@@ -28,6 +25,7 @@ public class ProfileController {
         return "profile/profile-form";
     }
 
+
     @GetMapping("/edit")
     public String editProfile(HttpSession session,Model model) {
         model.addAttribute("isEdit", true);
@@ -37,15 +35,12 @@ public class ProfileController {
         return "profile/profile-form";
     }
 
+
     @PostMapping("")
     @ResponseStatus(HttpStatus.OK)
     public String saveProfile(UserDto userDto) {
         System.out.println(userDto.getEmail());
         return "redirect:/profile";
     }
-
-
-
-
 
 }

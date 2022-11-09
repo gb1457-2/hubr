@@ -27,11 +27,13 @@
 
                         <h2 class="blog-post-title mb-1" th:utext="${article.getName()}">..</h2>
 
-                        <p class="blog-post-meta" th:utext="${article.getAuthor()}">..</p>
+                        <h4 class="blog-post-title mb-2" th:utext="${article.topic.getTitle()}">..</h4>
+
+                        <p class="blog-post-meta" th:utext="${article.author}">..</p>
 
                         <p th:utext="${article.getPreview()}">..</p>
 
-                        <a type="button" th:href="@{'/articles/' + ${article.id} }" class="btn btn-warning">Просмотреть</a>
+                        <a type="button" th:href="@{'/articles/' + ${article.id}}" class="btn btn-warning">Просмотреть</a>
                     </div>
                 </div>
             </article>
