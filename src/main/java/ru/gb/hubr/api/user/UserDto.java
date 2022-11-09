@@ -3,12 +3,12 @@ package ru.gb.hubr.api.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -31,9 +31,9 @@ public class UserDto {
     @Size(min = 8, message = "required 8 symbols")
     private String matchingPassword;
     @NotBlank(message = "is required")
-    private String firstname;
+    private String firstName;
     @NotBlank(message = "is required")
-    private String lastname;
+    private String lastName;
     @Email
     @NotBlank(message = "is required")
     private String email;

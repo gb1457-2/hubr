@@ -1,12 +1,13 @@
 package ru.gb.hubr.api.article;
 
+
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import ru.gb.hubr.entity.AccountUser;
 import ru.gb.hubr.entity.enums.ArticleTopic;
 
-import javax.persistence.EntityListeners;
+
 import javax.validation.constraints.NotBlank;
 
 @Getter
