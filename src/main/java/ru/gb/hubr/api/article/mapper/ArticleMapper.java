@@ -6,6 +6,7 @@ import ru.gb.hubr.api.article.ArticleDto;
 import ru.gb.hubr.dao.AccountUserDao;
 import ru.gb.hubr.entity.AccountUser;
 import ru.gb.hubr.entity.Article;
+import ru.gb.hubr.entity.enums.ArticleTopic;
 
 import java.util.NoSuchElementException;
 
@@ -26,5 +27,8 @@ public interface ArticleMapper {
         return author.getUsername();
     }
 
+//    default String getTopic(ArticleTopic topic) {
+//        return topic.getTitle();
+//    }
 
 }

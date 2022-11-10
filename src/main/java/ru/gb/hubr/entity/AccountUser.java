@@ -29,10 +29,10 @@ public class AccountUser extends InfoEntity implements UserDetails {
     private String password;
 
     @Column(name = "first_name")
-    private String firstName;
+    private String firstname;
 
     @Column(name = "last_name")
-    private String lastName;
+    private String lastname;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.MERGE)
     private Set<Article> articles;
@@ -42,6 +42,13 @@ public class AccountUser extends InfoEntity implements UserDetails {
 
     @Column(name = "email")
     private String email;
+
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "locked_until")
+    private LocalDateTime lockedUntil;
 
     @Singular
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
@@ -71,5 +78,6 @@ public class AccountUser extends InfoEntity implements UserDetails {
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<AccountRole> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
+
 
 }

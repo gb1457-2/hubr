@@ -20,8 +20,8 @@
       <div class="card mb-4">
         <div class="card-body">
           <h2 class="blog-post-title mb-1" th:utext="${article.getName()}">..</h2>
-
-          <p class="blog-post-meta" th:utext="${article.getAuthor()}">..</p>
+          <h4 class="blog-post-title mb-2" th:utext="${article.topic.getTitle()}">..</h4>
+          <p class="blog-post-meta" th:utext="${article.author}">..</p>
 
           <p th:utext="${article.getContent()}">..</p>
         </div>

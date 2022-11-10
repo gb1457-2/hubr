@@ -84,7 +84,7 @@ public class SecurityServiceSQL implements SecurityService {
                 .build();
 
         emailContext.addContext("type_event", TypeEvent.DELETE_PROFILE);
-        emailContext.addContext("username", accountUser.getFirstName());
+        emailContext.addContext("username", accountUser.getFirstname());
         return emailContext;
     }
 

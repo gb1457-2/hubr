@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import ru.gb.hubr.entity.common.InfoEntity;
+import ru.gb.hubr.entity.enums.ArticleTopic;
 
 import javax.persistence.*;
 
@@ -20,6 +21,10 @@ public class Article extends InfoEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private AccountUser author;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "topic")
+    private ArticleTopic topic;
 
     @Column(name = "name")
     private String name;

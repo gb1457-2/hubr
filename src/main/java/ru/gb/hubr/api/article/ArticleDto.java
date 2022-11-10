@@ -1,10 +1,12 @@
 package ru.gb.hubr.api.article;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import ru.gb.hubr.entity.AccountUser;
+import ru.gb.hubr.entity.enums.ArticleTopic;
+
 
 import javax.validation.constraints.NotBlank;
 
@@ -21,10 +23,14 @@ public class ArticleDto {
     private String author;
 
     @NotBlank
+    private ArticleTopic topic;
+
+    @NotBlank
     private String name;
 
     @NotBlank
     private String content;
+
 
     public String getPreview() {
         int maxPreviewLength = 100;

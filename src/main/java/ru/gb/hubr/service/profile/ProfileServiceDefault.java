@@ -31,7 +31,8 @@ public class ProfileServiceDefault implements ProfileService {
             .build();
 
     @Transactional(readOnly = true)
-    public UserDto findByUsername(String login) {
+
+    public UserDto findByUsername(String username) {
 
         return profileUserDto;
 

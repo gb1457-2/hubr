@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="before_alter_tables_account_user_and_article" author="Viktor Khalezov">
+        <tagDatabase tag="before_alter_tables_account_user_and_article"/>
+    </changeSet>
+
+
+    <changeSet id="alter_tables_account_user_and_article" author="Viktor Khalezov">
+        <comment>Добавлены поля телефон, срок бана, тема статьи</comment>
+
+            <addColumn tableName="account_user">
+                <column name="phone" type="VARCHAR(255)"/>
+                <column name="locked_until" type="TIMESTAMP WITH TIME ZONE"/>
+            </addColumn>
+
+        <addColumn tableName="article">
+            <column name="topic" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+    </changeSet>
+
+
+
+</databaseChangeLog>

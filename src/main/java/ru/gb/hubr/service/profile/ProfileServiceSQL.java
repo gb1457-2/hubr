@@ -33,10 +33,13 @@ public class ProfileServiceSQL implements ProfileService, UserDetailsService {
         );
     }
 
+    @Override
     @Transactional(readOnly = true)
-    public UserDto findByUsername(String login) {
+    public UserDto findByUsername(String username) {
 
-        AccountUser accountUser = accountUserDao.findByUsername(login).orElse(new AccountUser());
+
+        AccountUser accountUser = accountUserDao.findByUsername(username).orElse(new AccountUser());
+
         UserDto userDto = userMapper.toUserDto(accountUser);
         return userDto;
 
