@@ -4,6 +4,13 @@ package ru.gb.hubr.api.user;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -22,7 +29,7 @@ public class UserDto {
     @JsonIgnore
     private Long id;
     @NotBlank
-    @Size(min = 3, message = "login length must be greater than 2 symbols")
+    @Size(min = 3, message = "username length must be greater than 2 symbols")
     private String username;
     @NotNull(message = "is required")
     @Size(min = 8, message = "required 8 symbols")

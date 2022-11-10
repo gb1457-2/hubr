@@ -3,11 +3,16 @@ package ru.gb.hubr.controller.profile;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.hubr.api.user.UserDto;
 import ru.gb.hubr.api.user.profile.ProfileService;
+import ru.gb.hubr.entity.AccountUser;
+import ru.gb.hubr.service.mapper.UserMapper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,18 +23,20 @@ import javax.servlet.http.HttpSession;
 public class ProfileController {
 
     private final ProfileService profileService;
+    private final UserMapper userMapper;
 
     @GetMapping("")
-    public String profilePage(HttpSession session, Model model) {
-        model.addAttribute("user", profileService.getCurrentUser(session));
+    public String profilePage(@AuthenticationPrincipal UserDetails user, Model model) {
+        model.addAttribute("user", userMapper.toUserDto((AccountUser) user));
+
         return "profile/profile-form";
     }
 
 
     @GetMapping("/edit")
-    public String editProfile(HttpSession session,Model model) {
+    public String editProfile(@AuthenticationPrincipal UserDetails user,Model model) {
         model.addAttribute("isEdit", true);
-        UserDto byLogin = profileService.getCurrentUser(session);
+        UserDto byLogin = userMapper.toUserDto((AccountUser) user);
         byLogin.setPassword("");
         model.addAttribute("user", byLogin);
         return "profile/profile-form";
@@ -39,7 +46,7 @@ public class ProfileController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.OK)
     public String saveProfile(UserDto userDto) {
-        System.out.println(userDto.getEmail());
+        profileService.save(userDto);
         return "redirect:/profile";
     }
 

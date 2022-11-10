@@ -17,6 +17,7 @@ public interface ArticleMapper {
 
     ArticleDto toArticleDto(Article article);
 
+    //todo ищет по одному пользователю
     default AccountUser getAuthor(String author, @Context AccountUserDao accountUserDao) {
         return accountUserDao.findByUsername("system").orElseThrow(
                 () -> new NoSuchElementException("There isn't author with name " + author));

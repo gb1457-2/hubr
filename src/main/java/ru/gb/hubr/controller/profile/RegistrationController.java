@@ -11,6 +11,9 @@ import ru.gb.hubr.dao.AccountUserDao;
 import ru.gb.hubr.dao.security.AccountRoleDao;
 import ru.gb.hubr.entity.AccountUser;
 
+import java.sql.SQLException;
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/register")
 @RequiredArgsConstructor
@@ -28,6 +31,7 @@ public class RegistrationController {
 
     @PostMapping
     public String processRegistration(AccountUser user) {
+
         AccountUser savedUser = AccountUser
                 .builder()
                 .username(user.getUsername())

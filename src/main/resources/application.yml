@@ -14,8 +14,8 @@ security-uri: /profile/security
 mail-service:
   host: smtp.gmail.com
   port: 465
-  username: gbtestcase.mail@gmail.com
-  password: lmcdepergjcmbxwb
+  login-mail: gbtestcase.mail@gmail.com
+  password-mail: xchdibbwnhucijpe
   path-template: mail/template-mail
   display-from: hubr-gb
   base-url: http://localhost:8080
