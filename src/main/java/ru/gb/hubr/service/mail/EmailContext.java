@@ -1,7 +1,6 @@
-package ru.gb.hubr.api.mail;
+package ru.gb.hubr.service.mail;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,11 +28,9 @@ public class EmailContext {
     private Map<String, Object> context = new HashMap<>();
 
 
-    public void addContext(String key,Object value){
-        context.put(key,value);
+    public void addContext(String key, Object value) {
+        context.put(key, value);
     }
-
-
 
 
 }

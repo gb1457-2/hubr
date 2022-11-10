@@ -1,14 +1,16 @@
 package ru.gb.hubr.controller.admin;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import ru.gb.hubr.api.user.UserDto;
-import ru.gb.hubr.service.profile.ProfileServiceSQL;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import ru.gb.hubr.api.dto.UserDto;
+import ru.gb.hubr.service.AccountUserService;
 
 
 @Controller
@@ -16,11 +18,11 @@ import ru.gb.hubr.service.profile.ProfileServiceSQL;
 @RequestMapping("/admin/users")
 public class UserAdminController {
 
-    private final ProfileServiceSQL profileServiceSQL;
+    private final AccountUserService accountUserService;
 
     @GetMapping("/all")
     public String getUserList(Model model) {
-        model.addAttribute("users", profileServiceSQL.findAll());
+        model.addAttribute("users", accountUserService.findAll());
         return "admin/admin-users";
     }
 
@@ -29,7 +31,7 @@ public class UserAdminController {
     public String getProfilePageById(Model model, @PathVariable("userId") Long id) {
         UserDto userDto;
         if (id != null) {
-            userDto = profileServiceSQL.findById(id);
+            userDto = accountUserService.findById(id);
         } else {
             return "redirect:/admin/users/all";
         }
@@ -41,7 +43,7 @@ public class UserAdminController {
     public String editProfileById(Model model, @RequestParam(name = "id") Long id) {
         UserDto userDto;
         if(id != null) {
-            userDto = profileServiceSQL.findById(id);
+            userDto = accountUserService.findById(id);
         } else {
             return "redirect:/admin/users/all";
         }

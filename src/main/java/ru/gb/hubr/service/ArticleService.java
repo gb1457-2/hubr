@@ -1,13 +1,13 @@
-package ru.gb.hubr.service.article;
+package ru.gb.hubr.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.gb.hubr.api.dto.ArticleDto;
+import ru.gb.hubr.api.mapper.ArticleMapper;
 import ru.gb.hubr.dao.AccountUserDao;
 import ru.gb.hubr.dao.ArticleDao;
 import ru.gb.hubr.entity.Article;
-import ru.gb.hubr.api.article.ArticleDto;
-import ru.gb.hubr.api.article.mapper.ArticleMapper;
 
 import java.util.List;
 import java.util.stream.Collectors;

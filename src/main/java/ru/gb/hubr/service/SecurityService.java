@@ -1,24 +1,22 @@
-package ru.gb.hubr.service.security;
+package ru.gb.hubr.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-import ru.gb.hubr.api.mail.EmailContext;
-import ru.gb.hubr.api.mail.EmailService;
-import ru.gb.hubr.api.user.UserDto;
-import ru.gb.hubr.api.user.security.SecurityService;
+import ru.gb.hubr.api.dto.UserDto;
 import ru.gb.hubr.config.MailProperties;
 import ru.gb.hubr.dao.AccountUserDao;
 import ru.gb.hubr.dao.EventUserDao;
 import ru.gb.hubr.entity.AccountUser;
 import ru.gb.hubr.entity.EventUser;
 import ru.gb.hubr.entity.TypeEvent;
+import ru.gb.hubr.service.mail.EmailContext;
+import ru.gb.hubr.service.mail.EmailService;
 
 
 @Service
 @RequiredArgsConstructor
-public class SecurityServiceSQL implements SecurityService {
+public class SecurityService {
 
     private final MailProperties mailProperties;
     private final EmailService emailService;
@@ -27,7 +25,6 @@ public class SecurityServiceSQL implements SecurityService {
     @Value("${security-uri}")
     private String securityPath;
 
-    @Override
     public void createDeleteProfile(UserDto userDto) throws Exception {
 
         AccountUser accountUser = accountUserDao.findByUsername(userDto.getUsername()).orElseThrow();
@@ -47,7 +44,6 @@ public class SecurityServiceSQL implements SecurityService {
 
     }
 
-    @Override
     public void resetPassword(UserDto userDto, String newPassword) {
 
         AccountUser accountUser = accountUserDao.findByUsername(userDto.getUsername()).orElseThrow();
@@ -56,20 +52,17 @@ public class SecurityServiceSQL implements SecurityService {
 
     }
 
-    @Override
     public void resetEmail(UserDto userDto, String newEmail) {
         AccountUser accountUser = accountUserDao.findByUsername(userDto.getUsername()).orElseThrow();
         accountUser.setEmail(newEmail);
         accountUserDao.save(accountUser);
     }
 
-    @Override
     public void confirmAccount(UserDto userDto) {
 
     }
 
-    @Override
-    public void deleteProfile(UserDto userDto ) {
+    public void deleteProfile(UserDto userDto) {
         AccountUser accountUser = accountUserDao.findByUsername(userDto.getUsername()).orElseThrow();
         accountUserDao.delete(accountUser);
     }
@@ -84,7 +77,7 @@ public class SecurityServiceSQL implements SecurityService {
                 .build();
 
         emailContext.addContext("type_event", TypeEvent.DELETE_PROFILE);
-        emailContext.addContext("username", accountUser.getFirstname());
+        emailContext.addContext("username", accountUser.getUsername());
         return emailContext;
     }
 
@@ -95,7 +88,6 @@ public class SecurityServiceSQL implements SecurityService {
         eventUser.setTypeEvent(typeEvent);
         return eventUserDao.save(eventUser);
     }
-
 
 
 }

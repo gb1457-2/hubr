@@ -1,23 +1,17 @@
 package ru.gb.hubr.controller.main;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.gb.hubr.api.user.UserDto;
-import ru.gb.hubr.api.user.profile.ProfileService;
-import ru.gb.hubr.entity.AccountUser;
+import ru.gb.hubr.api.dto.ArticleDto;
+import ru.gb.hubr.api.mapper.UserMapper;
 import ru.gb.hubr.entity.enums.ArticleTopic;
-import ru.gb.hubr.service.article.ArticleService;
-import ru.gb.hubr.api.article.ArticleDto;
-import ru.gb.hubr.service.mapper.UserMapper;
-import ru.gb.hubr.service.profile.ProfileServiceSQL;
-
-import javax.servlet.http.HttpSession;
+import ru.gb.hubr.service.AccountUserService;
+import ru.gb.hubr.service.ArticleService;
 
 
 @Controller
@@ -26,7 +20,7 @@ import javax.servlet.http.HttpSession;
 public class MainController {
 
     private final ArticleService service;
-    private final ProfileServiceSQL profileServiceSQL;
+    private final AccountUserService accountUserService;
     private final UserMapper userMapper;
 
     @GetMapping("/all")
