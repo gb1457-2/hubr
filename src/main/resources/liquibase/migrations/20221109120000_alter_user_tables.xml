@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="before_alter_user_tables_email" author="Vitaly Krivobokov">
+        <tagDatabase tag="before_alter_user_tables"/>
+    </changeSet>
+
+    <changeSet id="alter_table_account_user_email" author="Vitaly Krivobokov">
+        <addUniqueConstraint tableName="account_user" columnNames="email"></addUniqueConstraint>
+    </changeSet>
+
+
+
+
+</databaseChangeLog>

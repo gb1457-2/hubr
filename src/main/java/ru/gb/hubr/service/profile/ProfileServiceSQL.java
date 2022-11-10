@@ -1,6 +1,7 @@
 package ru.gb.hubr.service.profile;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Primary
 @RequiredArgsConstructor
 public class ProfileServiceSQL implements ProfileService, UserDetailsService {
 
@@ -32,7 +34,7 @@ public class ProfileServiceSQL implements ProfileService, UserDetailsService {
     }
 
     @Transactional(readOnly = true)
-    public UserDto findByLogin(String login) {
+    public UserDto findByUsername(String login) {
 
         AccountUser accountUser = accountUserDao.findByUsername(login).orElse(new AccountUser());
         UserDto userDto = userMapper.toUserDto(accountUser);

@@ -2,6 +2,7 @@ package ru.gb.hubr.service.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import ru.gb.hubr.api.mail.EmailContext;
 import ru.gb.hubr.api.mail.EmailService;

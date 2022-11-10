@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface ProfileService {
-     UserDto findByLogin(String login);
+     UserDto findByUsername(String username);
 
      UserDto findById(Long idUser);
 

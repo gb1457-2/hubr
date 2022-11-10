@@ -33,7 +33,7 @@ class ProfileControllerTest extends AbstractTest {
                 .phone("dfsdfsdf")
                 .username("username")
                 .build();
-        given(profileService.findByLogin(anyString())).willReturn(profileUserDto);
+        given(profileService.findByUsername(anyString())).willReturn(profileUserDto);
     }
 
     @Test
