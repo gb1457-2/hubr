@@ -15,7 +15,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Service
-@Primary
 @RequiredArgsConstructor
 public class ProfileServiceDefault implements ProfileService {
 
@@ -32,7 +31,7 @@ public class ProfileServiceDefault implements ProfileService {
             .build();
 
     @Transactional(readOnly = true)
-    public UserDto findByLogin(String login) {
+    public UserDto findByUsername(String login) {
 
         return profileUserDto;
 

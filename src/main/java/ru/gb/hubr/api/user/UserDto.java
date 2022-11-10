@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -22,7 +23,7 @@ public class UserDto {
     @JsonIgnore
     private Long id;
     @NotBlank
-    @Size(min = 3, message = "login length must be greater than 2 symbols")
+    @Size(min = 3, message = "username length must be greater than 2 symbols")
     private String username;
     @NotNull(message = "is required")
     @Size(min = 8, message = "required 8 symbols")

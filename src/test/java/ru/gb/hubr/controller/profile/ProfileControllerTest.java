@@ -3,29 +3,24 @@ package ru.gb.hubr.controller.profile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import ru.gb.hubr.AbstractTest;
-import ru.gb.hubr.api.user.ProfileUserDto;
 import ru.gb.hubr.api.user.profile.ProfileService;
+import ru.gb.hubr.api.user.ProfileUserDto;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.any;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class ProfileControllerTest extends AbstractTest {
 
     ProfileUserDto profileUserDto;
 
-    @MockBean
+    @Autowired
     ProfileService profileService;
 
     @BeforeEach
@@ -38,7 +33,7 @@ class ProfileControllerTest extends AbstractTest {
                 .phone("dfsdfsdf")
                 .username("username")
                 .build();
-        given(profileService.getCurrentUser(any())).willReturn(profileUserDto);
+        given(profileService.findByUsername(anyString())).willReturn(profileUserDto);
     }
 
     @Test
@@ -74,5 +69,7 @@ class ProfileControllerTest extends AbstractTest {
                 .content(objectMapper.writeValueAsString(profileUserDto)))
                 .andExpect(status().isOk())
                 .andExpect(view().name("redirect:/profile"));
+
+
     }
 }

@@ -1,6 +1,4 @@
 spring:
-  #  main:
-  #    web-application-type: none
   liquibase:
     change-log: classpath:/liquibase/changelog.xml
   jpa:
@@ -11,13 +9,22 @@ spring:
   datasource:
     hikari:
       driver-class-name: 'org.h2.Driver'
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+hubr:
+  mail:
+    host: smtp.gmail.com
+    port: 587
 profile-uri: /profile
 security-uri: /profile/security
 mail-service:
   host: smtp.gmail.com
   port: 465
-  username: gbtestcase.mail@gmail.com
-  password: lmcdepergjcmbxwb
+  login-mail: gbtestcase.mail@gmail.com
+  password-mail: xchdibbwnhucijpe
   path-template: mail/template-mail
   display-from: hubr-gb
   base-url: http://localhost:8080
