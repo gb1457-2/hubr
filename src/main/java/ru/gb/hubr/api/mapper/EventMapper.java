@@ -1,8 +1,8 @@
-package ru.gb.hubr.service.mapper;
+package ru.gb.hubr.api.mapper;
 
 
 import org.mapstruct.Mapper;
-import ru.gb.hubr.api.event.EventDto;
+import ru.gb.hubr.api.dto.EventDto;
 import ru.gb.hubr.entity.EventUser;
 import ru.gb.hubr.entity.TypeEvent;
 

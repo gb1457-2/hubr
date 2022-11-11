@@ -1,8 +1,8 @@
-package ru.gb.hubr.service.mapper;
+package ru.gb.hubr.api.mapper;
 
 
 import org.mapstruct.Mapper;
-import ru.gb.hubr.api.user.UserDto;
+import ru.gb.hubr.api.dto.UserDto;
 import ru.gb.hubr.entity.AccountUser;
 
 

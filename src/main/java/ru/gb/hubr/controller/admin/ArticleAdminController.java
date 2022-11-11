@@ -3,15 +3,15 @@ package ru.gb.hubr.controller.admin;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import ru.gb.hubr.api.article.ArticleDto;
-import ru.gb.hubr.api.user.UserDto;
-import ru.gb.hubr.api.user.profile.ProfileService;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import ru.gb.hubr.api.dto.ArticleDto;
 import ru.gb.hubr.entity.enums.ArticleTopic;
-import ru.gb.hubr.service.article.ArticleService;
-
-import java.sql.SQLOutput;
-import java.util.ArrayList;
+import ru.gb.hubr.service.ArticleService;
 
 @Controller
 @RequiredArgsConstructor

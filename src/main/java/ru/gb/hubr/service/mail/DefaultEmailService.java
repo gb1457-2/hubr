@@ -7,8 +7,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
-import ru.gb.hubr.api.mail.EmailContext;
-import ru.gb.hubr.api.mail.EmailService;
 import ru.gb.hubr.config.MailProperties;
 
 import javax.mail.MessagingException;
@@ -42,11 +40,10 @@ public class DefaultEmailService implements EmailService {
 
         mimeMessageHelper.setTo(email.getTo());
         mimeMessageHelper.setSubject(email.getSubject());
-        mimeMessageHelper.setFrom(email.getFrom(),email.getDisplayName());
+        mimeMessageHelper.setFrom(email.getFrom(), email.getDisplayName());
         mimeMessageHelper.setText(emailContent, true);
         emailSender.send(message);
     }
-
 
 
 }

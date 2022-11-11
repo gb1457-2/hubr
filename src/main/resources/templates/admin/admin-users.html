@@ -58,8 +58,8 @@
                                 <tr th:each="user, i : ${users}" th:attr="user_index=${user.id}">
                                     <th scope="row" th:text="${i.count}"></th>
                                     <td th:text="${user.username}"></td>
-                                    <td th:text="${user.firstname}"></td>
-                                    <td th:text="${user.lastname}"></td>
+                                    <td th:text="${user.firstName}"></td>
+                                    <td th:text="${user.lastName}"></td>
                                     <td th:text="${user.email}"></td>
                                     <td th:text="${user.phone}"></td>
                                     <td th:text="0"></td>
@@ -68,7 +68,8 @@
                                     <td th:text="${user.lockedUntil}"></td>
 
                                     <td>
-                                        <a role="button" class="btn btn-warning" th:href="@{'/admin/users/' + ${user.id}}">Посмотреть</a>
+                                        <a role="button" class="btn btn-warning"
+                                           th:href="@{'/admin/users/' + ${user.id}}">Посмотреть</a>
                                     </td>
 
                                     <td>

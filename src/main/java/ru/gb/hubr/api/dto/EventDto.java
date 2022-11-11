@@ -1,4 +1,4 @@
-package ru.gb.hubr.api.event;
+package ru.gb.hubr.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

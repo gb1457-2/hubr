@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import ru.gb.hubr.api.event.EventDto;
-import ru.gb.hubr.api.event.EventService;
-import ru.gb.hubr.api.user.ProfileUserDto;
-import ru.gb.hubr.api.user.UserDto;
-import ru.gb.hubr.api.user.profile.ProfileService;
-import ru.gb.hubr.api.user.security.SecurityService;
+import ru.gb.hubr.api.dto.EventDto;
+import ru.gb.hubr.api.dto.ProfileUserDto;
+import ru.gb.hubr.api.dto.UserDto;
 import ru.gb.hubr.entity.TypeEvent;
+import ru.gb.hubr.service.AccountUserService;
+import ru.gb.hubr.service.EventService;
+import ru.gb.hubr.service.SecurityService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,7 +28,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("${security-uri}")
 public class SecurityController {
 
-    private final ProfileService profileService;
+    private final AccountUserService accountUserService;
     private final SecurityService securityService;
     private final EventService eventService;
     @Value("${security-uri}")
@@ -42,7 +42,7 @@ public class SecurityController {
 
     @GetMapping
     public String profilePage(Model model, HttpSession session) {
-        model.addAttribute("user", profileService.getCurrentUser(session));
+        model.addAttribute("user", accountUserService.getCurrentUser(session));
         return "profile/security-form";
     }
 
@@ -62,7 +62,7 @@ public class SecurityController {
 
     @GetMapping("/deleteProfile")
     public String sendDeleteProfile(HttpServletRequest request, HttpSession session, Model model) throws Exception {
-        UserDto currentUser = profileService.getCurrentUser(session);
+        UserDto currentUser = accountUserService.getCurrentUser(session);
         securityService.createDeleteProfile(currentUser);
         model.addAttribute("user", currentUser);
 
@@ -72,7 +72,7 @@ public class SecurityController {
     @GetMapping("/event/{token}")
     public String sendDeleteProfile(HttpSession session, @PathVariable(name = "token") String token, Model model) {
         EventDto eventByToken = eventService.getEventByToken(token);
-        UserDto currentUser = profileService.getCurrentUser(session);
+        UserDto currentUser = accountUserService.getCurrentUser(session);
         model.addAttribute("user", currentUser);
         model.addAttribute("typeBackdrop", TypeEvent.valueOf(eventByToken.getTypeEvent()));
         return "profile/security-form";
@@ -81,7 +81,7 @@ public class SecurityController {
     @PostMapping("/event/{token}")
     public String workByTokenRequest(UserDto userDto, @PathVariable(name = "token") String token, Model model) {
         EventDto eventByToken = eventService.getEventByToken(token);
-        UserDto currentUser = profileService.findById(eventByToken.getUserId());
+        UserDto currentUser = accountUserService.findById(eventByToken.getUserId());
         TypeEvent typeEvent = TypeEvent.valueOf(eventByToken.getTypeEvent());
 
         boolean successfulDelete = false;
