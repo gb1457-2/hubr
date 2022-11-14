@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="before_alter_notification_tables" author="Paul Selyutin">
+        <tagDatabase tag="before_alter_notification_tables"/>
+    </changeSet>
+
+
+    <changeSet id="create_table_comment_notification" author="Paul Selyutin">
+
+        <dropTable tableName="moderator_notification"/>
+
+        <createTable tableName="comment_notification">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="comment_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="user_id" type="BIGINT"/>
+            <column name="complain_type" type="VARCHAR(255)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="comment_notification" baseColumnNames="comment_id"
+                                 constraintName="fk_comment_notification_comment"
+                                 referencedTableName="comment" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="create_table_article_notification" author="Paul Selyutin">
+        <createTable tableName="article_notification">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="article_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="user_id" type="BIGINT"/>
+            <column name="complain_type" type="VARCHAR(255)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="article_notification" baseColumnNames="article_id"
+                                 constraintName="fk_article_notification_article"
+                                 referencedTableName="article" referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

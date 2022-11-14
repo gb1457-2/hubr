@@ -9,16 +9,15 @@ import ru.gb.hubr.entity.Article;
 
 import java.util.NoSuchElementException;
 
-@Mapper
+@Mapper(uses = CommentMapper.class)
 public interface ArticleMapper {
 
     Article toArticle(ArticleDto articleDto, @Context AccountUserDao accountUserDao);
 
-    ArticleDto toArticleDto(Article article);
+    ArticleDto toArticleDto(Article article, @Context AccountUserDao accountUserDao);
 
-    //todo ищет по одному пользователю
     default AccountUser getAuthor(String author, @Context AccountUserDao accountUserDao) {
-        return accountUserDao.findByUsername("system").orElseThrow(
+        return accountUserDao.findByUsername(author).orElseThrow(
                 () -> new NoSuchElementException("There isn't author with name " + author));
     }
 
