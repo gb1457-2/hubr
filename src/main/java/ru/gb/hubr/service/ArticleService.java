@@ -21,18 +21,19 @@ public class ArticleService {
     private final AccountUserDao accountUserDao;
     private final ArticleMapper articleMapper;
 
-    public ArticleDto getArticleById(Long id){
-        return articleMapper.toArticleDto(articleDao.findById(id).orElse(null));
+    public ArticleDto getArticleById(Long id) {
+        return articleMapper.toArticleDto(articleDao.findById(id).orElse(null), accountUserDao);
     }
 
-    public List<ArticleDto> getAllArticles(){
-        return articleDao.findAll().stream().map(articleMapper::toArticleDto).collect(Collectors.toList());
+    public List<ArticleDto> getAllArticles() {
+        return articleDao.findAll().stream()
+                .map(article -> articleMapper.toArticleDto(article, accountUserDao))
+                .collect(Collectors.toList());
     }
 
-    public ArticleDto saveArticle(ArticleDto articleDto){
-
+    public ArticleDto saveArticle(ArticleDto articleDto) {
         Article article = articleMapper.toArticle(articleDto, accountUserDao);
-        return articleMapper.toArticleDto(articleDao.save(article));
+        return articleMapper.toArticleDto(articleDao.save(article), accountUserDao);
     }
 
 
