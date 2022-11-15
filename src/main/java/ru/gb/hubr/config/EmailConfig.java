@@ -11,7 +11,10 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import java.util.Properties;
-
+/**
+ * @author Vitaly Krivobokov
+ * @Date 13.11.22
+ */
 @Configuration
 @RequiredArgsConstructor
 public class EmailConfig {
