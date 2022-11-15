@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.gb.hubr.entity.common.InfoEntity;
-import ru.gb.hubr.entity.enums.ArticleTopic;
 import ru.gb.hubr.entity.user.AccountUser;
 import ru.gb.hubr.enumeration.ArticleTopic;
 
