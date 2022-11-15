@@ -5,7 +5,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-
+/**
+ * @author Vitaly Krivobokov
+ * @Date 13.11.22
+ */
 @Setter
 @Getter
 @Component
