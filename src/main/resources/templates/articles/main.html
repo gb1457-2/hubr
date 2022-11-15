@@ -14,12 +14,12 @@
 <div th:replace="~{common/navbar :: navbar(ArticleList)}"></div>
 <div style="background-color: #eee;">
 
-<div class="container">
+<ul class="container">
 
     <div class="row g-5">
         <div class="col-md-8">
 
-            <article class="blog-post" th:each="article, i : ${articles}">
+            <article class="blog-post" th:each="article, i : ${articlesPage.content}">
 
                 <div class="card mb-2">
 
@@ -29,14 +29,41 @@
 
                         <p class="blog-post-meta" th:utext="${article.getAuthor()}">..</p>
 
+                        <p class="blog-post-meta" th:utext="${article.getFormattedCreatedAt()}">..</p>
+
                         <p th:utext="${article.getPreview()}">..</p>
 
                         <a type="button" th:href="@{'/articles/' + ${article.id} }" class="btn btn-warning">Просмотреть</a>
                     </div>
                 </div>
+
             </article>
+
         </div>
     </div>
+
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination" th:if="${articlesPage.totalPages > 0}">
+            <th:block>
+                <li class="page-item" th:classappend="${currentPage < 2? 'disabled' : ''}">
+                    <a class="page-link" th:href="@{/articles/all(size=${articlesPage.size}, page=${currentPage}-1)}"
+                       tabindex="-1">Previous</a>
+                </li>
+                <th:block th:each="pageNumber : ${pageNumbers}">
+                    <li class="page-item" th:classappend="${pageNumber==currentPage? 'active' : ''}" th:if="${pageNumber>=firstIndexPagination && pageNumber<=lastIndexPagination}">
+                        <a class="page-link" th:href="@{/articles/all(size=${articlesPage.size}, page=${pageNumber})}"
+                           th:text="${pageNumber}"></a>
+                    </li>
+                </th:block>
+                <li class="page-item" th:classappend="${currentPage == articlesPage.getTotalPages()? 'disabled' : ''}">
+                    <a class="page-link" th:href="@{/articles/all(size=${articlesPage.size}, page=${currentPage}+1)}"
+                       tabindex="+1">Next</a>
+                </li>
+            </th:block>
+        </ul>
+    </nav>
+</ul>
 </div>
 </div>
 

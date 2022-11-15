@@ -1,12 +1,11 @@
 package ru.gb.hubr.api.article;
 
 import lombok.*;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import ru.gb.hubr.entity.AccountUser;
 
-import javax.persistence.EntityListeners;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -26,6 +25,9 @@ public class ArticleDto {
     @NotBlank
     private String content;
 
+    @PastOrPresent
+    private LocalDateTime createdAt;
+
     public String getPreview(){
 
         String[] strings = content.split("</p>");
@@ -33,6 +35,12 @@ public class ArticleDto {
         String preview = strings[0] + strings[1];
 
         return preview;
+    }
+
+    public String getFormattedCreatedAt(){
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return createdAt.format(formatter);
     }
 
 }

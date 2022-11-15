@@ -27,4 +27,11 @@ public class InfoEntity extends BaseEntity {
     @Column(name = "last_modified_at")
     private LocalDateTime lastModifiedAt;
 
+    public InfoEntity(Long id, int version, LocalDateTime createdAt, LocalDateTime deletedAt, LocalDateTime lastModifiedAt) {
+        super(id);
+        this.version = version;
+        this.createdAt = createdAt;
+        this.deletedAt = deletedAt;
+        this.lastModifiedAt = lastModifiedAt;
+    }
 }

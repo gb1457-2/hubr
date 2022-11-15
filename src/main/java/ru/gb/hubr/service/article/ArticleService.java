@@ -2,12 +2,17 @@ package ru.gb.hubr.service.article;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.gb.hubr.dao.AccountUserDao;
 import ru.gb.hubr.dao.ArticleDao;
 import ru.gb.hubr.entity.Article;
 import ru.gb.hubr.api.article.ArticleDto;
 import ru.gb.hubr.api.article.mapper.ArticleMapper;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +31,7 @@ public class ArticleService {
     }
 
     public List<ArticleDto> getAllArticles(){
-        return articleDao.findAll().stream().map(articleMapper::toArticleDto).collect(Collectors.toList());
+        return articleDao.findAll(Sort.by("createdAt").ascending()).stream().map(articleMapper::toArticleDto).collect(Collectors.toList());
     }
 
     public ArticleDto saveArticle(ArticleDto articleDto){
@@ -34,4 +39,15 @@ public class ArticleService {
         Article article = articleMapper.toArticle(articleDto, accountUserDao);
         return articleMapper.toArticleDto(articleDao.save(article));
     }
+
+    public Page<ArticleDto> getArticlesPage(Pageable pageable){
+
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+
+        return articleDao.findAll(pageable).map(articleMapper::toArticleDto);
+    }
+
+
 }
