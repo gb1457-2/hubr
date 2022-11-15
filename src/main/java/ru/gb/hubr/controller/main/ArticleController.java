@@ -1,6 +1,8 @@
 package ru.gb.hubr.controller.main;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,30 +10,32 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.gb.hubr.api.dto.ArticleDto;
-import ru.gb.hubr.api.mapper.UserMapper;
-import ru.gb.hubr.entity.enums.ArticleTopic;
-import ru.gb.hubr.service.AccountUserService;
+import ru.gb.hubr.api.dto.ArticleNotificationDto;
+import ru.gb.hubr.api.dto.CommentDto;
+import ru.gb.hubr.api.dto.CommentNotificationDto;
+import ru.gb.hubr.enumeration.ArticleComplainType;
+import ru.gb.hubr.enumeration.ArticleTopic;
+import ru.gb.hubr.enumeration.CommentComplainType;
 import ru.gb.hubr.service.ArticleService;
 
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/articles")
-public class MainController {
+public class ArticleController {
 
     private final ArticleService service;
-    private final AccountUserService accountUserService;
-    private final UserMapper userMapper;
 
     @GetMapping("/all")
-    public String getArticlesList(Model model){
+    public String getArticlesList(Model model) {
         model.addAttribute("articles", service.getAllArticles());
-        return "articles/main";
+        return "articles/articles";
     }
 
     @PostMapping("/add")
-    public String saveArticle(ArticleDto articleDto) {
-
+    public String saveArticle(@AuthenticationPrincipal UserDetails user,
+                              ArticleDto articleDto) {
+        articleDto.setAuthor(user.getUsername());
         service.saveArticle(articleDto);
         return "redirect:/articles/all";
     }
@@ -45,10 +49,23 @@ public class MainController {
     }
 
     @GetMapping("/{id}")
-    public String showArticle(Model model, @PathVariable(name = "id") Long id){
+    public String showArticle(Model model, @PathVariable(name = "id") Long id) {
 
         ArticleDto articleDto = service.getArticleById(id);
         model.addAttribute("article", articleDto);
+
+        CommentDto comment = new CommentDto();
+        comment.setArticleId(id);
+        model.addAttribute("comment", comment);
+
+        model.addAttribute("articleComplainTypes", ArticleComplainType.values());
+
+        model.addAttribute("articleNotification", new ArticleNotificationDto());
+
+        model.addAttribute("commentComplainTypes", CommentComplainType.values());
+
+        model.addAttribute("commentNotification", new CommentNotificationDto());
+
         return "articles/show-article";
     }
 

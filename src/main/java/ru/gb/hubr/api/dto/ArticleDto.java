@@ -6,9 +6,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.gb.hubr.entity.enums.ArticleTopic;
+import ru.gb.hubr.enumeration.ArticleTopic;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 import static java.lang.Math.min;
 import static liquibase.repackaged.org.apache.commons.lang3.StringUtils.ordinalIndexOf;
@@ -34,6 +35,7 @@ public class ArticleDto {
     @NotBlank
     private String content;
 
+    private List<CommentDto> comments;
 
     public String getPreview() {
         int maxPreviewLength = 100;

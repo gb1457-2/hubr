@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.gb.hubr.api.dto.ArticleDto;
-import ru.gb.hubr.entity.enums.ArticleTopic;
+import ru.gb.hubr.enumeration.ArticleTopic;
 import ru.gb.hubr.service.ArticleService;
 
 @Controller

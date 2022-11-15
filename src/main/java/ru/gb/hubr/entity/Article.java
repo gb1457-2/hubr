@@ -1,18 +1,31 @@
 package ru.gb.hubr.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.gb.hubr.entity.common.InfoEntity;
 import ru.gb.hubr.entity.enums.ArticleTopic;
 import ru.gb.hubr.entity.user.AccountUser;
+import ru.gb.hubr.enumeration.ArticleTopic;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.util.List;
 
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+//@Builder
 @Entity
 @Table(name = "article")
 public class Article extends InfoEntity {
@@ -31,7 +44,13 @@ public class Article extends InfoEntity {
     @Column(name = "content")
     private String content;
 
-    public String getPreview(){
+    @OneToMany(mappedBy = "article", cascade = CascadeType.MERGE)
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "article", cascade = CascadeType.MERGE)
+    private List<ArticleNotification> complains;
+
+    public String getPreview() {
 
         String[] strings = content.split("</p>");
 

@@ -51,6 +51,12 @@ public class AccountUser extends InfoEntity implements UserDetails {
     @OneToMany(mappedBy = "author", cascade = CascadeType.MERGE)
     private Set<Article> articles;
 
+    @OneToMany(mappedBy = "author", cascade = CascadeType.MERGE)
+    private Set<CommentNotification> commentNotifications;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.MERGE)
+    private Set<ArticleNotification> articleNotifications;
+
     @Column(name = "locked_at")
     private LocalDateTime lockedAt;
 
