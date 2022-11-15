@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureMockMvc(addFilters = true)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class AbstractTest {
@@ -22,4 +22,5 @@ public class AbstractTest {
 
     @Autowired
     protected ObjectMapper objectMapper;
+
 }
