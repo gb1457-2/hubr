@@ -7,16 +7,19 @@ import ru.gb.hubr.api.dto.UserDto;
 import ru.gb.hubr.config.MailProperties;
 import ru.gb.hubr.dao.AccountUserDao;
 import ru.gb.hubr.dao.EventUserDao;
-import ru.gb.hubr.entity.AccountUser;
+import ru.gb.hubr.entity.user.AccountUser;
 import ru.gb.hubr.entity.EventUser;
 import ru.gb.hubr.entity.TypeEvent;
 import ru.gb.hubr.service.mail.EmailContext;
 import ru.gb.hubr.service.mail.EmailService;
 
-
+/**
+ * @author Vitaly
+ * @Date 11.11.22
+ */
 @Service
 @RequiredArgsConstructor
-public class SecurityService {
+public class SecurityUserService {
 
     private final MailProperties mailProperties;
     private final EmailService emailService;

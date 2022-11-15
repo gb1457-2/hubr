@@ -19,3 +19,7 @@ mail-service:
   path-template: mail/template-mail
   display-from: hubr-gb
   base-url: http://localhost:8080
+security:
+  locked-authorities:
+    - article.write
+

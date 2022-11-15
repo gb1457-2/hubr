@@ -1,10 +1,9 @@
 package ru.gb.hubr.entity;
 
 import lombok.*;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import ru.gb.hubr.entity.common.InfoEntity;
 import ru.gb.hubr.entity.enums.ArticleTopic;
+import ru.gb.hubr.entity.user.AccountUser;
 
 import javax.persistence.*;
 

@@ -30,7 +30,7 @@
                     <a class="nav-link" th:classappend="${activeTab == 'ArticleList' ? 'active' : ''}"
                        aria-current="page" th:href="@{/articles/all}">Все статьи</a>
                 </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()" >
+                <li class="nav-item" sec:authorize="isAuthenticated() && hasAuthority('article.write')" >
                     <a class="nav-link" th:classappend="${activeTab == 'AddArticle' ? 'active' : ''}"
                        aria-current="page" th:href="@{/articles/add}">Написать статью</a>
                 </li>
@@ -94,11 +94,8 @@
                     <li>
                         <hr class="mt-0 mb-0">
                     </li>
-                    <li><a class="dropdown-item">
-                        <form th:action="@{/logout}" method="POST">
-                            <input type="submit" class="btn btn-danger" value="Выйти"/>
-                        </form>
-                    </a></li>
+
+                    <li><a class="dropdown-item" th:href="@{/logout}">Выйти</a></li>
                 </ul>
 
                 <ul class="dropdown-menu" sec:authorize="isAnonymous()" style="">

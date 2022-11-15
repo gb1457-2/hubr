@@ -1,7 +1,7 @@
 package ru.gb.hubr.entity.security;
 
 import lombok.*;
-import ru.gb.hubr.entity.AccountUser;
+import ru.gb.hubr.entity.user.AccountUser;
 
 import javax.persistence.*;
 import java.util.Set;

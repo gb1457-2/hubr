@@ -1,7 +1,7 @@
 package ru.gb.hubr.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.gb.hubr.entity.AccountUser;
+import ru.gb.hubr.entity.user.AccountUser;
 
 import java.util.Optional;
 
