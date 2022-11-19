@@ -10,6 +10,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.gb.hubr.entity.Article;
+import ru.gb.hubr.entity.ArticleNotification;
+import ru.gb.hubr.entity.CommentNotification;
 import ru.gb.hubr.entity.common.InfoEntity;
 import ru.gb.hubr.entity.security.AccountRole;
 
@@ -100,7 +102,6 @@ public class AccountUser extends InfoEntity implements UserDetails {
             return false;
         }
         return LocalDateTime.now().isAfter(lockedAt) && LocalDateTime.now().isBefore(lockedUntil);
-
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<AccountRole> roles) {

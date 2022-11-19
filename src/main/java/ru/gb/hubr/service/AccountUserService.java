@@ -80,16 +80,20 @@ public class AccountUserService implements UserDetailsService {
         AccountUser accountUserDB = accountUserDao.findByUsername(userDto.getUsername()).orElseThrow();
         accountUserDB.updateInfoByDuplicate(accountUser);
 
+        updateCurrentUser(session,accountUserDB);
+
+        return userMapper.toUserDto(accountUserDao.save(accountUserDB));
+    }
+
+    private void updateCurrentUser(HttpSession session,AccountUser accountUser){
         SecurityContext context = (SecurityContext) session.getAttribute(SPRING_SECURITY_CONTEXT_KEY);
         Authentication authentication = context.getAuthentication();
         if (authentication.getPrincipal() instanceof AccountUser) {
             AccountUser currentUser = (AccountUser) authentication.getPrincipal();
-            if (currentUser.getUsername().equals(accountUserDB.getUsername())) {
-                currentUser.updateInfoByDuplicate(accountUserDB);
+            if (currentUser.getUsername().equals(accountUser.getUsername())) {
+                currentUser.updateInfoByDuplicate(accountUser);
             }
         }
-
-        return userMapper.toUserDto(accountUserDao.save(accountUserDB));
     }
 
     @Transactional(readOnly = true)

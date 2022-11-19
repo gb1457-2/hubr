@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import ru.gb.hubr.entity.common.BaseEntity;
+import ru.gb.hubr.entity.user.AccountUser;
 import ru.gb.hubr.enumeration.ArticleComplainType;
 
 import javax.persistence.Column;

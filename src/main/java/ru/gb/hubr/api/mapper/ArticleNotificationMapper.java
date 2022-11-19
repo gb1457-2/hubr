@@ -7,8 +7,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import ru.gb.hubr.api.dto.ArticleNotificationDto;
 import ru.gb.hubr.dao.AccountUserDao;
-import ru.gb.hubr.entity.AccountUser;
 import ru.gb.hubr.entity.ArticleNotification;
+import ru.gb.hubr.entity.user.AccountUser;
 
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
