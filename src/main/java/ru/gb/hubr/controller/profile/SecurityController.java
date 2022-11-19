@@ -18,18 +18,22 @@ import ru.gb.hubr.api.dto.UserDto;
 import ru.gb.hubr.entity.TypeEvent;
 import ru.gb.hubr.service.AccountUserService;
 import ru.gb.hubr.service.EventService;
-import ru.gb.hubr.service.SecurityService;
+import ru.gb.hubr.service.SecurityUserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * @author Vitaly Krivobokov
+ * @Date 13.11.22
+ */
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("${security-uri}")
 public class SecurityController {
 
     private final AccountUserService accountUserService;
-    private final SecurityService securityService;
+    private final SecurityUserService securityUserService;
     private final EventService eventService;
     @Value("${security-uri}")
     private String pathSecurity;
@@ -47,12 +51,14 @@ public class SecurityController {
     }
 
 
+    //todo vitaly
     @PostMapping("/updatePassword")
     @ResponseStatus(HttpStatus.OK)
     public String updatePassword(ProfileUserDto profileUserDto) {
         return "redirect:" + pathSecurity;
     }
 
+    //todo vitaly
     @PostMapping("/updateEmail")
     @ResponseStatus(HttpStatus.OK)
     public String updateEmail(ProfileUserDto profileUserDto) {
@@ -60,10 +66,11 @@ public class SecurityController {
     }
 
 
+
     @GetMapping("/deleteProfile")
     public String sendDeleteProfile(HttpServletRequest request, HttpSession session, Model model) throws Exception {
         UserDto currentUser = accountUserService.getCurrentUser(session);
-        securityService.createDeleteProfile(currentUser);
+        securityUserService.createDeleteProfile(currentUser);
         model.addAttribute("user", currentUser);
 
         return "profile/security-form";
@@ -78,6 +85,7 @@ public class SecurityController {
         return "profile/security-form";
     }
 
+    //todo vitaly не доделаны методы отличные от удаления
     @PostMapping("/event/{token}")
     public String workByTokenRequest(UserDto userDto, @PathVariable(name = "token") String token, Model model) {
         EventDto eventByToken = eventService.getEventByToken(token);
@@ -86,16 +94,16 @@ public class SecurityController {
 
         boolean successfulDelete = false;
         if (typeEvent.equals(TypeEvent.RESET_EMAIL)) {
-            securityService.resetEmail(currentUser, userDto.getEmail());
+            securityUserService.resetEmail(currentUser, userDto.getEmail());
             successfulDelete = true;
         } else if (typeEvent.equals(TypeEvent.RESET_PASSWORD)) {
-            securityService.resetPassword(currentUser, userDto.getPassword());
+            securityUserService.resetPassword(currentUser, userDto.getPassword());
             successfulDelete = true;
         } else if (typeEvent.equals(TypeEvent.CONFIRM_ACCOUNT)) {
-            securityService.resetPassword(currentUser, userDto.getPassword());
+            securityUserService.resetPassword(currentUser, userDto.getPassword());
             successfulDelete = true;
         } else if (typeEvent.equals(TypeEvent.DELETE_PROFILE) && currentUser.getPassword().equals(userDto.getPassword())) {
-            securityService.deleteProfile(currentUser);
+            securityUserService.deleteProfile(currentUser);
             successfulDelete = true;
         }
         model.addAttribute("successfulDelete", successfulDelete);

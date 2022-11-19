@@ -16,6 +16,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests(requests -> {
             requests.antMatchers("/articles/all").permitAll();
+            requests.antMatchers("/articles/add").access("hasAuthority('article.write')");
             requests.antMatchers("/login").permitAll();
             requests.antMatchers("/register").permitAll();
             requests.antMatchers("/").permitAll();

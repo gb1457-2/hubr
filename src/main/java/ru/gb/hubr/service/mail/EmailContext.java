@@ -7,7 +7,10 @@ import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * @author Vitaly Krivobokov
+ * @Date 13.11.22
+ */
 @Getter
 @Setter
 @Builder

@@ -7,7 +7,7 @@ import ru.gb.hubr.api.dto.UserDto;
 import ru.gb.hubr.api.mapper.EventMapper;
 import ru.gb.hubr.dao.AccountUserDao;
 import ru.gb.hubr.dao.EventUserDao;
-import ru.gb.hubr.entity.AccountUser;
+import ru.gb.hubr.entity.user.AccountUser;
 import ru.gb.hubr.entity.EventUser;
 
 import java.time.LocalDateTime;
@@ -15,6 +15,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * @author Vitaly Krivobokov
+ * @Date 13.11.22
+ */
 @Service
 @RequiredArgsConstructor
 public class EventService {

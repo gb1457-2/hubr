@@ -4,7 +4,7 @@ import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import ru.gb.hubr.api.dto.ArticleDto;
 import ru.gb.hubr.dao.AccountUserDao;
-import ru.gb.hubr.entity.AccountUser;
+import ru.gb.hubr.entity.user.AccountUser;
 import ru.gb.hubr.entity.Article;
 
 import java.util.NoSuchElementException;

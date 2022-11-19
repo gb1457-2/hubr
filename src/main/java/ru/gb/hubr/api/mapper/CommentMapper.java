@@ -7,8 +7,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import ru.gb.hubr.api.dto.CommentDto;
 import ru.gb.hubr.dao.AccountUserDao;
-import ru.gb.hubr.entity.AccountUser;
 import ru.gb.hubr.entity.Comment;
+import ru.gb.hubr.entity.user.AccountUser;
 
 import java.util.List;
 import java.util.NoSuchElementException;

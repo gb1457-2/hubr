@@ -6,13 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.gb.hubr.dao.AccountUserDao;
 import ru.gb.hubr.dao.security.AccountRoleDao;
-import ru.gb.hubr.entity.AccountUser;
-
-import java.sql.SQLException;
-import java.util.Optional;
+import ru.gb.hubr.entity.user.AccountUser;
 
 @Controller
 @RequestMapping("/register")
@@ -29,8 +27,9 @@ public class RegistrationController {
         return "registration";
     }
 
+    // todo pezhe roleRepo.findById(2L).get() в коде непонятно что значит 2L, лучше добавить enum
     @PostMapping
-    public String processRegistration(AccountUser user) {
+    public String processRegistration(@RequestBody AccountUser user) {
 
         AccountUser savedUser = AccountUser
                 .builder()

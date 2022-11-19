@@ -2,7 +2,10 @@ package ru.gb.hubr.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
+/**
+ * @author Vitaly Krivobokov
+ * @Date 14.11.22
+ */
 @Getter
 @RequiredArgsConstructor
 public enum TypeEvent {

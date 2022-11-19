@@ -8,9 +8,10 @@
 <body>
 
 <div th:fragment="profilecardedit" >
-    <form th:action="@{/profile}" th:object="${user}" method='post'>
+    <form th:action="@{/profile}" th:object="${user}" method='put'>
         <div class="card mb-3">
             <div class="card-body">
+                <input type="hidden" th:field="*{username}">
                 <div class="row mb-3">
                     <div class="col-sm-3">
                         <h6 class="mb-0" >Фамилия</h6>
@@ -61,6 +62,7 @@
 <div th:fragment="profilecardview" th:object="${user}">
     <div class="card mb-3">
         <div class="card-body">
+            <input type="hidden" th:field="*{username}">
             <div class="row mb-3">
                 <div class="col-sm-3">
                     <h6 class="mb-0">Фамилия</h6>
@@ -95,7 +97,7 @@
             <hr>
 
             <hr>
-            <div class="row">
+            <div class="row" th:if="${isMyProfile}">
                 <div class="col-sm-12">
                     <a class="btn btn-info " target="__blank" th:href="@{/profile/edit}">Edit</a>
                 </div>

@@ -5,28 +5,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+
 /**
  * @author Vitaly Krivobokov
- * @Date 13.11.22
+ * @Date 14.11.2022
  */
+
 @Setter
 @Getter
 @Component
-@ConfigurationProperties(prefix = "mail-service")
+@ConfigurationProperties(prefix = "security")
 @RequiredArgsConstructor
-public class MailProperties {
-
-    private String host;
-
-    private int port;
-
-    private String username;
-
-    private String password;
-
-    private String pathTemplate;
-
-    private String displayFrom;
-
-    private String baseUrl;
+public class SecurityProperties {
+    private List<String> LockedAuthorities;
 }
