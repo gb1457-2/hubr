@@ -40,7 +40,7 @@
                         <div class="card-body">
                             <form th:action="@{/profile/security}" th:object="${user}" method='post'>
                                 <!-- Form Group (current password)-->
-                                <input type="hidden" th:field="*{login}">
+                                <input type="hidden" th:field="*{username}">
                                 <div class="mb-3">
                                     <label class="small mb-1" for="currentPassword">Текущий пароль</label>
                                     <input class="form-control" id="currentPassword" th:field="*{password}"
@@ -79,7 +79,7 @@
                         <div class="card-header">Изменить почту</div>
                         <div class="card-body">
                             <form th:action="@{/profile/security}" th:object="${user}" method='post'>
-                                <input type="hidden" th:field="*{login}">
+                                <input type="hidden" th:field="*{username}">
                                 <div class="mb-3">
                                     <label class="small mb-1" for="currentPassword">Пароль для подтверждения</label>
                                     <input class="form-control" id="currentPassword"
@@ -119,7 +119,7 @@
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <form th:action="@{/profile/security/deleteProfile}" id="formModal" th:object="${user}" method="get">
-        <input type="hidden" th:field="*{login}">
+        <input type="hidden" th:field="*{username}">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

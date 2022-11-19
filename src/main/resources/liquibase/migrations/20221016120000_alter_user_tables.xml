@@ -5,12 +5,12 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
 
-    <changeSet id="before_alter_ans_create_user_tables" author="Vitaly Krivobokov">
-        <tagDatabase tag="before_alter_ans_create_user_tables"/>
+    <changeSet id="before_alter_user_tables" author="Vitaly Krivobokov">
+        <tagDatabase tag="before_alter_user_tables"/>
     </changeSet>
 
     <changeSet id="alter_table_account_user" author="Vitaly Krivobokov">
-        <comment>Добавлены поля с ФИО и датой блокировки</comment>
+        <comment>Добавлено поле с адресом электронной почты</comment>
         <addColumn tableName="account_user">
             <column name="email" type="VARCHAR(255)"/>
         </addColumn>

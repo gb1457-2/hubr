@@ -3,6 +3,7 @@ package ru.gb.hubr.entity.common;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -27,11 +28,6 @@ public class InfoEntity extends BaseEntity {
     @Column(name = "last_modified_at")
     private LocalDateTime lastModifiedAt;
 
-    public InfoEntity(Long id, int version, LocalDateTime createdAt, LocalDateTime deletedAt, LocalDateTime lastModifiedAt) {
-        super(id);
-        this.version = version;
-        this.createdAt = createdAt;
-        this.deletedAt = deletedAt;
-        this.lastModifiedAt = lastModifiedAt;
-    }
+
+
 }

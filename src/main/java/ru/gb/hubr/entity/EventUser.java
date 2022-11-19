@@ -9,7 +9,10 @@ import ru.gb.hubr.entity.common.InfoEntity;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
+/**
+ * @author Vitaly Krivobokov
+ * @Date 13.11.22
+ */
 @Setter
 @Getter
 @NoArgsConstructor

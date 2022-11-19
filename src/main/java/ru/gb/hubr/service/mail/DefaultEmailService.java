@@ -2,22 +2,21 @@ package ru.gb.hubr.service.mail;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
-import ru.gb.hubr.api.mail.EmailContext;
-import ru.gb.hubr.api.mail.EmailService;
 import ru.gb.hubr.config.MailProperties;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-
+/**
+ * @author Vitaly Krivobokov
+ * @Date 13.11.22
+ */
 @Service
 @RequiredArgsConstructor
 public class DefaultEmailService implements EmailService {
@@ -44,11 +43,10 @@ public class DefaultEmailService implements EmailService {
 
         mimeMessageHelper.setTo(email.getTo());
         mimeMessageHelper.setSubject(email.getSubject());
-        mimeMessageHelper.setFrom(email.getFrom(),email.getDisplayName());
+        mimeMessageHelper.setFrom(email.getFrom(), email.getDisplayName());
         mimeMessageHelper.setText(emailContent, true);
         emailSender.send(message);
     }
-
 
 
 }

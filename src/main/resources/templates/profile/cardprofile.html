@@ -8,15 +8,16 @@
 <body>
 
 <div th:fragment="profilecardedit" >
-    <form th:action="@{/profile}" th:object="${user}" method='post'>
+    <form th:action="@{/profile}" th:object="${user}" method='put'>
         <div class="card mb-3">
             <div class="card-body">
+                <input type="hidden" th:field="*{username}">
                 <div class="row mb-3">
                     <div class="col-sm-3">
                         <h6 class="mb-0" >Фамилия</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                        <input type="text" class="form-control" th:field="*{lastname}">
+                        <input type="text" class="form-control" th:field="*{lastName}">
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -24,7 +25,7 @@
                         <h6 class="mb-0">Имя</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                        <input type="text" class="form-control" th:field="*{firstname}">
+                        <input type="text" class="form-control" th:field="*{firstName}">
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -43,14 +44,7 @@
                         <input type="text" class="form-control"  th:field="*{phone}">
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-sm-3">
-                        <h6 class="mb-0">Адрес</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                        <input type="text" class="form-control" value="Bay Area, San Francisco, CA">
-                    </div>
-                </div>
+
 
                 <div class="row" >
 
@@ -68,11 +62,12 @@
 <div th:fragment="profilecardview" th:object="${user}">
     <div class="card mb-3">
         <div class="card-body">
+            <input type="hidden" th:field="*{username}">
             <div class="row mb-3">
                 <div class="col-sm-3">
                     <h6 class="mb-0">Фамилия</h6>
                 </div>
-                <div class="col-sm-9 text-secondary" th:text="*{lastname}">
+                <div class="col-sm-9 text-secondary" th:text="*{lastName}">
                 </div>
             </div>
             <hr>
@@ -80,7 +75,7 @@
                 <div class="col-sm-3">
                     <h6 class="mb-0">Имя</h6>
                 </div>
-                <div class="col-sm-9 text-secondary" th:text="*{firstname}">
+                <div class="col-sm-9 text-secondary" th:text="*{firstName}">
                 </div>
             </div>
             <hr>
@@ -100,16 +95,9 @@
                 </div>
             </div>
             <hr>
-            <div class="row">
-                <div class="col-sm-3">
-                    <h6 class="mb-0">Адрес</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                    Bay Area, San Francisco, CA
-                </div>
-            </div>
+
             <hr>
-            <div class="row">
+            <div class="row" th:if="${isMyProfile}">
                 <div class="col-sm-12">
                     <a class="btn btn-info " target="__blank" th:href="@{/profile/edit}">Edit</a>
                 </div>
