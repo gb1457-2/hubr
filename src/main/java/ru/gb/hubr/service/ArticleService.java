@@ -1,17 +1,18 @@
-package ru.gb.hubr.service.article;
+package ru.gb.hubr.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import ru.gb.hubr.api.dto.ArticleDto;
+import ru.gb.hubr.api.mapper.ArticleMapper;
 import ru.gb.hubr.dao.AccountUserDao;
 import ru.gb.hubr.dao.ArticleDao;
 import ru.gb.hubr.entity.Article;
-import ru.gb.hubr.api.article.ArticleDto;
-import ru.gb.hubr.api.article.mapper.ArticleMapper;
+
+
 
 
 import java.util.List;
@@ -27,17 +28,20 @@ public class ArticleService {
     private final ArticleMapper articleMapper;
 
     public ArticleDto getArticleById(Long id){
-        return articleMapper.toArticleDto(articleDao.findById(id).orElse(null));
+        return articleMapper.toArticleDto(articleDao.findById(id).orElse(null), accountUserDao);
     }
 
     public List<ArticleDto> getAllArticles(){
-        return articleDao.findAll(Sort.by("createdAt").ascending()).stream().map(articleMapper::toArticleDto).collect(Collectors.toList());
+        return articleDao.findAll(Sort.by("createdAt").ascending())
+                .stream()
+                .map(article -> articleMapper.toArticleDto(article, accountUserDao))
+                .collect(Collectors.toList());
     }
 
     public ArticleDto saveArticle(ArticleDto articleDto){
 
         Article article = articleMapper.toArticle(articleDto, accountUserDao);
-        return articleMapper.toArticleDto(articleDao.save(article));
+        return articleMapper.toArticleDto(articleDao.save(article), accountUserDao);
     }
 
     public Page<ArticleDto> getArticlesPage(Pageable pageable){
@@ -46,7 +50,7 @@ public class ArticleService {
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
 
-        return articleDao.findAll(pageable).map(articleMapper::toArticleDto);
+        return articleDao.findAll(pageable).map(article -> articleMapper.toArticleDto(article, accountUserDao));
     }
 
 
