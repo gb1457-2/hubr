@@ -34,12 +34,14 @@ public class ArticleController {
     @GetMapping("/all")
     public String getArticlesList(Model model, @RequestParam("page") Optional<Integer> page,
                                   @RequestParam("size") Optional<Integer> size){
+
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
 
         Page<ArticleDto> articlesPage = service.getArticlesPage(PageRequest.of(currentPage-1, pageSize,
                 Sort.by(Sort.Direction.DESC, "createdAt")));
         model.addAttribute("articlesPage", articlesPage);
+
         int totalPages = articlesPage.getTotalPages();
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
@@ -47,7 +49,9 @@ public class ArticleController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
+
         model.addAttribute("currentPage", currentPage);
+
         int firstIndexPagination = 1;
         int lastIndexPagination = 10;
         if (totalPages >= 10 && currentPage > 5){
@@ -60,6 +64,7 @@ public class ArticleController {
         }
         model.addAttribute("firstIndexPagination", firstIndexPagination);
         model.addAttribute("lastIndexPagination", lastIndexPagination);
+
         return "articles/articles";
     }
 
@@ -73,9 +78,12 @@ public class ArticleController {
 
     @GetMapping("/add")
     public String showForm(Model model) {
+
         ArticleDto articleDto = new ArticleDto();
+
         model.addAttribute("topics", ArticleTopic.values());
         model.addAttribute("article", articleDto);
+
         return "articles/add-article";
     }
 

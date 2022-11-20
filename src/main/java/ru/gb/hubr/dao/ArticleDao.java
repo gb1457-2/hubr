@@ -10,5 +10,4 @@ public interface ArticleDao extends JpaRepository<Article, Long> {
 
     Page<Article> findAll(Pageable pageable);
 
-
 }
