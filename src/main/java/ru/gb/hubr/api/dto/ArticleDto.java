@@ -1,14 +1,20 @@
 package ru.gb.hubr.api.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import ru.gb.hubr.enumeration.ArticleTopic;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static java.lang.Math.min;
@@ -32,6 +38,9 @@ public class ArticleDto {
     @NotBlank
     private String name;
 
+    @PastOrPresent
+    private LocalDateTime createdAt;
+
     @NotBlank
     private String content;
 
@@ -45,6 +54,12 @@ public class ArticleDto {
         int endContentIndex = (thirdParagraphEndIndex < 0) ? min(content.length(), maxPreviewLength)
                 : min(thirdParagraphEndIndex, min(content.length(), maxPreviewLength));
         return content.substring(0, endContentIndex).concat("...");
+    }
+
+    public String getFormattedCreatedAt(){
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return createdAt.format(formatter);
     }
 
 }
