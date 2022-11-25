@@ -44,19 +44,20 @@ public class AccountUserService implements UserDetailsService {
     }
 
     @Transactional(readOnly = true)
-    public UserDto findByUsername(String username) {
-        AccountUser accountUser = accountUserDao.findByUsername(username).orElse(new AccountUser());
-
-        UserDto userDto = userMapper.toUserDto(accountUser);
-        return userDto;
-
+    public AccountUser findByUsername(String username) {
+        return accountUserDao.findByUsername(username).orElse(new AccountUser());
     }
 
-    public UserDto findById(Long idUser) {
-        AccountUser accountUser = accountUserDao.findById(idUser).orElseThrow();
-        UserDto userDto = userMapper.toUserDto(accountUser);
+    public UserDto findDtoByUsername(String username) {
+        return userMapper.toUserDto(findByUsername(username));
+    }
 
-        return userDto;
+    public AccountUser findById(Long userId) {
+        return accountUserDao.findById(userId).orElseThrow();
+    }
+
+    public UserDto findDtoById(Long userId) {
+        return userMapper.toUserDto(findById(userId));
     }
 
     @Transactional
@@ -64,8 +65,10 @@ public class AccountUserService implements UserDetailsService {
         AccountUser accountUser = userMapper.toAccountUser(userDto);
         if (accountUser.getUsername() != null) {
             accountUserDao.findByUsername(accountUser.getUsername())
-                    .ifPresent((p) -> {accountUser.setVersion(p.getVersion());
-                                        accountUser.setId(p.getId());});
+                    .ifPresent((p) -> {
+                        accountUser.setVersion(p.getVersion());
+                        accountUser.setId(p.getId());
+                    });
         }
         return userMapper.toUserDto(accountUserDao.save(accountUser));
     }
@@ -80,12 +83,12 @@ public class AccountUserService implements UserDetailsService {
         AccountUser accountUserDB = accountUserDao.findByUsername(userDto.getUsername()).orElseThrow();
         accountUserDB.updateInfoByDuplicate(accountUser);
 
-        updateCurrentUser(session,accountUserDB);
+        updateCurrentUser(session, accountUserDB);
 
         return userMapper.toUserDto(accountUserDao.save(accountUserDB));
     }
 
-    private void updateCurrentUser(HttpSession session,AccountUser accountUser){
+    private void updateCurrentUser(HttpSession session, AccountUser accountUser) {
         SecurityContext context = (SecurityContext) session.getAttribute(SPRING_SECURITY_CONTEXT_KEY);
         Authentication authentication = context.getAuthentication();
         if (authentication.getPrincipal() instanceof AccountUser) {
@@ -103,18 +106,35 @@ public class AccountUserService implements UserDetailsService {
     }
 
     @Transactional(readOnly = true)
-    public UserDto getCurrentUser(HttpSession session) {
-        SecurityContext context = (SecurityContext) session.getAttribute(SPRING_SECURITY_CONTEXT_KEY);
-        Authentication authentication = context.getAuthentication();
+    public UserDto getCurrentUserDto(HttpSession session) {
+        return userMapper.toUserDto(getCurrentUser(session));
+    }
 
-        Object principal = authentication.getPrincipal();
+    @Transactional(readOnly = true)
+    public AccountUser getCurrentUser(HttpSession session) {
+        Object principal = getPrincipal(session);
 
         if (principal instanceof AccountUser) {
-            return userMapper.toUserDto((AccountUser) principal);
+            return (AccountUser) principal;
         }
-        User currentUser = (User) authentication.getPrincipal();
+        User currentUser = (User) principal;
         return findByUsername(currentUser.getUsername());
     }
 
+
+    public String getCurrentUsername(HttpSession session) {
+        Object principal = getPrincipal(session);
+        if (principal instanceof AccountUser) {
+            return ((AccountUser) principal).getUsername();
+        }
+        User currentUser = (User) principal;
+        return currentUser.getUsername();
+    }
+
+    private Object getPrincipal(HttpSession session) {
+        SecurityContext context = (SecurityContext) session.getAttribute(SPRING_SECURITY_CONTEXT_KEY);
+        Authentication authentication = context.getAuthentication();
+        return authentication.getPrincipal();
+    }
 
 }

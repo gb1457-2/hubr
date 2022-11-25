@@ -15,12 +15,14 @@ import ru.gb.hubr.entity.Comment;
 public class CommentService {
 
     private final CommentDao commentDao;
+    private final CommentLikeService commentLikeService;
     private final AccountUserDao accountUserDao;
     private final CommentMapper commentMapper;
 
-    public CommentDto save(CommentDto commentDto) {
+    public CommentDto save(CommentDto commentDto, String currentUserName) {
         Comment comment = commentMapper.toComment(commentDto, accountUserDao);
-        return commentMapper.toCommentDto(commentDao.save(comment), accountUserDao);
+        return commentMapper.toCommentDto(commentDao.save(comment), accountUserDao,
+                currentUserName, commentLikeService);
     }
 
     public void delete(Long commentId) {
@@ -30,6 +32,4 @@ public class CommentService {
     public void complain(Long commentId, Long userId) {
 
     }
-
-
 }

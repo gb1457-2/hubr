@@ -10,7 +10,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.gb.hubr.entity.Article;
+import ru.gb.hubr.entity.ArticleLike;
 import ru.gb.hubr.entity.ArticleNotification;
+import ru.gb.hubr.entity.CommentLike;
 import ru.gb.hubr.entity.CommentNotification;
 import ru.gb.hubr.entity.common.InfoEntity;
 import ru.gb.hubr.entity.security.AccountRole;
@@ -38,7 +40,7 @@ import java.util.stream.Collectors;
 @Table(name = "account_user")
 public class AccountUser extends InfoEntity implements UserDetails {
 
-    @Column(name = "login",unique = true)
+    @Column(name = "login", unique = true)
     private String username;
 
     @Column(name = "password")
@@ -58,6 +60,12 @@ public class AccountUser extends InfoEntity implements UserDetails {
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.MERGE)
     private Set<ArticleNotification> articleNotifications;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.MERGE)
+    private Set<ArticleLike> articleLikes;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.MERGE)
+    private Set<CommentLike> commentLikes;
 
     @Column(name = "locked_at")
     private LocalDateTime lockedAt;
@@ -97,8 +105,8 @@ public class AccountUser extends InfoEntity implements UserDetails {
         return authorities;
     }
 
-    public boolean nowLocked(){
-        if (lockedAt==null|| lockedUntil==null){
+    public boolean nowLocked() {
+        if (lockedAt == null || lockedUntil == null) {
             return false;
         }
         return LocalDateTime.now().isAfter(lockedAt) && LocalDateTime.now().isBefore(lockedUntil);
@@ -108,14 +116,14 @@ public class AccountUser extends InfoEntity implements UserDetails {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
-    public void updateInfoByDuplicate(AccountUser anotherUser){
-        this.firstName = anotherUser.getFirstName() == null ? this.firstName: anotherUser.getFirstName();
-        this.lastName = anotherUser.getLastName() == null ? this.lastName: anotherUser.getEmail();
-        this.articles = anotherUser.getArticles() == null ? this.articles: anotherUser.getArticles();
-        this.lockedAt = anotherUser.getLockedAt() == null ? this.lockedAt: anotherUser.getLockedAt();
-        this.lockedUntil = anotherUser.getLockedUntil() == null ? this.lockedUntil: anotherUser.getLockedUntil();
-        this.email = anotherUser.getEmail() == null ? this.email: anotherUser.getEmail();
-        this.phone = anotherUser.getPhone() == null ? this.phone: anotherUser.getEmail();
+    public void updateInfoByDuplicate(AccountUser anotherUser) {
+        this.firstName = anotherUser.getFirstName() == null ? this.firstName : anotherUser.getFirstName();
+        this.lastName = anotherUser.getLastName() == null ? this.lastName : anotherUser.getEmail();
+        this.articles = anotherUser.getArticles() == null ? this.articles : anotherUser.getArticles();
+        this.lockedAt = anotherUser.getLockedAt() == null ? this.lockedAt : anotherUser.getLockedAt();
+        this.lockedUntil = anotherUser.getLockedUntil() == null ? this.lockedUntil : anotherUser.getLockedUntil();
+        this.email = anotherUser.getEmail() == null ? this.email : anotherUser.getEmail();
+        this.phone = anotherUser.getPhone() == null ? this.phone : anotherUser.getEmail();
     }
 
 }

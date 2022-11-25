@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="before_create_unique_index_like" author="Paul Selyutin">
+        <tagDatabase tag="before_create_unique_index_like"/>
+    </changeSet>
+
+    <changeSet id="create_unique_index_like" author="Paul Selyutin">
+        <sql dbms="postgresql" endDelimiter=";">
+            CREATE UNIQUE INDEX uidx_article_like ON article_like (article_id,user_id)
+            WHERE deleted_at IS NULL;
+            CREATE UNIQUE INDEX uidx_article_like_deleted_at ON article_like (article_id,user_id, deleted_at)
+            WHERE deleted_at IS NOT NULL;
+            CREATE UNIQUE INDEX uidx_comment_like ON comment_like (comment_id,user_id)
+            WHERE deleted_at IS NULL;
+            CREATE UNIQUE INDEX uidx_comment_like_deleted_at ON comment_like (comment_id,user_id, deleted_at)
+            WHERE deleted_at IS NOT NULL;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

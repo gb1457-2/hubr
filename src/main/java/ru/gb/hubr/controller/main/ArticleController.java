@@ -8,7 +8,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.gb.hubr.api.dto.ArticleDto;
 import ru.gb.hubr.api.dto.ArticleNotificationDto;
 import ru.gb.hubr.api.dto.CommentDto;
@@ -16,8 +20,11 @@ import ru.gb.hubr.api.dto.CommentNotificationDto;
 import ru.gb.hubr.enumeration.ArticleComplainType;
 import ru.gb.hubr.enumeration.ArticleTopic;
 import ru.gb.hubr.enumeration.CommentComplainType;
+import ru.gb.hubr.service.AccountUserService;
+import ru.gb.hubr.service.ArticleLikeService;
 import ru.gb.hubr.service.ArticleService;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,16 +36,20 @@ import java.util.stream.IntStream;
 @RequestMapping("/articles")
 public class ArticleController {
 
-    private final ArticleService service;
+    private final ArticleService articleService;
+
+    private final ArticleLikeService articleLikeService;
+
+    private final AccountUserService accountUserService;
 
     @GetMapping("/all")
     public String getArticlesList(Model model, @RequestParam("page") Optional<Integer> page,
-                                  @RequestParam("size") Optional<Integer> size){
+                                  @RequestParam("size") Optional<Integer> size) {
 
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
 
-        Page<ArticleDto> articlesPage = service.getArticlesPage(PageRequest.of(currentPage-1, pageSize,
+        Page<ArticleDto> articlesPage = articleService.getArticlesPage(PageRequest.of(currentPage - 1, pageSize,
                 Sort.by(Sort.Direction.DESC, "createdAt")));
         model.addAttribute("articlesPage", articlesPage);
 
@@ -54,10 +65,10 @@ public class ArticleController {
 
         int firstIndexPagination = 1;
         int lastIndexPagination = 10;
-        if (totalPages >= 10 && currentPage > 5){
+        if (totalPages >= 10 && currentPage > 5) {
             firstIndexPagination = currentPage - 4;
             lastIndexPagination = currentPage + 5;
-            if (lastIndexPagination >= totalPages){
+            if (lastIndexPagination >= totalPages) {
                 lastIndexPagination = totalPages;
                 firstIndexPagination = totalPages - 9;
             }
@@ -72,7 +83,7 @@ public class ArticleController {
     public String saveArticle(@AuthenticationPrincipal UserDetails user,
                               ArticleDto articleDto) {
         articleDto.setAuthor(user.getUsername());
-        service.saveArticle(articleDto);
+        articleService.saveArticle(articleDto, user.getUsername());
         return "redirect:/articles/all";
     }
 
@@ -88,9 +99,11 @@ public class ArticleController {
     }
 
     @GetMapping("/{id}")
-    public String showArticle(Model model, @PathVariable(name = "id") Long id) {
-
-        ArticleDto articleDto = service.getArticleById(id);
+    public String showArticle(HttpSession session,
+                              Model model,
+                              @PathVariable Long id) {
+        String currentUserName = accountUserService.getCurrentUsername(session);
+        ArticleDto articleDto = articleService.getArticleById(id, currentUserName);
         model.addAttribute("article", articleDto);
 
         CommentDto comment = new CommentDto();
@@ -107,6 +120,4 @@ public class ArticleController {
 
         return "articles/show-article";
     }
-
-
 }

@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.gb.hubr.api.dto.ArticleDto;
 import ru.gb.hubr.enumeration.ArticleTopic;
+import ru.gb.hubr.service.AccountUserService;
 import ru.gb.hubr.service.ArticleService;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,17 +23,21 @@ public class ArticleAdminController {
 
     private final ArticleService articleService;
 
+    private final AccountUserService accountUserService;
+
     @GetMapping("/all")
-    public String getArticleList(Model model) {
-        model.addAttribute("articles", articleService.getAllArticles());
+    public String getArticleList(HttpSession session, Model model) {
+        model.addAttribute("articles", articleService.getAllArticles(
+                accountUserService.getCurrentUsername(session)
+        ));
         return "admin/admin-articles";
     }
 
     @GetMapping("/{articleId}")
-    public String readArticle(Model model, @PathVariable("articleId") Long id) {
+    public String readArticle(HttpSession session, Model model, @PathVariable("articleId") Long id) {
         ArticleDto articleDto;
         if (id != null) {
-            articleDto = articleService.getArticleById(id);
+            articleDto = articleService.getArticleById(id, accountUserService.getCurrentUsername(session));
         } else {
             return "redirect:/admin/articles/all";
         }
@@ -39,10 +46,10 @@ public class ArticleAdminController {
     }
 
     @GetMapping("/edit")
-    public String editArticle(Model model, @RequestParam(name = "id") Long id) {
+    public String editArticle(HttpSession session, Model model, @RequestParam(name = "id") Long id) {
         ArticleDto articleDto;
         if (id != null) {
-            articleDto = articleService.getArticleById(id);
+            articleDto = articleService.getArticleById(id, accountUserService.getCurrentUsername(session));
         } else {
             return "redirect:/admin/articles/all";
         }
@@ -51,16 +58,16 @@ public class ArticleAdminController {
         return "articles/add-article";
     }
 
-        @PutMapping("/ban")
-        public String banArticle(@RequestParam(name = "id") Long id) {
-            //  UserDto userDto = profileServiceSQL.findById(id);
-            return "redirect:admin/articles/all";
-        }
+    @PutMapping("/ban")
+    public String banArticle(@RequestParam(name = "id") Long id) {
+        //  UserDto userDto = profileServiceSQL.findById(id);
+        return "redirect:admin/articles/all";
+    }
 
-        @DeleteMapping("/delete")
-        public String deleteArticle(@RequestParam(name = "id") Long id) {
-            //   UserDto userDto = profileServiceSQL.findById(id);
-            return "redirect:admin/articles/all";
-        }
+    @DeleteMapping("/delete")
+    public String deleteArticle(@RequestParam(name = "id") Long id) {
+        //   UserDto userDto = profileServiceSQL.findById(id);
+        return "redirect:admin/articles/all";
+    }
 
 }
