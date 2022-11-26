@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="before_recreate_comment_article_like" author="Paul Selyutin">
+        <tagDatabase tag="before_recreate_comment_article_like"/>
+    </changeSet>
+
+    <changeSet id="drop_comment_article_like_" author="Paul Selyutin">
+
+        <dropTable tableName="article_like"/>
+
+        <dropTable tableName="comment_like"/>
+
+    </changeSet>
+
+    <changeSet id="create_comment_like" author="Paul Selyutin">
+
+        <createTable tableName="comment_like">
+
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="comment_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE"/>
+
+            <column name="deleted_at" type="TIMESTAMP WITH TIME ZONE"/>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="comment_like" baseColumnNames="comment_id"
+                                 constraintName="fk_comment_like_comment"
+                                 referencedTableName="comment" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="comment_like" baseColumnNames="user_id"
+                                 constraintName="fk_comment_like_user"
+                                 referencedTableName="account_user" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="create_article_like" author="Paul Selyutin">
+
+        <createTable tableName="article_like">
+
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="article_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE"/>
+
+            <column name="deleted_at" type="TIMESTAMP WITH TIME ZONE"/>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="article_like" baseColumnNames="article_id"
+                                 constraintName="fk_article_like_article"
+                                 referencedTableName="article" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="article_like" baseColumnNames="user_id"
+                                 constraintName="fk_article_like_user"
+                                 referencedTableName="account_user" referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -38,4 +38,8 @@ public class CommentDto {
     @JsonSerialize(using = LocalDateSerializer.class)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime createdAt;
+
+    private Long likesCount;
+
+    private Long currentUserLikeId;
 }

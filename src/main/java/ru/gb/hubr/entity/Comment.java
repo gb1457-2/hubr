@@ -39,4 +39,7 @@ public class Comment extends InfoEntity {
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.MERGE)
     private List<CommentNotification> complains;
+
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.MERGE)
+    private List<CommentLike> likes;
 }
