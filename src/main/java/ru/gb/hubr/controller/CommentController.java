@@ -1,4 +1,4 @@
-package ru.gb.hubr.controller.main;
+package ru.gb.hubr.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,9 @@ import ru.gb.hubr.service.CommentService;
 
 import static java.time.LocalDateTime.now;
 
-
+/**
+ * Контроллер для работы с комментариями
+ */
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/comments")
@@ -24,6 +26,13 @@ public class CommentController {
 
     private final CommentService service;
 
+    /**
+     * Сохраняет комментарий
+     *
+     * @param user       пользователь, отправивший REST-апрос
+     * @param commentDto DTO с комментарием
+     * @return строка с командой перенаправления на страницу с отображением статьи
+     */
     @PostMapping
     public String saveComment(@AuthenticationPrincipal UserDetails user,
                               CommentDto commentDto) {
@@ -35,6 +44,13 @@ public class CommentController {
         return "redirect:/articles/" + commentDto.getArticleId();
     }
 
+    /**
+     * Удаляет комментарий
+     *
+     * @param commentId идентификтаор комментария
+     * @param model     объект с данными атрибутов
+     * @return строка с командой перенаправления на страницу с отображением статьи
+     */
     @DeleteMapping("/{commentId}")
     public String deleteComment(@PathVariable Long commentId, Model model) {
         log.info("Удаляется комментарий с идентификтором {}", commentId);

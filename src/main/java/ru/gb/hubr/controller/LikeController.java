@@ -1,4 +1,4 @@
-package ru.gb.hubr.controller.main;
+package ru.gb.hubr.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.gb.hubr.service.ArticleLikeService;
 import ru.gb.hubr.service.CommentLikeService;
 
-
+/**
+ * Контроллер для работы с лайками
+ */
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/articles")
@@ -22,6 +24,13 @@ public class LikeController {
 
     private final CommentLikeService commentLikeService;
 
+    /**
+     * Добавляет лайк пользователя на статью
+     *
+     * @param user      пользователь
+     * @param articleId идентификатор статьи
+     * @return строка с командой перенаправления на страницу с отображением статьи
+     */
     @GetMapping("/{articleId}/likes/add")
     public String addNewArticleLike(@AuthenticationPrincipal UserDetails user,
                                     @PathVariable long articleId) {
@@ -31,6 +40,14 @@ public class LikeController {
         return "redirect:/articles/" + articleId;
     }
 
+    /**
+     * Проводит логическое удаление лайка на статью с заданным идентификатором
+     *
+     * @param user          пользователь
+     * @param articleId     идентификатор статьи
+     * @param articleLikeId идентификатор лайка на статью
+     * @return строка с командой перенаправления на страницу с отображением статьи
+     */
     @GetMapping("/{articleId}/likes/{articleLikeId}/delete")
     public String logicalDeleteArticleLike(@AuthenticationPrincipal UserDetails user,
                                            @PathVariable Long articleId,
@@ -41,6 +58,14 @@ public class LikeController {
         return "redirect:/articles/" + articleId;
     }
 
+    /**
+     * Добавляет лайк пользователя на комментарий
+     *
+     * @param user      пользователь
+     * @param articleId идентификатор статьи
+     * @param commentId идентификатор комментария
+     * @return строка с командой перенаправления на страницу с отображением статьи
+     */
     @GetMapping("/{articleId}/comments/{commentId}/likes/add")
     public String addNewCommentLike(@AuthenticationPrincipal UserDetails user,
                                     @PathVariable Long articleId,
@@ -51,6 +76,15 @@ public class LikeController {
         return "redirect:/articles/" + articleId;
     }
 
+    /**
+     * Проводит логическое удаление лайка на статью с заданным идентификатором
+     *
+     * @param user          пользователь
+     * @param articleId     идентификатор статьи
+     * @param commentId     идентификатор комментария
+     * @param commentLikeId идентификатор лайка на комментарий
+     * @return строка с командой перенаправления на страницу с отображением статьи
+     */
     @GetMapping("/{articleId}/comments/{commentId}/likes/{commentLikeId}/delete")
     public String logicalDeleteCommentLike(@AuthenticationPrincipal UserDetails user,
                                            @PathVariable Long articleId,
