@@ -7,6 +7,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import ru.gb.hubr.api.dto.CommentDto;
 import ru.gb.hubr.dao.AccountUserDao;
+import ru.gb.hubr.entity.Article;
 import ru.gb.hubr.entity.Comment;
 import ru.gb.hubr.entity.user.AccountUser;
 
@@ -20,6 +21,7 @@ public interface CommentMapper {
     @Mapping(target = "author", ignore = true)
     Comment toComment(CommentDto commentDto, @Context AccountUserDao accountUserDao);
 
+    @Mapping(target = "articleId", source = "article.id")
     @Mapping(target = "username", ignore = true)
     CommentDto toCommentDto(Comment comment, @Context AccountUserDao accountUserDao);
 
@@ -45,4 +47,10 @@ public interface CommentMapper {
         );
         comment.setAuthor(accountUser);
     }
+
+    default String getArticle(Article article) {
+        return article.getName();
+    }
+
+
 }

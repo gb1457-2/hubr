@@ -24,14 +24,15 @@
                <!-- <button class="nav-link" id="v-pills-comments-tab" data-bs-toggle="pill" data-bs-target="#v-pills-comments" type="button" role="tab" aria-controls="v-pills-comments" aria-selected="false">Comments</button> -->
                 <a class="nav-link" type="button" align="center" th:href="@{/admin/comments/all}">Comments</a>
                 <!--  <button class="nav-link" id="v-pills-notifications-tab" data-bs-toggle="pill" data-bs-target="#v-pills-notifications" type="button" role="tab" aria-controls="v-pills-notifications" aria-selected="false">Notifications</button> -->
-                <a class="nav-link" type="button" align="center" th:href="@{/admin/notifications/all}">Notifications</a>
+                <a class="nav-link" type="button" align="center" th:href="@{/admin/article-notifications/all}">Article notifications</a>
+                <a class="nav-link" type="button" align="center" th:href="@{/admin/comment-notifications/all}">Comment notifications</a>
             </div>
             <div class="tab-content" id="v-pills-tabContent">
 
                 <div class="tab-pane fade show active" id="v-pills-users" role="tabpanel" aria-labelledby="v-pills-users-tab" tabindex="0">
 
                     <div class="container">
-                        <span th:if="${users.size() == 0}">Нет пользователей</span>
+                        <span th:if="${users.size() == 0}">Пользователей нет</span>
                         <div th:unless="${users.size() == 0}">
                             <table class="table table-bordered">
                                 <thead>
@@ -48,7 +49,8 @@
                                     <th scope="col">Дата блокировки</th>
                                     <th scope="col">Дата снятия блокировки</th>
                                     <th scope="col">Просмотр</th>
-                                    <th scope="col">Забанить</th>
+                                    <th scope="col">Заблокировать</th>
+                                    <th scope="col">Разблокировать</th>
                                     <th scope="col">Редактировать</th>
                                     <th scope="col">Удалить</th>
 
@@ -73,7 +75,11 @@
                                     </td>
 
                                     <td>
-                                        <a type="button" class="btn btn-warning" th:href="@{/admin/users/ban(id=${user.id})}">Забанить</a>
+                                        <a type="button" class="btn btn-warning" th:href="@{/admin/users/ban(id=${user.id})}">Заблокировать</a>
+                                    </td>
+
+                                    <td>
+                                        <a type="button" class="btn btn-warning" th:href="@{/admin/users/unban(id=${user.id})}">Разблокировать</a>
                                     </td>
 
                                       <td>

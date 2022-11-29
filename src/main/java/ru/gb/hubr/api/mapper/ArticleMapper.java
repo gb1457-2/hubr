@@ -25,8 +25,5 @@ public interface ArticleMapper {
         return author.getUsername();
     }
 
-//    default String getTopic(ArticleTopic topic) {
-//        return topic.getTitle();
-//    }
 
 }

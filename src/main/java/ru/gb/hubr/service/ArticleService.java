@@ -32,7 +32,7 @@ public class ArticleService {
     }
 
     public List<ArticleDto> getAllArticles(){
-        return articleDao.findAll(Sort.by("createdAt").ascending())
+        return articleDao.findAll(Sort.by("createdAt").descending())
                 .stream()
                 .map(article -> articleMapper.toArticleDto(article, accountUserDao))
                 .collect(Collectors.toList());

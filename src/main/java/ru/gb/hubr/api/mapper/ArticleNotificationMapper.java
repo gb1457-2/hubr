@@ -7,6 +7,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import ru.gb.hubr.api.dto.ArticleNotificationDto;
 import ru.gb.hubr.dao.AccountUserDao;
+import ru.gb.hubr.entity.Article;
 import ru.gb.hubr.entity.ArticleNotification;
 import ru.gb.hubr.entity.user.AccountUser;
 
@@ -46,4 +47,9 @@ public interface ArticleNotificationMapper {
         );
         articleNotification.setAuthor(accountUser);
     }
+
+    default String getArticle(Article article) {
+        return article.getName();
+    }
+
 }

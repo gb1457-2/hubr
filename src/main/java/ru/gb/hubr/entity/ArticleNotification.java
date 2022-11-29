@@ -24,7 +24,6 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "article_notification")
 public class ArticleNotification extends BaseEntity {

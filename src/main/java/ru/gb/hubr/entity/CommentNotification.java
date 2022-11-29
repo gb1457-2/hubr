@@ -24,7 +24,6 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "comment_notification")
 public class CommentNotification extends BaseEntity {

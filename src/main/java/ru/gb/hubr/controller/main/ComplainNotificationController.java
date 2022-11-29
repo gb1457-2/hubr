@@ -27,6 +27,7 @@ public class ComplainNotificationController {
         Long commentId = notification.getCommentId();
         log.info("Сохраняется жалоба на комментарий {} пользователя {} по статье с идентификтором {}",
                 commentId, user.getUsername(), articleId);
+        notification.setUsername(user.getUsername());
         commentNotificationService.save(notification);
         return "redirect:/articles/" + articleId;
     }
@@ -37,6 +38,9 @@ public class ComplainNotificationController {
         Long articleId = notification.getArticleId();
         log.info("Сохраняется жалоба пользователя {} на статью с идентификтором {}",
                 user.getUsername(), articleId);
+        System.out.println("User Details user: " + user.getUsername());
+        notification.setUsername(user.getUsername());
+        System.out.println("User from notification: " + notification.getUsername());
         articleNotificationService.save(notification);
         return "redirect:/articles/" + articleId;
     }

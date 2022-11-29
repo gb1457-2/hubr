@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
@@ -25,7 +26,9 @@ public class CommentDto {
 
     private Long articleId;
 
-    private Long userId;
+   private String article;
+
+ //   private Long userId;
 
     @NotBlank
     private String username;
@@ -38,4 +41,13 @@ public class CommentDto {
     @JsonSerialize(using = LocalDateSerializer.class)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime createdAt;
+
+    public String getPreview() {
+        if(content.length() <= 15) {
+            return content;
+        } else {
+            return content.substring(0, 13).concat("...");
+        }
+    }
+
 }
