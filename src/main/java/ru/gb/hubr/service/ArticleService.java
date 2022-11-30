@@ -39,8 +39,8 @@ public class ArticleService {
                 currentUserName, commentLikeService);
     }
 
-    public List<ArticleDto> getAllArticles(String currentUserName) {
-        return articleDao.findAll(Sort.by("createdAt").ascending())
+    public List<ArticleDto> getAllArticles(){
+        return articleDao.findAll(Sort.by("createdAt").descending())
                 .stream()
                 .map(article -> articleMapper.toArticleDto(article, accountUserDao, articleLikeService,
                         currentUserName, commentLikeService))

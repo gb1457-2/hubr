@@ -50,8 +50,5 @@ public interface ArticleMapper {
     }
 
 
-//    default String getTopic(ArticleTopic topic) {
-//        return topic.getTitle();
-//    }
 
 }

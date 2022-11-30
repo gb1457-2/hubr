@@ -7,6 +7,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import ru.gb.hubr.api.dto.CommentNotificationDto;
 import ru.gb.hubr.dao.AccountUserDao;
+import ru.gb.hubr.entity.Comment;
 import ru.gb.hubr.entity.CommentNotification;
 import ru.gb.hubr.entity.user.AccountUser;
 
@@ -46,4 +47,14 @@ public interface CommentNotificationMapper {
         );
         commentNotification.setAuthor(accountUser);
     }
+
+    default String getComment(Comment comment) {
+        String content = comment.getContent();
+        if(content.length() <= 15) {
+            return content;
+        } else {
+            return content.substring(0, 13).concat("...");
+        }
+    }
+
 }
