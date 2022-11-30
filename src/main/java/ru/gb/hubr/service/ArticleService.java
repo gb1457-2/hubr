@@ -37,11 +37,11 @@ public class ArticleService {
                 currentUserName, commentLikeService);
     }
 
-    public List<ArticleDto> getAllArticles(){
+    public List<ArticleDto> getAllArticles(String currentUsername) {
         return articleDao.findAll(Sort.by("createdAt").descending())
                 .stream()
                 .map(article -> articleMapper.toArticleDto(article, accountUserDao, articleLikeService,
-                        currentUserName, commentLikeService))
+                        currentUsername, commentLikeService))
                 .collect(Collectors.toList());
     }
 

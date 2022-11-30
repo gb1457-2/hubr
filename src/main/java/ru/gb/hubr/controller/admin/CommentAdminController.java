@@ -5,14 +5,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import ru.gb.hubr.api.dto.ArticleDto;
-import ru.gb.hubr.api.dto.ArticleNotificationDto;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.gb.hubr.api.dto.CommentDto;
-import ru.gb.hubr.api.dto.CommentNotificationDto;
-import ru.gb.hubr.enumeration.ArticleComplainType;
-import ru.gb.hubr.enumeration.ArticleTopic;
-import ru.gb.hubr.enumeration.CommentComplainType;
 import ru.gb.hubr.service.CommentService;
 
 @Controller
@@ -23,16 +21,17 @@ public class CommentAdminController {
     private final CommentService commentService;
 
     @GetMapping("/all")
-    public String getCommentList(Model model) {
-        model.addAttribute("comments", commentService.findAll());
+    public String getCommentList(@AuthenticationPrincipal UserDetails user, Model model) {
+        model.addAttribute("comments", commentService.findAll(user.getUsername()));
         return "admin/admin-comments";
     }
 
     @GetMapping("/{commentId}")
-    public String showComment(Model model, @PathVariable("commentId") Long id) {
+    public String showComment(@AuthenticationPrincipal UserDetails user, Model model,
+                              @PathVariable("commentId") Long id) {
         CommentDto commentDto;
         if (id != null) {
-            commentDto = commentService.findCommentById(id);
+            commentDto = commentService.findCommentById(id, user.getUsername());
         } else {
             return "redirect:/admin/comments/all";
         }
@@ -41,10 +40,11 @@ public class CommentAdminController {
     }
 
     @GetMapping("/edit")
-    public String showCommentEditForm(Model model, @RequestParam(name = "id") Long id) {
+    public String showCommentEditForm(@AuthenticationPrincipal UserDetails user,
+                                      Model model, @RequestParam(name = "id") Long id) {
         CommentDto commentDto;
         if (id != null) {
-            commentDto = commentService.findCommentById(id);
+            commentDto = commentService.findCommentById(id, user.getUsername());
         } else {
             return "redirect:/admin/comments/all";
         }
@@ -54,9 +54,10 @@ public class CommentAdminController {
 
 
     @PostMapping("/edit")
-    public String saveComment(CommentDto commentDto) {
-        if(commentDto.getContent() != null || !commentDto.getContent().equals("")) {
-            commentService.save(commentDto);
+    public String saveComment(@AuthenticationPrincipal UserDetails user,
+                              CommentDto commentDto) {
+        if (commentDto.getContent() != null || !commentDto.getContent().equals("")) {
+            commentService.save(commentDto, user.getUsername());
             return "redirect:/admin/comments/all";
         }
         return "admin/edit-comment";
