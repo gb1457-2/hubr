@@ -1,14 +1,10 @@
 package ru.gb.hubr.api.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 import ru.gb.hubr.enumeration.ArticleTopic;
 
 import javax.validation.constraints.NotBlank;
@@ -24,7 +20,6 @@ import static liquibase.repackaged.org.apache.commons.lang3.StringUtils.ordinalI
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class ArticleDto {
 
     private Long id;
@@ -44,6 +39,10 @@ public class ArticleDto {
     @NotBlank
     private String content;
 
+    private Long likesCount;
+
+    private Long currentUserLikeId;
+
     private List<CommentDto> comments;
 
     public String getPreview() {
@@ -56,8 +55,7 @@ public class ArticleDto {
         return content.substring(0, endContentIndex).concat("...");
     }
 
-    public String getFormattedCreatedAt(){
-
+    public String getFormattedCreatedAt() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return createdAt.format(formatter);
     }

@@ -16,8 +16,8 @@ public interface UserMapper {
     AccountUser toAccountUser(UserDto userDto);
 
     @AfterMapping
-    default void UpdateResult(final AccountUser accountUser,@MappingTarget final UserDto.UserDtoBuilder userDto){
-        userDto.isLocked(accountUser.nowLocked());
+    default void UpdateResult(AccountUser accountUser, @MappingTarget UserDto userDto) {
+        userDto.setLocked(accountUser.nowLocked());
     }
 
 }

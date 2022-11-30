@@ -46,7 +46,7 @@ public class SecurityController {
 
     @GetMapping
     public String profilePage(Model model, HttpSession session) {
-        model.addAttribute("user", accountUserService.getCurrentUser(session));
+        model.addAttribute("user", accountUserService.getCurrentUserDto(session));
         return "profile/security-form";
     }
 
@@ -69,7 +69,7 @@ public class SecurityController {
 
     @GetMapping("/deleteProfile")
     public String sendDeleteProfile(HttpServletRequest request, HttpSession session, Model model) throws Exception {
-        UserDto currentUser = accountUserService.getCurrentUser(session);
+        UserDto currentUser = accountUserService.getCurrentUserDto(session);
         securityUserService.createDeleteProfile(currentUser);
         model.addAttribute("user", currentUser);
 
@@ -79,7 +79,7 @@ public class SecurityController {
     @GetMapping("/event/{token}")
     public String sendDeleteProfile(HttpSession session, @PathVariable(name = "token") String token, Model model) {
         EventDto eventByToken = eventService.getEventByToken(token);
-        UserDto currentUser = accountUserService.getCurrentUser(session);
+        UserDto currentUser = accountUserService.getCurrentUserDto(session);
         model.addAttribute("user", currentUser);
         model.addAttribute("typeBackdrop", TypeEvent.valueOf(eventByToken.getTypeEvent()));
         return "profile/security-form";
@@ -89,7 +89,7 @@ public class SecurityController {
     @PostMapping("/event/{token}")
     public String workByTokenRequest(UserDto userDto, @PathVariable(name = "token") String token, Model model) {
         EventDto eventByToken = eventService.getEventByToken(token);
-        UserDto currentUser = accountUserService.findById(eventByToken.getUserId());
+        UserDto currentUser = accountUserService.findDtoById(eventByToken.getUserId());
         TypeEvent typeEvent = TypeEvent.valueOf(eventByToken.getTypeEvent());
 
         boolean successfulDelete = false;

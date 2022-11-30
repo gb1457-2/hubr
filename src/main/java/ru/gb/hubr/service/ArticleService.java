@@ -12,9 +12,6 @@ import ru.gb.hubr.dao.AccountUserDao;
 import ru.gb.hubr.dao.ArticleDao;
 import ru.gb.hubr.entity.Article;
 
-
-
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,34 +21,42 @@ import java.util.stream.Collectors;
 public class ArticleService {
 
     private final ArticleDao articleDao;
+
+    private final ArticleLikeService articleLikeService;
+
     private final AccountUserDao accountUserDao;
+
+    private final CommentLikeService commentLikeService;
+
     private final ArticleMapper articleMapper;
 
-    public ArticleDto getArticleById(Long id){
-        return articleMapper.toArticleDto(articleDao.findById(id).orElse(null), accountUserDao);
+    public ArticleDto getArticleById(Long id, String currentUserName) {
+        Article article = articleDao.findById(id).orElse(null);
+
+        return articleMapper.toArticleDto(article, accountUserDao, articleLikeService,
+                currentUserName, commentLikeService);
     }
 
     public List<ArticleDto> getAllArticles(){
         return articleDao.findAll(Sort.by("createdAt").descending())
                 .stream()
-                .map(article -> articleMapper.toArticleDto(article, accountUserDao))
+                .map(article -> articleMapper.toArticleDto(article, accountUserDao, articleLikeService,
+                        currentUserName, commentLikeService))
                 .collect(Collectors.toList());
     }
 
-    public ArticleDto saveArticle(ArticleDto articleDto){
-
+    public ArticleDto saveArticle(ArticleDto articleDto, String currentUserName) {
         Article article = articleMapper.toArticle(articleDto, accountUserDao);
-        return articleMapper.toArticleDto(articleDao.save(article), accountUserDao);
+        return articleMapper.toArticleDto(articleDao.save(article), accountUserDao, articleLikeService,
+                currentUserName, commentLikeService);
     }
 
-    public Page<ArticleDto> getArticlesPage(Pageable pageable){
-
+    public Page<ArticleDto> getArticlesPage(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
 
-        return articleDao.findAll(pageable).map(article -> articleMapper.toArticleDto(article, accountUserDao));
+        return articleDao.findAll(pageable).map(article -> articleMapper.toArticleDto(article, accountUserDao,
+                articleLikeService, null, commentLikeService));
     }
-
-
 }

@@ -1,4 +1,4 @@
-package ru.gb.hubr.controller.main;
+package ru.gb.hubr.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,9 @@ import ru.gb.hubr.api.dto.CommentNotificationDto;
 import ru.gb.hubr.service.ArticleNotificationService;
 import ru.gb.hubr.service.CommentNotificationService;
 
-
+/**
+ * Контроллер для работы с жалобами-уведомлениями
+ */
 @Controller
 @RequiredArgsConstructor
 @Slf4j
@@ -20,6 +22,13 @@ public class ComplainNotificationController {
     private final CommentNotificationService commentNotificationService;
     private final ArticleNotificationService articleNotificationService;
 
+    /**
+     * Сохраняет жалобу на комментарий
+     *
+     * @param user         пользователь, отправивший жалобу
+     * @param notification уведомление-жалоба
+     * @return строка с командой перенаправления на страницу с отображением статьи
+     */
     @PostMapping("/comments/complain")
     public String saveCommentComplain(@AuthenticationPrincipal UserDetails user,
                                       CommentNotificationDto notification) {
@@ -32,15 +41,20 @@ public class ComplainNotificationController {
         return "redirect:/articles/" + articleId;
     }
 
+    /**
+     * Сохраняет жалобу на статью
+     *
+     * @param user         пользователь, отправивший жалобу
+     * @param notification уведомление-жалоба
+     * @return строка с командой перенаправления на страницу с отображением статьи
+     */
     @PostMapping("/articles/complain")
     public String saveArticleComplain(@AuthenticationPrincipal UserDetails user,
                                       ArticleNotificationDto notification) {
         Long articleId = notification.getArticleId();
         log.info("Сохраняется жалоба пользователя {} на статью с идентификтором {}",
                 user.getUsername(), articleId);
-        System.out.println("User Details user: " + user.getUsername());
         notification.setUsername(user.getUsername());
-        System.out.println("User from notification: " + notification.getUsername());
         articleNotificationService.save(notification);
         return "redirect:/articles/" + articleId;
     }

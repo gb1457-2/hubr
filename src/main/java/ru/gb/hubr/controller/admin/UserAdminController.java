@@ -31,7 +31,7 @@ public class UserAdminController {
     public String getProfilePageById(Model model, @PathVariable("userId") Long id) {
         UserDto userDto;
         if (id != null) {
-            userDto = accountUserService.findById(id);
+            userDto = accountUserService.findDtoById(id);
         } else {
             return "redirect:/admin/users/all";
         }
@@ -43,7 +43,7 @@ public class UserAdminController {
     public String editProfileById(Model model, @RequestParam(name = "id") Long id) {
         UserDto userDto;
         if(id != null) {
-            userDto = accountUserService.findById(id);
+            userDto = accountUserService.findDtoById(id);
         } else {
             return "redirect:/admin/users/all";
         }

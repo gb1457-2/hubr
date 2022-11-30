@@ -50,4 +50,8 @@ public class CommentDto {
         }
     }
 
+
+    private Long likesCount;
+
+    private Long currentUserLikeId;
 }
