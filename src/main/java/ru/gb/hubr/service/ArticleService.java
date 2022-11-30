@@ -12,6 +12,8 @@ import ru.gb.hubr.dao.AccountUserDao;
 import ru.gb.hubr.dao.ArticleDao;
 import ru.gb.hubr.entity.Article;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 

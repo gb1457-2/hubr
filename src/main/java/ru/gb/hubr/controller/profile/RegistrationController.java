@@ -29,7 +29,7 @@ public class RegistrationController {
 
     // todo pezhe roleRepo.findById(2L).get() в коде непонятно что значит 2L, лучше добавить enum
     @PostMapping
-    public String processRegistration(@RequestBody AccountUser user) {
+    public String processRegistration(AccountUser user) {
 
         AccountUser savedUser = AccountUser
                 .builder()

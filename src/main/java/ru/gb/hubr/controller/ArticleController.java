@@ -95,8 +95,9 @@ public class ArticleController {
      */
     @PostMapping("/add")
     public String saveArticle(@AuthenticationPrincipal UserDetails user,
-                              ArticleDto articleDto) {
+                              ArticleDto articleDto,@RequestParam(required = false,name = "isPublished") String isPublished) {
         articleDto.setAuthor(user.getUsername());
+        articleDto.setPublished("on".equals(isPublished));
         articleService.saveArticle(articleDto, user.getUsername());
         return "redirect:/articles/all";
     }
@@ -108,15 +109,18 @@ public class ArticleController {
      * @return путь до страницы формаой добавления новой статьи
      */
     @GetMapping("/add")
-    public String showForm(Model model) {
+    public String showForm(HttpSession session,Model model,@RequestParam(required = false) Long id) {
 
-        ArticleDto articleDto = new ArticleDto();
+        ArticleDto articleDto = id ==null ?new ArticleDto():
+                articleService.getArticleById(id,accountUserService.getCurrentUsername(session));
 
         model.addAttribute("topics", ArticleTopic.values());
         model.addAttribute("article", articleDto);
 
         return "articles/add-article";
     }
+
+
 
     /**
      * Получает данные о статье с заданным идентификатором и

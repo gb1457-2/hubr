@@ -54,4 +54,7 @@ public class Article extends InfoEntity {
 
     @OneToMany(mappedBy = "article", cascade = CascadeType.MERGE)
     private List<ArticleLike> likes;
+
+    @Column(name = "is_published")
+    private boolean isPublished;
 }
