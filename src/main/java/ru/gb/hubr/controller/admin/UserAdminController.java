@@ -60,10 +60,27 @@ public class UserAdminController {
         return "redirect:admin/users/all";
     }
 
+    @PutMapping("/unban")
+    public String unbanUser(@RequestParam(name = "id") Long id) {
+        UserDto userDto;
+        if(id != null) {
+                userDto = accountUserService.findById(id);
+                if(userDto.isLocked() || userDto.getLockedAt() != null || userDto.getLockedUntil() != null) {
+                userDto.setLocked(false);
+                userDto.setLockedAt(null);
+                userDto.setLockedUntil(null);
+                accountUserService.save(userDto);
+            }
+        }
+        return "redirect:admin/users/all";
+    }
+
     @DeleteMapping("/delete")
     public String deleteUser(@RequestParam(name = "id") Long id) {
      //   UserDto userDto = profileServiceSQL.findById(id);
         return "redirect:admin/users/all";
     }
+
+
 
 }

@@ -10,8 +10,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.gb.hubr.api.dto.ArticleDto;
+import ru.gb.hubr.api.dto.ArticleNotificationDto;
+import ru.gb.hubr.api.dto.CommentDto;
+import ru.gb.hubr.api.dto.CommentNotificationDto;
+import ru.gb.hubr.enumeration.ArticleComplainType;
 import ru.gb.hubr.enumeration.ArticleTopic;
 import ru.gb.hubr.service.AccountUserService;
+import ru.gb.hubr.enumeration.CommentComplainType;
 import ru.gb.hubr.service.ArticleService;
 
 import javax.servlet.http.HttpSession;
@@ -42,6 +47,13 @@ public class ArticleAdminController {
             return "redirect:/admin/articles/all";
         }
         model.addAttribute("article", articleDto);
+        CommentDto comment = new CommentDto();
+        comment.setArticleId(id);
+        model.addAttribute("comment", comment);
+        model.addAttribute("articleComplainTypes", ArticleComplainType.values());
+        model.addAttribute("articleNotification", new ArticleNotificationDto());
+        model.addAttribute("commentComplainTypes", CommentComplainType.values());
+        model.addAttribute("commentNotification", new CommentNotificationDto());
         return "articles/show-article";
     }
 

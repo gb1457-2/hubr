@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Все статьи</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div th:replace="~{common/navbar :: navbar(AdminPanel)}"></div>
+    <!--<div style="background-color: #eee;"> -->
+
+<br>
+        <div class="d-flex align-items-start">
+            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <h1><span class="badge bg-secondary">Admin Panel</span></h1>
+              <!--  <button class="nav-link" id="v-pills-users-tab" data-bs-toggle="pill" data-bs-target="#v-pills-users" type="button" role="tab" aria-controls="v-pills-users" aria-selected="false">Users</button> -->
+                <a class="nav-link" type="button" align="center" th:href="@{/admin/users/all}">Users</a>
+               <!-- <button class="nav-link active" id="v-pills-articles-tab" data-bs-toggle="pill" data-bs-target="#v-pills-articles" type="button" role="tab" aria-controls="v-pills-articles" aria-selected="true">Articles</button> -->
+                <a class="nav-link" type="button" align="center" th:href="@{/admin/articles/all}">Articles</a>
+                <!-- <button class="nav-link" id="v-pills-comments-tab" data-bs-toggle="pill" data-bs-target="#v-pills-comments" type="button" role="tab" aria-controls="v-pills-comments" aria-selected="false">Comments</button> -->
+                <a class="nav-link" type="button" align="center" th:href="@{/admin/comments/all}">Comments</a>
+                <button class="nav-link active" id="v-pills-article-notifications-tab" data-bs-toggle="pill" data-bs-target="#v-pills-article-notifications" type="button" role="tab" aria-controls="v-pills-article-notifications" aria-selected="true">Article notifications</button>
+                <a class="nav-link" type="button" align="center" th:href="@{/admin/comment-notifications/all}">Comment notifications</a>
+            </div>
+            <div class="tab-content" id="v-pills-tabContent">
+
+              <!--  <div class="tab-pane fade" id="v-pills-users" role="tabpanel" aria-labelledby="v-pills-users-tab" tabindex="0"></div> -->
+
+              <!--  <div class="tab-pane fade" id="v-pills-articles" role="tabpanel" aria-labelledby="v-pills-articles-tab" tabindex="0"></div> -->
+
+               <!-- <div class="tab-pane fade" id="v-pills-comments" role="tabpanel" aria-labelledby="v-pills-comments-tab" tabindex="0">Comments</div> -->
+
+              <div class="tab-pane fade show active" id="v-pills-article-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab" tabindex="0">
+
+                  <div class="container">
+                      <span th:if="${articleNotifications.size() == 0}">Уведомлений о статьях нет</span>
+                      <div th:unless="${articleNotifications.size() == 0}">
+                          <table class="table table-bordered">
+                              <thead>
+                              <tr>
+                                  <th scope="col">#</th>
+                                  <th scope="col">Название статьи</th>
+                                  <th scope="col">Отправитель</th>
+                                  <th scope="col">Тип жалобы</th>
+                                 <th scope="col">Дата создания</th>
+                                  <th scope="col">Просмотр статьи</th>
+                                  <th scope="col">Удалить</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr th:each="articleNotification, i : ${articleNotifications}">
+                                  <th scope="row" th:text="${i.count}"></th>
+                                    <td th:text="${articleNotification.article}"></td>
+                                    <td th:text="${articleNotification.username}"></td>
+                                    <td th:text="${articleNotification.articleComplainType}"></td>
+                                    <td th:text="${articleNotification.createdAt}"></td>
+
+                                  <td>
+                                      <a role="button" class="btn btn-warning"
+                                         th:href="@{'/admin/articles/' + ${articleNotification.articleId}}">Просмотр статьи</a>
+                                  </td>
+
+                                  <td>
+                                      <a type="button" class="btn btn-warning" th:href="@{'/admin/articles/' + ${articleNotification.articleId}}">Удалить</a>
+                                  </td>
+
+                              </tr>
+                              </tbody>
+
+                          </table>
+                          <hr>
+                      </div>
+                  </div>
+
+
+              </div>
+
+                </div>
+
+        </div>
+
+
+</body>
+</html>
