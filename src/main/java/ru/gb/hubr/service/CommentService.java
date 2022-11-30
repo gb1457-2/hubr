@@ -23,15 +23,17 @@ public class CommentService {
     private final AccountUserDao accountUserDao;
     private final CommentMapper commentMapper;
 
-    public List<CommentDto> findAll() {
+    public List<CommentDto> findAll(String currentUserName) {
         return commentDao.findAll(Sort.by("createdAt").descending())
                 .stream()
-                .map(comment -> commentMapper.toCommentDto(comment, accountUserDao))
+                .map(comment -> commentMapper.toCommentDto(comment, accountUserDao,
+                        currentUserName, commentLikeService))
                 .collect(Collectors.toList());
     }
 
-    public CommentDto findCommentById(Long id) {
-        return commentMapper.toCommentDto(commentDao.findById(id).orElse(null), accountUserDao);
+    public CommentDto findCommentById(Long id, String currentUserName) {
+        return commentMapper.toCommentDto(commentDao.findById(id).orElse(null), accountUserDao,
+                currentUserName, commentLikeService);
     }
 
     public CommentDto save(CommentDto commentDto, String currentUserName) {

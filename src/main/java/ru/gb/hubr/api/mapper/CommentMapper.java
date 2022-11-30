@@ -24,12 +24,6 @@ public interface CommentMapper {
     @Mapping(target = "author", ignore = true)
     Comment toComment(CommentDto commentDto, @Context AccountUserDao accountUserDao);
 
-    @Mapping(target = "articleId", source = "article.id")
-    @Mapping(target = "username", ignore = true)
-    CommentDto toCommentDto(Comment comment, @Context AccountUserDao accountUserDao);
-
-    List<CommentDto> toCommentDto(List<Comment> comments, @Context AccountUserDao accountUserDao);
-
     @AfterMapping
     default void commentComplete(@MappingTarget Comment comment, CommentDto commentDto,
                                  @Context AccountUserDao accountUserDao) {
@@ -46,6 +40,7 @@ public interface CommentMapper {
                                    @Context String currentUserName,
                                    @Context CommentLikeService commentLikeService);
 
+    @Mapping(target = "articleId", source = "article.id")
     @Mapping(target = "username", ignore = true)
     CommentDto toCommentDto(Comment comment,
                             @Context AccountUserDao accountUserDao,
