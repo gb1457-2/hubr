@@ -49,6 +49,12 @@ public class ArticleService {
 
     public ArticleDto saveArticle(ArticleDto articleDto, String currentUserName) {
         Article article = articleMapper.toArticle(articleDto, accountUserDao);
+        if (article.getId()!=null){
+            articleDao.findById(article.getId())
+                    .ifPresent((p)-> {
+                        article.setVersion(p.getVersion());
+                    });
+        }
         return articleMapper.toArticleDto(articleDao.save(article), accountUserDao, articleLikeService,
                 currentUserName, commentLikeService);
     }
