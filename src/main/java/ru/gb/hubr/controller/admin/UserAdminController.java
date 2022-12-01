@@ -64,7 +64,7 @@ public class UserAdminController {
     public String unbanUser(@RequestParam(name = "id") Long id) {
         UserDto userDto;
         if(id != null) {
-                userDto = accountUserService.findById(id);
+                userDto = accountUserService.findDtoById(id);
                 if(userDto.isLocked() || userDto.getLockedAt() != null || userDto.getLockedUntil() != null) {
                 userDto.setLocked(false);
                 userDto.setLockedAt(null);
