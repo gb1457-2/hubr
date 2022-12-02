@@ -12,6 +12,8 @@ import ru.gb.hubr.dao.AccountUserDao;
 import ru.gb.hubr.dao.ArticleDao;
 import ru.gb.hubr.entity.Article;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,6 +49,12 @@ public class ArticleService {
 
     public ArticleDto saveArticle(ArticleDto articleDto, String currentUserName) {
         Article article = articleMapper.toArticle(articleDto, accountUserDao);
+        if (article.getId()!=null){
+            articleDao.findById(article.getId())
+                    .ifPresent((p)-> {
+                        article.setVersion(p.getVersion());
+                    });
+        }
         return articleMapper.toArticleDto(articleDao.save(article), accountUserDao, articleLikeService,
                 currentUserName, commentLikeService);
     }

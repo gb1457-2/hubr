@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="before_alter_table_article_publish" author="Vitaly Krivobokov">
+        <tagDatabase tag="before_alter_table_article_publish"/>
+    </changeSet>
+
+    <changeSet id="alter_table_article_publish" author="Vitaly Krivobokov">
+        <addColumn tableName="article">
+            <column name="is_published" type="boolean" defaultValue="false"/>
+        </addColumn>
+
+    </changeSet>
+
+</databaseChangeLog>

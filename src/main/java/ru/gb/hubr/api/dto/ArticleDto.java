@@ -43,6 +43,8 @@ public class ArticleDto {
 
     private Long currentUserLikeId;
 
+    private boolean isPublished;
+
     private List<CommentDto> comments;
 
     public String getPreview() {
@@ -59,5 +61,4 @@ public class ArticleDto {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return createdAt.format(formatter);
     }
-
 }
