@@ -36,16 +36,16 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" th:classappend="${activeTab == 'Design' ? 'active' : ''}" aria-current="page" th:href="@{/articles/all}">Дизайн</a>
+                    <a class="nav-link" th:classappend="${activeTab == 'Design' ? 'active' : ''}" aria-current="page" th:href="@{/articles/all(topic=design)}">Дизайн</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:classappend="${activeTab == 'WebDevelopment' ? 'active' : ''}" aria-current="page" th:href="@{/articles/all}">Веб-разработка</a>
+                    <a class="nav-link" th:classappend="${activeTab == 'WebDevelopment' ? 'active' : ''}" aria-current="page" th:href="@{/articles/all(topic=web_development)}">Веб-разработка</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:classappend="${activeTab == 'MobileDevelopment' ? 'active' : ''}" aria-current="page" th:href="@{/articles/all}">Мобильная разработка</a>
+                    <a class="nav-link" th:classappend="${activeTab == 'MobileDevelopment' ? 'active' : ''}" aria-current="page" th:href="@{/articles/all(topic=mobile_development)}">Мобильная разработка</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:classappend="${activeTab == 'Marketing' ? 'active' : ''}" aria-current="page" th:href="@{/articles/all}">Маркетинг</a>
+                    <a class="nav-link" th:classappend="${activeTab == 'Marketing' ? 'active' : ''}" aria-current="page" th:href="@{/articles/all(topic=marketing)}">Маркетинг</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:classappend="${activeTab == 'AdminPanel' ? 'active' : ''}" aria-current="page" th:href="@{/admin/users/all}">Панель администратора</a>

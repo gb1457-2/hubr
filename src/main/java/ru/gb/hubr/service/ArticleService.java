@@ -11,11 +11,12 @@ import ru.gb.hubr.api.mapper.ArticleMapper;
 import ru.gb.hubr.dao.AccountUserDao;
 import ru.gb.hubr.dao.ArticleDao;
 import ru.gb.hubr.entity.Article;
-
-
+import ru.gb.hubr.entity.user.AccountUser;
+import ru.gb.hubr.enumeration.ArticleTopic;
 
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,12 +47,35 @@ public class ArticleService {
 
     public Page<ArticleDto> getArticlesPage(Pageable pageable){
 
-        int pageSize = pageable.getPageSize();
-        int currentPage = pageable.getPageNumber();
-        int startItem = currentPage * pageSize;
-
         return articleDao.findAll(pageable).map(article -> articleMapper.toArticleDto(article, accountUserDao));
     }
 
+    public Page<ArticleDto> getArticlesPageByTopic(Pageable pageable, String topic){
 
+        ArticleTopic articleTopic = ArticleTopic.getArticleTopicByEnumValue(topic);
+        if (articleTopic != ArticleTopic.NOT_SELECTED){
+            return articleDao.findAllByTopic(pageable, articleTopic)
+                    .map(article -> articleMapper.toArticleDto(article, accountUserDao));
+        } else {
+            return articleDao.findAll(pageable).map(article -> articleMapper.toArticleDto(article, accountUserDao));
+        }
+    }
+
+    public Page<ArticleDto> getArticlesPageByAuthor(Pageable pageable, String author){
+
+        return articleDao.findAllByAuthor(pageable, articleMapper.getAuthor(author, accountUserDao))
+                .map(article -> articleMapper.toArticleDto(article, accountUserDao));
+    }
+
+    public Page<ArticleDto> getArticlesPageByTopicAndAuthor(Pageable pageable, String topic, String author){
+
+        ArticleTopic articleTopic = ArticleTopic.getArticleTopicByEnumValue(topic);
+        if (articleTopic != ArticleTopic.NOT_SELECTED){
+            return articleDao.findAllByTopicAndAuthor(pageable, articleTopic, articleMapper.getAuthor(author,accountUserDao))
+                    .map(article -> articleMapper.toArticleDto(article, accountUserDao));
+        } else {
+            return articleDao.findAll(pageable).map(article -> articleMapper.toArticleDto(article, accountUserDao));
+        }
+
+    }
 }

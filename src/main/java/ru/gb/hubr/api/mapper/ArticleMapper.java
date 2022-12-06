@@ -2,6 +2,7 @@ package ru.gb.hubr.api.mapper;
 
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
+
 import ru.gb.hubr.api.dto.ArticleDto;
 import ru.gb.hubr.dao.AccountUserDao;
 import ru.gb.hubr.entity.user.AccountUser;
@@ -25,8 +26,6 @@ public interface ArticleMapper {
         return author.getUsername();
     }
 
-//    default String getTopic(ArticleTopic topic) {
-//        return topic.getTitle();
-//    }
+
 
 }

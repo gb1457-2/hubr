@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous"></script>
+
 </head>
 <body>
 
@@ -27,7 +28,7 @@
 
                         <h2 class="blog-post-title mb-1" th:utext="${article.getName()}">..</h2>
 
-                        <h4 class="blog-post-title mb-2" th:utext="${article.topic.getTitle()}">..</h4>
+                        <h4 class="blog-post-title mb-2" th:utext="${article.topic.title}">..</h4>
 
                         <p class="blog-post-meta" th:utext="${article.author}">..</p>
 
@@ -38,28 +39,58 @@
                         <a type="button" th:href="@{'/articles/' + ${article.id}}" class="btn btn-warning">Просмотреть</a>
                     </div>
                 </div>
-
             </article>
+        </div>
+        <div class="col-lg-4">
+            <div class="card mb-2">
+                <div class="card-header">Фильтр</div>
+                    <div class="card-body">
+                        <form id="search-input" th:action="@{/articles/all}" method="get" >
+                            <label class="mb-1" for="article name">Название статьи</label>
+                            <input type="text" id="article name" class="form-control">
+                            <br>
+                            <label class="mb-1" for="select category">Категория</label>
+                            <select class="form-select" id="select category" name="topic" th:field="*{savedTopic}" aria-label="Default select example">
+                                <option th:each="topicValue : ${T(ru.gb.hubr.enumeration.ArticleTopic).values()}"
+                                        th:value="${topicValue.name().toLowerCase()}"
+                                        th:text="${topicValue.title}">
+                                </option>
 
+                            </select>
+                            <br>
+                            <label class="mb-1" for="author">Автор</label>
+                            <input type="text" id="author" class="form-control" name="author" th:value="${author}" th>
+                            <br>
+                            <!--
+                            <p>Поиск по дате</p>
+                            <label class="mb-1" for="from">с</label>
+                            <input type="date" class="form-control" id="from" name="date" placeholder="Дата с" required>
+                            <label class="mb-1" for="to">по</label>
+                            <input type="date" class="form-control" id="to" name="date" placeholder="Дата по" required>
+                            <br>
+                            -->
+                            <button type="submit" class="btn btn-info" >Поиск</button>
+                        </form>
+                    </div>
+            </div>
         </div>
     </div>
-
 
     <nav aria-label="Page navigation example">
         <ul class="pagination" th:if="${articlesPage.totalPages > 0}">
             <th:block>
                 <li class="page-item" th:classappend="${currentPage < 2? 'disabled' : ''}">
-                    <a class="page-link" th:href="@{/articles/all(size=${articlesPage.size}, page=${currentPage}-1)}"
+                    <a class="page-link" th:href="@{/articles/all(size=${articlesPage.size}, page=${currentPage}-1, topic=${topic})}"
                        tabindex="-1">Previous</a>
                 </li>
                 <th:block th:each="pageNumber : ${pageNumbers}">
                     <li class="page-item" th:classappend="${pageNumber==currentPage? 'active' : ''}" th:if="${pageNumber>=firstIndexPagination && pageNumber<=lastIndexPagination}">
-                        <a class="page-link" th:href="@{/articles/all(size=${articlesPage.size}, page=${pageNumber})}"
+                        <a class="page-link" th:href="@{/articles/all(size=${articlesPage.size}, page=${pageNumber}, topic=${topic})}"
                            th:text="${pageNumber}"></a>
                     </li>
                 </th:block>
                 <li class="page-item" th:classappend="${currentPage == articlesPage.getTotalPages()? 'disabled' : ''}">
-                    <a class="page-link" th:href="@{/articles/all(size=${articlesPage.size}, page=${currentPage}+1)}"
+                    <a class="page-link" th:href="@{/articles/all(size=${articlesPage.size}, page=${currentPage}+1, topic=${topic})}"
                        tabindex="+1">Next</a>
                 </li>
             </th:block>
