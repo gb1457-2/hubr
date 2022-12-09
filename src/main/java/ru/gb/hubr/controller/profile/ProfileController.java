@@ -56,22 +56,18 @@ public class ProfileController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public String save(HttpSession session, @RequestBody UserDto userDto) throws AccessDeniedException {
+    public String save(HttpSession session, UserDto userDto, Model model) throws AccessDeniedException {
         UserDto byLogin = accountUserService.getCurrentUserDto(session);
         if (!byLogin.getUsername().equals(userDto.getUsername())){
             throw new AccessDeniedException("Записан другой пользователь");
         }
-        UserDto updateUser = accountUserService.save(userDto);
-        return "redirect:/profile";
-    }
-
-    @PutMapping
-    @ResponseStatus(HttpStatus.OK)
-    public String updateProfile(HttpSession session, @RequestBody UserDto userDto, Model model)  {
         UserDto updateUser = accountUserService.updateInfo(session, userDto);
+        model.addAttribute("isMyProfile", true);
+        model.addAttribute("articles",articleService.getAllArticles(updateUser.getUsername()));
         model.addAttribute("user", updateUser);
         return "profile/profile-form";
     }
+
 
 
 
