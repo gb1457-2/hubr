@@ -63,7 +63,7 @@ public class ProfileController {
         }
         UserDto updateUser = accountUserService.updateInfo(session, userDto);
         model.addAttribute("isMyProfile", true);
-        model.addAttribute("articles",articleService.getAllArticles(byLogin.getUsername()));
+        model.addAttribute("articles",articleService.getAllArticles(updateUser.getUsername()));
         model.addAttribute("user", updateUser);
         return "profile/profile-form";
     }
