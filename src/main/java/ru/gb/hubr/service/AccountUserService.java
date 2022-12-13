@@ -14,11 +14,13 @@ import ru.gb.hubr.api.dto.UserDto;
 import ru.gb.hubr.api.mapper.UserMapper;
 import ru.gb.hubr.config.SecurityProperties;
 import ru.gb.hubr.dao.AccountUserDao;
+
 import ru.gb.hubr.entity.user.AccountUser;
 import ru.gb.hubr.entity.user.LockedUser;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+
 import java.util.stream.Collectors;
 
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
@@ -78,7 +80,7 @@ public class AccountUserService implements UserDetailsService {
         if (userDto.getUsername() == null) {
             throw new NullPointerException("Не найден пользователь");
         }
-        ;
+
         AccountUser accountUser = userMapper.toAccountUser(userDto);
         AccountUser accountUserDB = accountUserDao.findByUsername(userDto.getUsername()).orElseThrow();
         accountUserDB.updateInfoByDuplicate(accountUser);

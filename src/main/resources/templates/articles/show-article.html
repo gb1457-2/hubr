@@ -61,7 +61,9 @@
                                 <td colspan="3"><p class="blog-post-meta" th:utext="${article.author}">..</p></td>
                             </tr>
                             <tr>
-                                <td colspan="3"><p th:utext="${article.getContent()}">..</p></td>
+                                <td colspan="3">
+                                    <p> <span th:if="${article.deletedAt != null}">Статья удалена</span>
+                                    <span th:unless="${article.deletedAt != null}" th:utext="${article.getContent()}"></span> </p>
                             </tr>
                         </table>
                     </div>
@@ -112,7 +114,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td th:text="${comment.content}" colspan="3" th:align="left" th:width="600"></td>
+                           <!-- <td  th:text="${comment.content}" colspan="3" th:align="left" th:width="600"> -->
+                            <td colspan="3" th:align="left" th:width="600">
+                                <span th:if="${comment.deletedAt != null}">Комментарий удален</span>
+                                <span th:unless="${comment.deletedAt != null}" th:utext="${comment.getContent()}"></span>
+                            </td>
                         </tr>
                     </table>
                 </div>

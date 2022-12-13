@@ -22,6 +22,12 @@ public class ArticleNotificationService {
     private final AccountUserDao accountUserDao;
     private final ArticleNotificationMapper articleNotificationMapper;
 
+
+    public ArticleNotificationDto findArticleNotificationById(Long id) {
+        return articleNotificationMapper.toArticleNotificationDto(articleNotificationDao.findById(id).orElse(null), accountUserDao);
+    }
+
+
     public List<ArticleNotificationDto> findAll() {
         return articleNotificationDao.findAll(Sort.by("createdAt").descending())
                 .stream()

@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import ru.gb.hubr.api.dto.ArticleNotificationDto;
 import ru.gb.hubr.api.dto.CommentNotificationDto;
 import ru.gb.hubr.api.mapper.CommentNotificationMapper;
 import ru.gb.hubr.dao.AccountUserDao;
@@ -22,6 +21,10 @@ public class CommentNotificationService {
     private final CommentNotificationDao commentNotificationDao;
     private final AccountUserDao accountUserDao;
     private final CommentNotificationMapper commentNotificationMapper;
+
+    public CommentNotificationDto findCommentNotificationById(Long id) {
+        return commentNotificationMapper.toCommentNotificationDto(commentNotificationDao.findById(id).orElse(null), accountUserDao);
+    }
 
     public List<CommentNotificationDto> findAll() {
         return commentNotificationDao.findAll(Sort.by("createdAt").descending())

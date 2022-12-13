@@ -3,6 +3,7 @@ package ru.gb.hubr.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.gb.hubr.entity.user.AccountUser;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AccountUserDao extends JpaRepository<AccountUser, Long> {

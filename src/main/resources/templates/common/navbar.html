@@ -48,6 +48,9 @@
                     <a class="nav-link" th:classappend="${activeTab == 'Marketing' ? 'active' : ''}" aria-current="page" th:href="@{/articles/all}">Маркетинг</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" th:classappend="${activeTab == 'Support' ? 'active' : ''}" aria-current="page" th:href="@{/support}">Помощь</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" th:classappend="${activeTab == 'AdminPanel' ? 'active' : ''}" aria-current="page" th:href="@{/admin/users/all}">Панель администратора</a>
                 </li>
 

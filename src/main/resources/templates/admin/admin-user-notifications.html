@@ -24,9 +24,9 @@
                 <a class="nav-link" type="button" align="center" th:href="@{/admin/articles/all}">Articles</a>
                 <!-- <button class="nav-link" id="v-pills-comments-tab" data-bs-toggle="pill" data-bs-target="#v-pills-comments" type="button" role="tab" aria-controls="v-pills-comments" aria-selected="false">Comments</button> -->
                 <a class="nav-link" type="button" align="center" th:href="@{/admin/comments/all}">Comments</a>
-                <button class="nav-link active" id="v-pills-article-notifications-tab" data-bs-toggle="pill" data-bs-target="#v-pills-article-notifications" type="button" role="tab" aria-controls="v-pills-article-notifications" aria-selected="true">Article notifications</button>
+                <a class="nav-link" type="button" align="center" th:href="@{/admin/article-notifications/all}">Article notifications</a>
                 <a class="nav-link" type="button" align="center" th:href="@{/admin/comment-notifications/all}">Comment notifications</a>
-                <a class="nav-link" type="button" align="center" th:href="@{/admin/user-notifications/all}">User notifications</a>
+                <button class="nav-link active" id="v-pills-user-notifications-tab" data-bs-toggle="pill" data-bs-target="#v-pills-user-notifications" type="button" role="tab" aria-controls="v-pills-user-notifications" aria-selected="true">User notifications</button>
             </div>
             <div class="tab-content" id="v-pills-tabContent">
 
@@ -39,45 +39,36 @@
               <div class="tab-pane fade show active" id="v-pills-article-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab" tabindex="0">
 
                   <div class="container">
-                      <span th:if="${articleNotifications.size() == 0}">Уведомлений о статьях нет</span>
-                      <div th:unless="${articleNotifications.size() == 0}">
+                      <span th:if="${userNotifications.size() == 0}">Уведомлений о пользователях нет</span>
+                      <div th:unless="${userNotifications.size() == 0}">
                           <table class="table table-bordered">
                               <thead>
                               <tr>
                                   <th scope="col">#</th>
-                                  <th scope="col">Название статьи</th>
+                                  <th scope="col">Сообщение</th>
+                                  <th scope="col">Тип уведомления</th>
+                                  <th scope="col">Получатель</th>
                                   <th scope="col">Отправитель</th>
-                                  <th scope="col">Тип жалобы</th>
                                   <th scope="col">Дата создания</th>
-                                  <th scope="col">Отметка о прочтении</th>
                                   <th scope="col">Дата удаления</th>
-                                  <th scope="col">Просмотр статьи</th>
-                                  <th scope="col">Отметить прочтенным</th>
+                                  <th scope="col">Отметка о прочтении</th>
                                   <th scope="col">Удалить/Восстановить</th>
                               </tr>
                               </thead>
                               <tbody>
-                              <tr th:each="articleNotification, i : ${articleNotifications}">
+                              <tr th:each="userNotification, i : ${userNotifications}">
                                   <th scope="row" th:text="${i.count}"></th>
-                                    <td th:text="${articleNotification.article}"></td>
-                                    <td th:text="${articleNotification.username}"></td>
-                                    <td th:text="${articleNotification.articleComplainType}"></td>
-                                    <td th:text="${articleNotification.createdAt}"></td>
-                                    <td th:text="${articleNotification.isRead}"></td>
-                                    <td th:text="${articleNotification.deletedAt}"></td>
+                                    <td th:text="${userNotification.message}"></td>
+                                    <td th:text="${userNotification.userNotificationType}"></td>
+                                    <td th:text="${userNotification.recipient}"></td>
+                                    <td th:text="${userNotification.author}"></td>
+                                    <td th:text="${userNotification.createdAt}"></td>
+                                    <td th:text="${userNotification.deletedAt}"></td>
+                                    <td th:text="${userNotification.isRead}"></td>
+
 
                                   <td>
-                                      <a role="button" class="btn btn-warning"
-                                         th:href="@{'/admin/article-notifications/articles/' + ${articleNotification.articleId}}">Просмотр статьи</a>
-                                  </td>
-
-                                  <td>
-                                      <a role="button" class="btn btn-warning"
-                                         th:href="@{/admin/article-notifications/mark-read(id=${articleNotification.id})}">Отметить прочтенным</a>
-                                  </td>
-
-                                  <td>
-                                      <a type="button" class="btn btn-warning" th:href="@{/admin/article-notifications/delete(id=${articleNotification.id})}">Удалить/Восстановить</a>
+                                      <a type="button" class="btn btn-warning" th:href="@{/admin/user-notifications/delete(id=${userNotification.id})}">Удалить/Восстановить</a>
                                   </td>
 
                               </tr>

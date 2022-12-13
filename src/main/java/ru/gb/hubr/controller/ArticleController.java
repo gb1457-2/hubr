@@ -113,6 +113,9 @@ public class ArticleController {
 
         ArticleDto articleDto = id == null ? new ArticleDto() :
                 articleService.getArticleById(id, accountUserService.getCurrentUsername(session));
+        if(articleDto.getDeletedAt() != null) {
+            return "redirect:/articles/all";
+        }
 
         model.addAttribute("topics", ArticleTopic.values());
         model.addAttribute("article", articleDto);
@@ -136,6 +139,7 @@ public class ArticleController {
                               @PathVariable Long id) {
         String currentUserName = accountUserService.getCurrentUsername(session);
         ArticleDto articleDto = articleService.getArticleById(id, currentUserName);
+
         model.addAttribute("article", articleDto);
 
         CommentDto comment = new CommentDto();

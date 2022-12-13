@@ -1,6 +1,11 @@
 package ru.gb.hubr.api.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,6 +52,11 @@ public class ArticleDto {
 
     private List<CommentDto> comments;
 
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
+    private LocalDateTime deletedAt;
+
     public String getPreview() {
         int maxPreviewLength = 100;
         String endOfParagraph = "</p>";
@@ -61,4 +71,6 @@ public class ArticleDto {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return createdAt.format(formatter);
     }
+
+
 }

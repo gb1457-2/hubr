@@ -8,7 +8,9 @@ import ru.gb.hubr.api.dto.UserDto;
 import ru.gb.hubr.entity.user.AccountUser;
 
 
-@Mapper
+
+
+@Mapper(uses = CommentMapper.class)
 public interface UserMapper {
 
     UserDto toUserDto(AccountUser accountUser);
@@ -19,5 +21,6 @@ public interface UserMapper {
     default void UpdateResult(AccountUser accountUser, @MappingTarget UserDto userDto) {
         userDto.setLocked(accountUser.nowLocked());
     }
+
 
 }

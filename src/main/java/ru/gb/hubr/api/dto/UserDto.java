@@ -12,12 +12,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -59,7 +61,25 @@ public class UserDto {
     @JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
     private LocalDateTime lockedUntil;
 
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
+    private LocalDateTime deletedAt;
+
+    private Set<AccountRoleDto> roles;
 
     private boolean isLocked;
+
+    public String getRoleNames() {
+        if(roles != null && roles.size() > 0) {
+            StringBuilder stringBuilder = new StringBuilder();
+        for (AccountRoleDto role : roles) {
+            stringBuilder.append(role.getName()).append(", ");
+        }
+        return stringBuilder.substring(0, stringBuilder.length() - 2);
+    }
+        return "";
+    }
+
 
 }

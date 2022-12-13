@@ -8,7 +8,7 @@
 <body>
 
 <div th:fragment="profilecardedit" >
-    <form th:action="@{/profile}" th:object="${user}" method='put'>
+    <form th:action="@{/profile}" th:object="${user}" method='post'>
         <div class="card mb-3">
             <div class="card-body">
                 <input type="hidden" th:field="*{username}">

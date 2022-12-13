@@ -11,7 +11,6 @@ import ru.gb.hubr.entity.Article;
 import ru.gb.hubr.entity.user.AccountUser;
 import ru.gb.hubr.service.ArticleLikeService;
 import ru.gb.hubr.service.CommentLikeService;
-
 import java.util.NoSuchElementException;
 
 import static java.util.Objects.nonNull;
@@ -48,7 +47,6 @@ public interface ArticleMapper {
             target.setCurrentUserLikeId(articleLikeService.getCurrentUserLikeId(currentUser));
         }
     }
-
 
 
 }

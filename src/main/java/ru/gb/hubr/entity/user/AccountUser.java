@@ -118,12 +118,12 @@ public class AccountUser extends InfoEntity implements UserDetails {
 
     public void updateInfoByDuplicate(AccountUser anotherUser) {
         this.firstName = anotherUser.getFirstName() == null ? this.firstName : anotherUser.getFirstName();
-        this.lastName = anotherUser.getLastName() == null ? this.lastName : anotherUser.getEmail();
+        this.lastName = anotherUser.getLastName() == null ? this.lastName : anotherUser.getLastName();
         this.articles = anotherUser.getArticles() == null ? this.articles : anotherUser.getArticles();
         this.lockedAt = anotherUser.getLockedAt() == null ? this.lockedAt : anotherUser.getLockedAt();
         this.lockedUntil = anotherUser.getLockedUntil() == null ? this.lockedUntil : anotherUser.getLockedUntil();
         this.email = anotherUser.getEmail() == null ? this.email : anotherUser.getEmail();
-        this.phone = anotherUser.getPhone() == null ? this.phone : anotherUser.getEmail();
+        this.phone = anotherUser.getPhone() == null ? this.phone : anotherUser.getPhone();
     }
 
 }

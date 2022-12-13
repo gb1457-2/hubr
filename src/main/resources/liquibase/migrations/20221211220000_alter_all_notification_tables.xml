@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="before_alter_all_notification_tables" author="Viktor Khalezov">
+        <tagDatabase tag="before_all_notification_tables"/>
+    </changeSet>
+
+    <changeSet id="alter_table_user_lock_notification" author="Viktor Khalezov">
+
+        <addColumn tableName="user_lock_notification">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="author_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="message" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="notification_type" type="VARCHAR(255)"/>
+            <column name="is_read" type="boolean" defaultValue="false"/>
+        </addColumn>
+
+        <addColumn tableName="article_notification">
+            <column name="is_read" type="boolean" defaultValue="false"/>
+        </addColumn>
+
+        <addColumn tableName="comment_notification">
+            <column name="is_read" type="boolean" defaultValue="false"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseTableName="user_lock_notification" baseColumnNames="user_id"
+                                 constraintName="fk_recipient_account_user"
+                                 referencedTableName="account_user" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="user_lock_notification" baseColumnNames="author_id"
+                                 constraintName="fk_author_account_user"
+                                 referencedTableName="account_user" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="user_lock_notification" constraintName="fk_user_lock_notification_user"/>
+
+        <renameColumn newColumnName="recipient_id" oldColumnName="user_id" tableName="user_lock_notification"/>
+        <renameTable oldTableName="user_lock_notification" newTableName="user_notification"/>
+    </changeSet>
+
+</databaseChangeLog>
