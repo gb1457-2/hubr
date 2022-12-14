@@ -26,6 +26,7 @@
                 <!--  <button class="nav-link" id="v-pills-notifications-tab" data-bs-toggle="pill" data-bs-target="#v-pills-notifications" type="button" role="tab" aria-controls="v-pills-notifications" aria-selected="false">Notifications</button> -->
                 <a class="nav-link" type="button" align="center" th:href="@{/admin/article-notifications/all}">Article notifications</a>
                 <a class="nav-link" type="button" align="center" th:href="@{/admin/comment-notifications/all}">Comment notifications</a>
+                <a class="nav-link" type="button" align="center" th:href="@{/admin/user-notifications/all}">User notifications</a>
             </div>
             <div class="tab-content" id="v-pills-tabContent">
 
@@ -44,15 +45,17 @@
                                     <th scope="col">Электронная почта</th>
                                     <th scope="col">Телефон</th>
                                     <th scope="col">Рейтинг</th>
-                                    <th scope="col">Статус</th>
-                                  <!--  <th scope="col">Количество статей</th> -->
                                     <th scope="col">Дата блокировки</th>
                                     <th scope="col">Дата снятия блокировки</th>
+                                    <th scope="col">Роли</th>
+                                    <th scope="col">Дата удаления</th>
                                     <th scope="col">Просмотр</th>
+                                    <th scope="col">Редактировать</th>
+                                    <th scope="col">Назначить администратором</th>
+                                    <th scope="col">Лишить прав администратора</th>
                                     <th scope="col">Заблокировать</th>
                                     <th scope="col">Разблокировать</th>
-                                    <th scope="col">Редактировать</th>
-                                    <th scope="col">Удалить</th>
+                                    <th scope="col">Удалить/Восстановить</th>
 
                                 </tr>
                                 </thead>
@@ -65,9 +68,10 @@
                                     <td th:text="${user.email}"></td>
                                     <td th:text="${user.phone}"></td>
                                     <td th:text="0"></td>
-                                    <td th:text="Статус"></td>
                                     <td th:text="${user.lockedAt}"></td>
                                     <td th:text="${user.lockedUntil}"></td>
+                                    <td th:text="${user.getRoleNames()}"></td>
+                                    <td th:text="${user.deletedAt}"></td>
 
                                     <td>
                                         <a role="button" class="btn btn-warning"
@@ -75,21 +79,28 @@
                                     </td>
 
                                     <td>
-                                        <a type="button" class="btn btn-warning" th:href="@{/admin/users/ban(id=${user.id})}">Заблокировать</a>
+                                        <a type="button" class="btn btn-warning" th:href="@{/admin/users/edit(id=${user.id})}">Редактировать</a>
+                                    </td>
+
+                                    <td>
+                                        <a type="button" class="btn btn-warning" th:href="@{/admin/users/appoint-admin(id=${user.id})}">Назначить администратором</a>
+                                    </td>
+
+                                    <td>
+                                        <a type="button" class="btn btn-warning" th:href="@{/admin/users/dismiss-admin(id=${user.id})}">Лишить прав администратора</a>
+                                    </td>
+
+                                    <td>
+                                        <a type="button" class="btn btn-warning" th:href="@{/admin/users/show-ban-form(id=${user.id})}">Заблокировать</a>
                                     </td>
 
                                     <td>
                                         <a type="button" class="btn btn-warning" th:href="@{/admin/users/unban(id=${user.id})}">Разблокировать</a>
                                     </td>
 
-                                      <td>
-                                          <a type="button" class="btn btn-warning" th:href="@{/admin/users/edit(id=${user.id})}">Редактировать</a>
-                                      </td>
-
                                     <td>
-                                        <a type="button" class="btn btn-warning" th:href="@{/admin/users/delete(id=${user.id})}">Удалить</a>
+                                        <a type="button" class="btn btn-warning" th:href="@{/admin/users/delete(id=${user.id})}">Удалить/Восстановить</a>
                                     </td>
-
 
                                 </tr>
                                 </tbody>

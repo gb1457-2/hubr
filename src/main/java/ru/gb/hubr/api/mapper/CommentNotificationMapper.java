@@ -23,6 +23,7 @@ public interface CommentNotificationMapper {
     CommentNotification toCommentNotification(CommentNotificationDto commentNotificationDto, @Context AccountUserDao accountUserDao);
 
     @Mapping(target = "username", ignore = true)
+    @Mapping(target = "commentId", source = "comment.id")
     @Mapping(target = "commentComplainType", source = "complainType")
     CommentNotificationDto toCommentNotificationDto(CommentNotification commentNotification, @Context AccountUserDao accountUserDao);
 

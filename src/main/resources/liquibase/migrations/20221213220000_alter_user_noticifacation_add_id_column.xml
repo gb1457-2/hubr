@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="before_alter_user_notification_add_id_column" author="Viktor Khalezov">
+        <tagDatabase tag="before_alter_user_notification_add_id_column"/>
+    </changeSet>
+
+    <changeSet id="alter_table_user_notification_add_id_column" author="Viktor Khalezov">
+
+        <addColumn tableName="user_notification">
+
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+        </addColumn>
+
+    </changeSet>
+
+</databaseChangeLog>

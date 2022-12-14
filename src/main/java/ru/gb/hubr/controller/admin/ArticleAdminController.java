@@ -3,7 +3,6 @@ package ru.gb.hubr.controller.admin;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +19,8 @@ import ru.gb.hubr.enumeration.CommentComplainType;
 import ru.gb.hubr.service.ArticleService;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -62,6 +63,9 @@ public class ArticleAdminController {
         ArticleDto articleDto;
         if (id != null) {
             articleDto = articleService.getArticleById(id, accountUserService.getCurrentUsername(session));
+            if(articleDto.getDeletedAt() != null) {
+                return "redirect:/admin/articles/all";
+            }
         } else {
             return "redirect:/admin/articles/all";
         }
@@ -73,13 +77,23 @@ public class ArticleAdminController {
     @PutMapping("/ban")
     public String banArticle(@RequestParam(name = "id") Long id) {
         //  UserDto userDto = profileServiceSQL.findById(id);
-        return "redirect:admin/articles/all";
+        return "redirect:/admin/articles/all";
     }
 
-    @DeleteMapping("/delete")
-    public String deleteArticle(@RequestParam(name = "id") Long id) {
-        //   UserDto userDto = profileServiceSQL.findById(id);
-        return "redirect:admin/articles/all";
+    @GetMapping("/delete")
+    public String deleteOrRestoreArticle(HttpSession session, @RequestParam(name = "id") Long id) {
+        ArticleDto articleDto;
+        if (id != null) {
+            articleDto = articleService.getArticleById(id, accountUserService.getCurrentUsername(session));
+            if(articleDto.getDeletedAt() != null) {
+                articleDto.setDeletedAt(null);
+            } else {
+                articleDto.setDeletedAt(LocalDateTime.now());
+            }
+            articleService.saveArticle(articleDto, accountUserService.getCurrentUsername(session));
+        }
+        return "redirect:/admin/articles/all";
     }
 
 }
+

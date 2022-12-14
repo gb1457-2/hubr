@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.gb.hubr.api.dto.CommentDto;
+import ru.gb.hubr.service.AccountUserService;
 import ru.gb.hubr.service.CommentService;
+import java.time.LocalDateTime;
 
 @Controller
 @RequiredArgsConstructor
@@ -19,6 +21,7 @@ import ru.gb.hubr.service.CommentService;
 public class CommentAdminController {
 
     private final CommentService commentService;
+    private final AccountUserService accountUserService;
 
     @GetMapping("/all")
     public String getCommentList(@AuthenticationPrincipal UserDetails user, Model model) {
@@ -45,6 +48,9 @@ public class CommentAdminController {
         CommentDto commentDto;
         if (id != null) {
             commentDto = commentService.findCommentById(id, user.getUsername());
+            if(commentDto.getDeletedAt() != null) {
+                return "redirect:/admin/comments/all";
+            }
         } else {
             return "redirect:/admin/comments/all";
         }
@@ -61,6 +67,21 @@ public class CommentAdminController {
             return "redirect:/admin/comments/all";
         }
         return "admin/edit-comment";
+    }
+
+    @GetMapping("/delete")
+    public String deleteOrRestoreComment(@AuthenticationPrincipal UserDetails user, @RequestParam(name = "id") Long id) {
+        CommentDto commentDto;
+        if(id != null) {
+            commentDto = commentService.findCommentById(id, user.getUsername());
+            if(commentDto.getDeletedAt() != null) {
+                commentDto.setDeletedAt(null);
+            } else {
+                commentDto.setDeletedAt(LocalDateTime.now());
+            }
+            commentService.save(commentDto, user.getUsername());
+        }
+        return "redirect:/admin/comments/all";
     }
 
 }

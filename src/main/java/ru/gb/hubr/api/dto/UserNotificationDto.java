@@ -1,6 +1,5 @@
 package ru.gb.hubr.api.dto;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -13,26 +12,34 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
-import ru.gb.hubr.enumeration.CommentComplainType;
+import ru.gb.hubr.enumeration.UserNotificationType;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentNotificationDto {
+public class UserNotificationDto {
+
 
     private Long id;
 
-    private Long commentId;
+    @NotBlank
+    private String recipient;
 
-    private Long articleId;
+    @NotBlank
+    private String author;
 
-    private String comment;
+    @NotBlank
+    private String message;
 
-    private String username;
+    @NotBlank
+    private UserNotificationType userNotificationType;
+
+    private boolean isRead;
 
     @JsonFormat(pattern = "dd.MM.yyyy")
     @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -44,10 +51,5 @@ public class CommentNotificationDto {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
     private LocalDateTime deletedAt;
-
-    @NotBlank
-    private CommentComplainType commentComplainType;
-
-    private boolean isRead;
 
 }

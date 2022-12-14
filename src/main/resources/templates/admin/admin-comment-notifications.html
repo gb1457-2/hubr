@@ -26,6 +26,7 @@
                 <a class="nav-link" type="button" align="center" th:href="@{/admin/comments/all}">Comments</a>
                 <a class="nav-link" type="button" align="center" th:href="@{/admin/article-notifications/all}">Article notifications</a>
                 <button class="nav-link active" id="v-pills-comment-notifications-tab" data-bs-toggle="pill" data-bs-target="#v-pills-comment-notifications" type="button" role="tab" aria-controls="v-pills-comment-notifications" aria-selected="true">Comment notifications</button>
+                <a class="nav-link" type="button" align="center" th:href="@{/admin/user-notifications/all}">User notifications</a>
             </div>
             <div class="tab-content" id="v-pills-tabContent">
 
@@ -48,8 +49,11 @@
                                   <th scope="col">Отправитель</th>
                                   <th scope="col">Тип жалобы</th>
                                   <th scope="col">Дата создания</th>
+                                  <th scope="col">Отметка о прочтении</th>
+                                  <th scope="col">Дата удаления</th>
                                   <th scope="col">Просмотр комментария</th>
-                                  <th scope="col">Удалить</th>
+                                  <th scope="col">Отметить прочтенным</th>
+                                  <th scope="col">Удалить/Восстановить</th>
                               </tr>
                               </thead>
                               <tbody>
@@ -59,14 +63,21 @@
                                   <td th:text="${commentNotification.username}"></td>
                                   <td th:text="${commentNotification.commentComplainType}"></td>
                                   <td th:text="${commentNotification.createdAt}"></td>
+                                  <td th:text="${commentNotification.isRead}"></td>
+                                  <td th:text="${commentNotification.deletedAt}"></td>
 
                                   <td>
                                       <a role="button" class="btn btn-warning"
-                                         th:href="@{'/admin/articles/' + ${commentNotification.articleId}}">Просмотр комментария</a>
+                                         th:href="@{'/admin/comment-notifications/comments/' + ${commentNotification.commentId}}">Просмотр комментария</a>
                                   </td>
 
                                   <td>
-                                      <a type="button" class="btn btn-warning" th:href="@{'/admin/articles/' + ${commentNotification.articleId}}">Удалить</a>
+                                      <a role="button" class="btn btn-warning"
+                                         th:href="@{/admin/comment-notifications/mark-read(id=${commentNotification.id})}">Отметить прочтенным</a>
+                                  </td>
+
+                                  <td>
+                                      <a type="button" class="btn btn-warning" th:href="@{/admin/comment-notifications/delete(id=${commentNotification.id})}">Удалить/Восстановить</a>
                                   </td>
 
                               </tr>

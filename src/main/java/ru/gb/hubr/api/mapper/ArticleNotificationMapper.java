@@ -23,6 +23,7 @@ public interface ArticleNotificationMapper {
     ArticleNotification toArticleNotification(ArticleNotificationDto articleNotificationDto, @Context AccountUserDao accountUserDao);
 
     @Mapping(target = "username", ignore = true)
+    @Mapping(target = "articleId", source = "article.id")
     @Mapping(target = "articleComplainType", source = "complainType")
     ArticleNotificationDto toArticleNotificationDto(ArticleNotification articleNotification, @Context AccountUserDao accountUserDao);
 

@@ -6,9 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.gb.hubr.entity.Article;
 
+
 public interface ArticleDao extends JpaRepository<Article, Long> {
 
     Page<Article> findAll(Pageable pageable);
+
+    Page<Article> findAllByDeletedAtIsNull(Pageable pageable);
 
     Page<Article> findAllByPublishedTrue(Pageable pageable);
 
